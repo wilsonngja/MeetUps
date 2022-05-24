@@ -391,21 +391,9 @@
           x.className = x.className.replace(" w3-show", "");
         }
       }
-
-      // API Call
-
-      function checkAvaAPI() {
-        var request_query = 'https://api.nusmods.com/v2/' + "2021" + '-' + "2022" + '/modules/' + "CS1010" + '.json'
-        //console.log("Start");
-
-        // API 
-        fetch(request_query).then(response => { return response.json(); }).then(data => { console.log(data); }).catch(err => {console.log("GG"); });
-        //
-
-        // console.log("End");
-      }
-
     </script>
+
+    <script src="app.js"></script>
 
 </body>
 
