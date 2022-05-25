@@ -120,51 +120,7 @@
 
 
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
-
-    <!-- For each element in the formInputs,  -->
-    <script>
-        const {
-            createClient
-        } = supabase
-        supabase = createClient(config.SUPABASE_URL, config.SUPABASE_KEY)
-            //supabase = createClient('https://fkrbgcocabobsjdzxlib.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZrcmJnY29jYWJvYnNqZHp4bGliIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTI5NDAzNTcsImV4cCI6MTk2ODUxNjM1N30.nutJqNIk17aTtxOTe9kegzJJM3kd7T0DkNMf5WV65Tg')
-
-        const form = document.querySelector('#contact-form')
-        form.addEventListener('submit', async(event) => {
-            event.preventDefault()
-
-            const formInputs = form.querySelectorAll('input,  textarea')
-
-            let submision = {}
-
-            formInputs.forEach(element => {
-                const {
-                    value,
-                    name
-                } = element
-                if (value) {
-                    submision[name] = value
-                }
-            })
-
-            const {
-                error
-            } = await supabase.from('meetups_user_feedback').insert([submision], {
-                returning: 'minimal'
-            })
-
-            if (error) {
-                alert('There was an error please try again')
-            } else {
-                alert('Thanks for contacting us')
-            }
-
-            formInputs.forEach(element => element.value = '')
-
-        })
-    </script>
 
 
     <script>
@@ -378,6 +334,51 @@
             </div>
         </div>
 
+        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+
+        <!-- For each element in the formInputs,  -->
+        <script>
+            const {
+                createClient
+            } = supabase
+            supabase = createClient(config.SUPABASE_URL, config.SUPABASE_KEY)
+                // supabase = createClient('https://fkrbgcocabobsjdzxlib.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZrcmJnY29jYWJvYnNqZHp4bGliIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTI5NDAzNTcsImV4cCI6MTk2ODUxNjM1N30.nutJqNIk17aTtxOTe9kegzJJM3kd7T0DkNMf5WV65Tg');
+
+            const form = document.querySelector('#contact-form')
+            form.addEventListener('submit', async(event) => {
+                event.preventDefault()
+
+                const formInputs = form.querySelectorAll('input,  textarea')
+
+                let submision = {}
+
+                formInputs.forEach(element => {
+                    const {
+                        value,
+                        name
+                    } = element
+                    if (value) {
+                        submision[name] = value
+                    }
+                })
+
+                const {
+                    error
+                } = await supabase.from('meetups_user_feedback').insert([submision], {
+                    returning: 'minimal'
+                })
+
+                if (error) {
+                    alert('There was an error please try again')
+                } else {
+                    alert('Thanks for contacting us')
+                }
+
+                formInputs.forEach(element => element.value = '')
+
+            })
+        </script>
 
 
 
