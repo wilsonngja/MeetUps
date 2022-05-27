@@ -138,12 +138,13 @@ function checkAvaAPI() {
           if (parseInt(value[i][1]) < parseInt(value[i + 1][0]))
           {
             //Append the message if there is a free slot
-            message = message + key + " " + value[i][1] + "-" + value[i + 1][0] + "\n";
+            message = message + key + ": " + value[i][1] + "-" + value[i + 1][0] + "<br />";
           }
         }
         
       }
-    alert(message);
+    document.getElementById("outputH1").innerHTML = "<strong>Available Timeslots:</strong>";
+    document.getElementById("outputH2").innerHTML = message;
     })();
     
   }
