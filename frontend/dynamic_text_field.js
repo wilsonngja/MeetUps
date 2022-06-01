@@ -5,6 +5,7 @@
 
 
 var num_links = 1;
+
       function GetDynamicSuggestionCart(value) {
         return '<input name = "DynamicSuggestionCart" type="text" size =111  id =tt_link  placeholder="Enter next timetable link! " value =  "' + value + '" />' +
           '<input type="button" value="Remove" onclick = "RemoveSuggestionCart(this)" />'
