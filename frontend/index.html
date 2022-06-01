@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
-  
+
 
 <head>
- 
+
   <title>W3.CSS Template</title>
   <meta charset="UTF-8">
   <!-- <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css"/> -->
@@ -14,83 +14,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
   <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
     integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+ 
+
+  //  Linked to personal .css folder
+    <link rel="stylesheet" href="style.css">
 
 
-
-
-
-
-  <style>
-    body,
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      font-family: "Lato", sans-serif;
-    }
-
-    body,
-    html {
-      height: 100%;
-      color: #777;
-      line-height: 1.8;
-    }
-
-    #outputH1, #outputH2 {
-      text-align: center;
-      justify-content: center;
-    }
-    /* Create a Parallax Effectlogo */
-    .bgimg-1,
-    .bgimg-2,
-    .bgimg-3 {
-      background-attachment: fixed;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-    }
-
-    /* First image (Logo. Full height) */
-    .bgimg-1 {
-      background-image: url('meetings.jpg');
-      min-height: 100%;
-    }
-
-    /* Second image (Portfolio) */
-    .bgimg-2 {
-      background-image: url('meetups.png');
-      min-height: 400px;
-    }
-
-    
-    /* Third image (Contact) */
-    .bgimg-3 {
-
-      background-image: url("NUS_logo.png");
-      min-height: 400px;
-    }
-
-    .w3-wide {
-      letter-spacing: 10px;
-    }
-
-    .w3-hover-opacity {
-      cursor: pointer;
-    }
-
-    /* Turn off parallax scrolling for tablets and phones */
-    @media only screen and (max-device-width: 1600px) {
-
-      .bgimg-2,
-      .bgimg-3 {
-
-        background-attachment: scroll;
-        min-height: 400px;
-      }
-    }
-  </style>
 </head>
 
 
@@ -98,6 +27,7 @@
 <body>
 
   <!-- Navbar (sit on top) -->
+  <!-- On click of the icons, would shift site layout to that division-->>
   <div class="w3-top w3-white">
     <div class="w3-bar " id="myNavbar">
       <a class="w3-bar-item w3-button w3-hover-black w3-hide-medium w3-hide-large w3-right" href="javascript:void(0);"
@@ -110,9 +40,6 @@
       <a href="#contact" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-envelope"></i> CONTACT</a>
       <a href="#find_space" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-pencil"></i> FIND A TIME AND
         SPACE</a>
-      <!-- <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red">
-      <i class="fa fa-search"></i>
-    </a> -->
     </div>
 
     <!-- Navbar on small screens -->
@@ -128,66 +55,87 @@
   <!-- First Parallax Image with Logo Text -->
   <div class="bgimg-1 w3-display-container w3-opacity-min" id="home">
     <div class="w3-display-middle" style="white-space:nowrap;">
-      <!-- This contains the My Logo statement -->
       <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">
         MeetUps</span>
-      <!-- MY <span class="w3-hide-small">WEBSITE</span> LOGO</span> -->
+   
     </div>
   </div>
+
 
   <!-- Container (Booking Section) -->
   <div class="w3-content w3-container w3-padding-64" id="find_space">
     <h3 class="w3-center"> Find your time and space!</h3>
-    <form id = tt_link_process action="/action_page.php" target="_blank">
+    <form id=tt_link_process action="/action_page.php" target="_blank">
       <div class="w3-row-padding" style="margin:0 -16px 8px -16px">
 
       </div>
-
-
-
+      <!-- For future reference regarding dynamic text fields-->
       <!-- https://stackoverflow.com/questions/50746868/how-to-add-input-fields-on-button-click -->
 
       <div>
-        <input name="DynamicSuggestionCart" type="text" size=121 id= "tt_link" placeholder="Enter NUSMods Timetable Link!" />
+        <input name="DynamicSuggestionCart" type="text" size=121 id="tt_link"
+          placeholder="Enter NUSMods Timetable Link!" />
       </div>
 
 
       <div id=tt_space></div>
-
       <input class="w3-button w3-black w3-section " type="button" id="btnAdd" onclick="AddSuggestionCart();"
         value="ADD TIMETABLES" />
 
-
-
-      <button class="w3-button w3-black w3-right w3-section" type="button" id=" check_ava" onclick="checkAvaAPI();">
+      <button class="w3-button w3-black w3-right w3-section" type="button" id=" check_ava" onclick="checkAvaAPI(); //unhide_tt();">
         <i class="fa fa-pencil"></i> CHECK AVAILABILITIES
       </button>
     </form>
 
   </div>
 
-  <hr>
+  
 
+
+  <!-- Container (Free Period Output + weekly timetable) -->
   <div>
-    <h1 id = "outputH1"></h1>
-    <h2 id = "outputH2"></h2>
-  </div>
-  <hr>
+    <div style="width: 40%; float:left">  
+      <h1 id="outputH1"></h1>
+      <h2 id="outputH2"></h2>
+    </div>
+
+
+    
+    <!--  Insert timetable on right of the free period output-->
+    <!-- By default, timetable should be centered, until the  -->
+    <div id= "tt_div"  style="width: 60%; float:right ; ">
+    
+      //---  Insert freeslots timetable on right of the free period output. (approx middle of screen)
+      <br>
+      //--- Timetable slots all show by default. Would be updated when the free periods have been updated 
+      <!-- nusmods/website/src/views/timetable/Timetable.scss -->
+      <!-- https://www.sliderrevolution.com/resources/html-calendar/  > -->
+    </div>
+   </div>
+  
+   <!-- A hidden division that displays all the venues 
+    available at the selected timeslot within the 
+    -->
+
+    <!-- call for unhide_venues_div(); to unhide this division -->
+   <div id = "venues_disp_div" style = "display: none;">
+      
+   </div>
+ 
+
+
+
+  
+
   <!-- Container (About Section) -->
   <div class="w3-content w3-container w3-padding-64" id="about">
+    <hr>
     <h1 class="w3-center"> ABOUT MEETUPS</h1>
-    <!-- <p class="w3-center"><em>2 Computer Engineers trying to make change to our NUS community</em></p> -->
-    <!-- <p style="font-size:15px;">
-      Meetups is an NUS Orbital project looking to make NUS facilities booking easy through the integration of NUSMods!
-  </p> -->
     <div class="w3-row ">
       <div class=" w3-center m6  w3-padding-large">
-        <!-- <p><b><i class="fa fa-user w3-margin-right"></i>Wilson Ng + Chin Han</b></p> -->
-        <img src="wilson_ng.png" class="w3-round w3-image w3-opacity w3-hover-opacity-off" alt="Photo of Me" width="100"
+             <img src="wilson_ng.png" class="w3-round w3-image w3-opacity w3-hover-opacity-off" alt="Photo of Wilson" width="100"
           height="100">
       </div>
-
-
       <!-- Hide this text on small devices -->
       <div class=" m6 w3-hide-small w3-padding-large w3-center">
         <p>
@@ -223,8 +171,7 @@
     <!-- Container (Contact Section) -->
     <div class="w3-content w3-container w3-padding-64 " id="contact">
       <h1 class="w3-center title"><strong>CONTACT US!</strong></h1>
-      <!-- <p class="w3-center"><em><strong>We'd love your feedback!</strong></em></p> -->
-
+  
       <div class="w3-row w3-padding-32 w3-section">
         <div class="w3-col m4 w3-container">
           <img src="meetups.png" class="w3-image w3-round" style="width:100%">
@@ -284,18 +231,18 @@
     <!-- <script defer src="https://pyscript.net/alpha/pyscript.js"></script> -->
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-
-
-
-
-
-
-
-
     <script src="timetable.js"></script>
     <script src="dynamic_text.js"></script>
     <script src="format.js"></script>
     <script src="contact_form.js"></script>
+    <script src="venue_display.js"></script>
+    <script src="hide_unhide_div.js" ></script>
+    
+
+   
+
+
+
 </body>
 
 </html>

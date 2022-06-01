@@ -9,15 +9,17 @@ function checkAvaAPI() {
     var each_module = [];
     var module_list = new Map();
 
-    // //Sample Timetable
-    // var nus_tt_links = ['https://nusmods.com/timetable/sem-2/share?CG2111A=LAB:04&CS1010=TUT:06,SEC:1&CS2040C=LAB:05,LEC:1&EE2023=PLEC:01,PTUT:02',
-    //                     'https://nusmods.com/timetable/sem-1/share?CG1111A=LAB:02&CS1010=LAB:E04,TUT:05,SEC:1&ES1103=SEC:E17&PC1201=TUT:5,LEC:1',
-    //                     'https://nusmods.com/timetable/sem-2/share?BAA6001=SEC:01&CG2111A=LAB:04&CM2288=&EC4332=SEM:1&EE2023=PLEC:02,PTUT:03&EE2023E=TUT:X1,LEC:P1&EE2111A=LAB:03&FIN3120B=SEC:A1&FIN3135=SEC:A1&GE2102=TUT:E3,LEC:1&GE2103=TUT:DO5,LEC:1&GEA1000=TUT:D61&MA1100=TUT:3,LEC:1'
-    //                   ];
+    num_timeslots =  0; // UnusedGlobal variable for use to generate out timetable.
+
+    // Sample Timetable
+    // 'https://nusmods.com/timetable/sem-2/share?CG2111A=LAB:04&CS1010=TUT:06,SEC:1&CS2040C=LAB:05,LEC:1&EE2023=PLEC:01,PTUT:02',
+    // 'https://nusmods.com/timetable/sem-1/share?CG1111A=LAB:02&CS1010=LAB:E04,TUT:05,SEC:1&ES1103=SEC:E17&PC1201=TUT:5,LEC:1',
+    // 'https://nusmods.com/timetable/sem-2/share?BAA6001=SEC:01&CG2111A=LAB:04&CM2288=&EC4332=SEM:1&EE2023=PLEC:02,PTUT:03&EE2023E=TUT:X1,LEC:P1&EE2111A=LAB:03&FIN3120B=SEC:A1&FIN3135=SEC:A1&GE2102=TUT:E3,LEC:1&GE2103=TUT:DO5,LEC:1&GEA1000=TUT:D61&MA1100=TUT:3,LEC:1'
+    //
     
     const form = document.querySelector('#tt_link_process')
     const tt_inputs = form.querySelectorAll('#tt_link')
-  console.log(tt_inputs);
+    //console.log(tt_inputs);
     let nus_tt_links = []
 
     tt_inputs.forEach(element => {
@@ -30,27 +32,7 @@ function checkAvaAPI() {
     })
     
 
-
-
-
-    // var nus_tt_links = [];
-
-    // // e.preventDefault();
-    
-    // var inputs = document.querySelectorAll("div.row:not([style='display: none;']) input[type=\"text\"]");
-    // var len = inputs.length;
-    // for (var i = 0; i < len; i++) {
-    // nus_tt_links.push({
-    //   input: i,
-    //   value: inputs[i].value
-    // });
-    // }
     console.log(nus_tt_links);
-
-   
-
-      
-
     
     var response;
     (async () => {
@@ -139,12 +121,15 @@ function checkAvaAPI() {
           {
             //Append the message if there is a free slot
             message = message + key + ": " + value[i][1] + "-" + value[i + 1][0] + "<br />";
+            num_timeslots += 1;
           }
         }
-        
+  
       }
+       console.log(num_timeslots);
     document.getElementById("outputH1").innerHTML = "<strong>Available Timeslots:</strong>";
     document.getElementById("outputH2").innerHTML = message;
     })();
+
     
   }
