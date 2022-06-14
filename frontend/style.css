@@ -21,7 +21,38 @@ html {
   justify-content: center;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+#background {
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+}
+
+.top_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  z-index: 1;
+}
+
+.top_text {
+  padding: 12px;
+  background-color: white;
+  mix-blend-mode: screen;
+
+  font-weight: 900;
+  border-radius: 12px;
+  font-size: 5rem;
+}
 
 
 /* Create a Parallax Effectlogo */
