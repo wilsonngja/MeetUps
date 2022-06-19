@@ -56,7 +56,7 @@
 
     var response;
     (async () => {
-      const ay = "2021 - 2022"; // Manually keyed in cos cant import json file
+      const ay = "2022-2023"; // Manually keyed in cos cant import json file
       // const ay = await fetch("./academic_year.json")
       //   .then((response) => {
       //     return response.json();
