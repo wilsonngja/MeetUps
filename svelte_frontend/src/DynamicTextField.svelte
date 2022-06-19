@@ -98,11 +98,7 @@
         for (const [key, value] of module_list.entries()) {
           //A sample API request
           var request_query =
-            "https://api.nusmods.com/v2/" +
-            ay["academic_year"] +
-            "/modules/" +
-            key +
-            ".json";
+            "https://api.nusmods.com/v2/" + ay + "/modules/" + key + ".json";
           response = await fetch(request_query, { method: "GET" }).then(
             (response) => response.json()
           );
