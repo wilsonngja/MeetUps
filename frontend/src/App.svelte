@@ -10,6 +10,7 @@
   let venue_slot = [];
   var buttons = "";
   var selected_sem_venue;
+  var loading = false;
   const apiURL = "http://localhost:3000";
 
   //This function does an API call for the Google Map
@@ -19,6 +20,7 @@
 
   // This function does an API call for venue
   async function getVenue() {
+    loading = true;
     venue_slot = [];
     const response = await fetch(apiURL, {
       method: "post",
@@ -63,6 +65,7 @@
         "</button>";
       // buttons += "<button class='VenueButton' id = '{ venue_slot[i]} '>" + venue_slot[i] + "</button>";
     }
+    loading = false;
   }
 </script>
 
@@ -100,6 +103,10 @@
 </section>
 
 <!-- <div class="button_div" contenteditable="false" bind:innerHTML={buttons} /> -->
+{#if loading}
+  <img src="dual_ring.svg" alt=""/>
+{/if}
+
 {#each venue_slot as venue}
   <button
     class="VenueButton"
@@ -191,5 +198,11 @@
     margin-top: -5px;
     outline: none;
     border: 2.25px solid #6969b3;
+  }
+
+  img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
   }
 </style>
