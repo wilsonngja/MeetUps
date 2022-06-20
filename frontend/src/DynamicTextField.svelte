@@ -2,9 +2,12 @@
   import App from "./App.svelte";
   import AcademicYear from "./backend/database/start_date.json";
 
-  var free_slot_generated = "true";
+  var free_slot_generated = true;
   var num_links = 1;
   let links = "";
+
+
+
   //Message will be the message that will be printed out
   var message = "";
 
@@ -67,6 +70,7 @@
     (async () => {
       // const ay = "2022-2023"; // Manually keyed in if json file doesnt load.
       const ay = AcademicYear.AY;
+      message = "";
 
       //This for-loop is for each links.
       for (let i = 0; i < nus_tt_links.length; i += 1) {
@@ -189,12 +193,15 @@
 <button on:click|preventDefault={submitLink}>
   <strong>Find Time</strong></button
 >
+{#if !free_slot_generated}
+
+    <br>
+    <img src="dual_ring.svg" alt=""/>
+    <!-- <p>{message}</p> -->
+{/if}
 
 <div class="freeslot_div" contenteditable="false" bind:innerHTML={message}>
-  {#if !free_slot_generated}
-    <img src="dual_ring.svg" alt="" />
-    <!-- <p>{message}</p> -->
-  {/if}
+  <p>{message}</p>  
 </div>
 
 <style>
