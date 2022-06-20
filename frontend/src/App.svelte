@@ -2,8 +2,7 @@
   import { get } from "svelte/store";
   import TopBackground from "./BackgroundTop.svelte";
   import DynamicTextField from "./DynamicTextField.svelte";
-  import Modal from "./Modal.svelte";
-  import { modal } from "./stores.js";
+  import VenueInfo from "./backend/database/venues.json";
 
   let day;
   let week;
@@ -15,10 +14,30 @@
   var selected_sem_venue;
   var loading = false;
   const apiURL = "http://localhost:3000";
-
+  // let venuedata = require(VenueInfo);
+  let long = "1.2966";
+  let lat = "103.7764";
+  let url = "";
+  // let url = "http://maps.google.com/maps?q=1.2966,103.7764"; // Default Map location.
   //This function does an API call for the Google Map
-  async function getMap() {
-    alert("Hello");
+
+  //Add
+  async function getMap({ venue }) {
+    alert("Close this pop up to view " + venue + "'s location.");
+    //reset the values before search
+    // console.log(VenueInfo.);
+
+    url = "";
+    long = "1.2966";
+    lat = "103.7764";
+
+    long = VenueInfo[venue].location.y;
+    lat = VenueInfo[venue].location.x;
+
+    //Find Json File and , modify and extract out venue data
+    url = "http://maps.google.com/maps?q=" + long + "," + lat;
+
+    window.open(url);
   }
 
   // This function does an API call for venue
@@ -73,10 +92,10 @@
 </script>
 
 <main>
-  <Modal show={$modal}>
-    <TopBackground />
-    <DynamicTextField />
-  </Modal>>
+  <!-- <Modal show={$modal}> -->
+  <TopBackground />
+  <DynamicTextField />
+  <!-- </Modal>> -->
 </main>
 
 <h3><strong>Venue Section</strong></h3>
@@ -108,20 +127,22 @@
 </section>
 
 <!-- <div class="button_div" contenteditable="false" bind:innerHTML={buttons} /> -->
-{#if loading}
-  <img src="dual_ring.svg" alt=""/>
-{/if}
+<div class="VenueDiv">
+  {#if loading}
+    <img src="dual_ring.svg" alt="" />
+  {/if}
 
-{#each venue_slot as venue}
-  <button
-    class="VenueButton"
-    id={venue}
-    contenteditable="false"
-    on:click={getMap}
-  >
-    {venue}
-  </button>
-{/each}
+  {#each venue_slot as venue}
+    <button
+      class="VenueButton"
+      id={venue}
+      contenteditable="false"
+      on:click={() => getMap({ venue })}
+    >
+      {venue}
+    </button>
+  {/each}
+</div>
 
 <style>
   main {
@@ -205,7 +226,7 @@
     border: 2.25px solid #6969b3;
   }
 
-  img{
+  img {
     display: block;
     margin-left: auto;
     margin-right: auto;
