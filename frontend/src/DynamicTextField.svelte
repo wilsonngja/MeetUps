@@ -1,6 +1,8 @@
 <script>
-  import AcademicYear from "./backend/database/start_date.json";
+  import App from "./App.svelte";
+import AcademicYear from "./backend/database/start_date.json";
 
+  var free_slot_generated = 'true';
   var num_links = 1;
   let links = "";
   //Message will be the message that will be printed out
@@ -36,6 +38,8 @@
     //Variable Declaration
     message = "";
     let list_of_modules = new Map();
+
+    free_slot_generated = false;
 
     var each_module = [];
     var module_list = new Map();
@@ -143,7 +147,7 @@
         }
       }
 
-
+    free_slot_generated = true;
     })();
   };
 </script>
@@ -152,6 +156,7 @@
   <br />
   <p>Find your Time and Space !</p>
 </div>
+
 
 {#each Array(num_links) as _, i}
   <div>
@@ -187,8 +192,12 @@
   <strong>Find Time</strong></button
 >
 
+
 <div class = "freeslot_div" contenteditable="false" bind:innerHTML={message}>
-  <p>{message}</p> 
+  {#if !free_slot_generated}
+  <img src = "dual_ring.svg" alt=""/>
+  <!-- <p>{message}</p> -->
+  {/if}
 </div>
 
 
