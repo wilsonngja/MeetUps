@@ -195,7 +195,7 @@
   <strong>Find Time</strong></button
 >
 
-<div class = "freeslot_div" contenteditable="true" bind:innerHTML={message}>
+<div class = "freeslot_div" contenteditable="false" bind:innerHTML={message}>
   <p>{message}</p> 
 </div>
 
