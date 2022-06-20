@@ -32,7 +32,7 @@
     Thursday: [["0800", "0800"]],
     Friday: [["0800", "0800"]],
   };
-  const submitLink = () => {
+  async function submitLink(){
     //Variable Declaration
     message = "";
     let list_of_modules = new Map();
@@ -59,10 +59,12 @@
 
     var response;
     (async () => {
+      //https://nusmods.com/timetable/sem-1/share?CG2027=LEC:01,TUT:01&CG2028=LEC:01,TUT:01,LAB:01&CS1231=SEC:1,TUT:10&CS2113=TUT:1,LEC:1&ES2631=SEC:G11&IE2141=TUT:02,LEC:1
       // const ay = "2022-2023"; // Manually keyed in if json file doesnt load.
       const ay = AcademicYear.AY;
       
 
+      
       //This for-loop is for each links.
       for (let i = 0; i < nus_tt_links.length; i += 1) {
         //Splitting the links into 2 parts. The first part contains the semester while the second part contains the timetable itself
@@ -89,11 +91,37 @@
           //After all the classes type has been configured into a map, store into the module list where the module list will contain
           //the module code as the key and the map of class type and class code as the value
           module_list.set(splitted_module_slot[0], module_lesson_type);
-          console.log(i);
+          for (var [key, value] of module_lesson_type.entries())
+          {
+            console.log(splitted_module_slot[0], key, value);
+            // New code here
+            const response = await fetch("http://localhost:3000",
+            {
+              method: "post",
+              headers : {
+				        'Accept': 'application/json',
+				        'Content-Type': 'application/json'
+			        },
+              body : JSON.stringify({
+                type: "free slot",
+                module_code: splitted_module_slot[0],
+                class_type: lesson_type[key],
+                class_code: value,
+                semester: 'semester1'
+              })
+            });
+
+            var data = (await response.json());
+            console.log(data['result'][0]['StartTime'] + '-' + data['result'][0]['endTime']);
+
+
+          }
+
         }
 
         //Iterate into each of the modules
         for (const [key, value] of module_list.entries()) {
+          
           //A sample API request
           var request_query =
             "https://api.nusmods.com/v2/" + ay + "/modules/" + key + ".json";

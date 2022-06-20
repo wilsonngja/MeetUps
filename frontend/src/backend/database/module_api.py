@@ -6,7 +6,13 @@ from datetime import datetime, date, time
 
 #JSON query
 http = urllib3.PoolManager()
-request_query = 'https://api.nusmods.com/v2/2021-2022/moduleList.json'
+
+with open('start_date.json') as file:
+    sem_start_date = json.load(file)
+
+academic_year = sem_start_date['AY']
+
+request_query = 'https://api.nusmods.com/v2/' + academic_year + '/moduleList.json'
 r = http.request('GET',request_query)
 
 #A list of all the module in the current academic year will print given in the 

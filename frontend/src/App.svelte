@@ -21,8 +21,9 @@
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-			semester: selected_sem_venue,
-			req_week: week
+				type: "venue",
+				semester: selected_sem_venue,
+				req_week: week
 		})});
 		var data = (await response.json());
 		buttons = "";
