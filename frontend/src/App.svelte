@@ -14,6 +14,7 @@
 
 	// This function does an API call for venue
 	async function getVenue(){
+		venue_slot = [];
 		const response = await fetch(apiURL,
 		{	method:"post",
 			headers : {
@@ -50,7 +51,7 @@
 			buttons += "<button class='VenueButton' id = '" + venue_slot[i] + "'>" + venue_slot[i] + "</button>";
 			// buttons += "<button class='VenueButton' id = '{ venue_slot[i]} '>" + venue_slot[i] + "</button>";
 		}
-		venue_slot = [];
+		
 	}
 	
 

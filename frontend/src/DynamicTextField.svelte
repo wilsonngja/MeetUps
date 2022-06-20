@@ -8,7 +8,7 @@
 
   const addField = () => {
     num_links += 1;
-    console.log(num_links);
+    // console.log(num_links);
   };
 
   const removeField = (div) => {
@@ -16,7 +16,7 @@
   };
 
   let list_of_modules = new Map();
-  const semester = { "sem-1": 1, "sem-2": 2, "st-i": 3, "st-ii": 4 };
+  const semester = { "sem-1": "semester1", "sem-2": "semester2", "st-i": "specialterm1", "st-ii": "specialterm2" };
   const lesson_type = {
     LEC: "Lecture",
     TUT: "Tutorial",
@@ -52,14 +52,11 @@
     for (let i = 0; i < num_links; i += 1) {
       const val = document.getElementById(`link_` + i).value;
       nus_tt_links.push(val);
-      // console.log(val);
     }
 
-    // console.log(nus_tt_links);
 
     var response;
     (async () => {
-      //https://nusmods.com/timetable/sem-1/share?CG2027=LEC:01,TUT:01&CG2028=LEC:01,TUT:01,LAB:01&CS1231=SEC:1,TUT:10&CS2113=TUT:1,LEC:1&ES2631=SEC:G11&IE2141=TUT:02,LEC:1
       // const ay = "2022-2023"; // Manually keyed in if json file doesnt load.
       const ay = AcademicYear.AY;
       
@@ -72,6 +69,8 @@
         //Splitting the timetable into each individual modules
         var each_module_class = each_timetable_module[1].split("&");
 
+        var sem = each_timetable_module[0].match('(sem-1)|(sem-2)|(st-i)|(st-ii)')[0];
+        // var = semester[(each_timetable_module[0]).match(/\w+-\w/)[0]];
         //For loop to iterate through each of the modules
         for (let j = 0; j < each_module_class.length; j += 1) {
           //Splitting each of the module into their module code and their classes (At this point the class code and class type is still not split)
@@ -93,8 +92,9 @@
           module_list.set(splitted_module_slot[0], module_lesson_type);
           for (var [key, value] of module_lesson_type.entries())
           {
-            console.log(splitted_module_slot[0], key, value);
-            // New code here
+            
+
+            // Get the timetable info from the database through the server.
             const response = await fetch("http://localhost:3000",
             {
               method: "post",
@@ -107,56 +107,21 @@
                 module_code: splitted_module_slot[0],
                 class_type: lesson_type[key],
                 class_code: value,
-                semester: 'semester1'
+                semester: semester[sem]
               })
             });
 
             var data = (await response.json());
-            console.log(data['result'][0]['StartTime'] + '-' + data['result'][0]['endTime']);
 
-
-          }
-
-        }
-
-        //Iterate into each of the modules
-        for (const [key, value] of module_list.entries()) {
-          
-          //A sample API request
-          var request_query =
-            "https://api.nusmods.com/v2/" + ay + "/modules/" + key + ".json";
-          response = await fetch(request_query, { method: "GET" }).then(
-            (response) => response.json()
-          );
-
-          //Iterate into the json response (which contains the crucial part)
-          for (const [key2, value2] of Object.entries(response.semesterData)) {
-            for (const [key3, value3] of Object.entries(value2)) {
-              //Check that the current dict is the right semester (Checked based on regex)
-              if (
-                value3 == semester[each_timetable_module[0].match(/\w+-\w/)[0]]
-              ) {
-                //If it's the right semester, iterate further
-                for (const [key4, value4] of Object.entries(value2.timetable)) {
-                  for (const [key5, value5] of value.entries()) {
-                    //Check that the lesson type and class code is correct
-                    if (
-                      value4.classNo == value5 &&
-                      value4["lessonType"] == lesson_type[key5]
-                    ) {
-                      //If it's the correct class, append into a class list where it stores the lesson time
-                      lesson_slot[value4.day].push([
-                        value4.startTime,
-                        value4.endTime,
-                      ]);
-                    }
-                  }
-                }
-              }
+            for (var class_num = 0; class_num < data['result'].length; class_num += 1)
+            {
+              (lesson_slot[data['result'][class_num]['LessonDay']]).push([data['result'][class_num]['StartTime'], data['result'][class_num]['endTime']]);
             }
+
           }
+
         }
-        //After iterating one timetable, clear the module list and restart
+
         module_list.clear();
       }
 
@@ -165,6 +130,7 @@
         //2359 is the end of the search. Can be change to differnt class timing. But take note that the class in NUS ends latest at 9pm
         lesson_slot[key].push(["2359", "2359"]);
         value.sort();
+        console.log(key, value);
 
         //Check through the classes each day
         for (var i = 0; i < value.length - 1; i += 1) {
@@ -176,8 +142,6 @@
           }
         }
       }
-      // console.log(num_timeslots);
-      // alert(message);
 
 
     })();
