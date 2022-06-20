@@ -65,59 +65,63 @@ for x in file_data:
 
     # Query to get the module info from json request
     request_query = 'https://api.nusmods.com/v2/' + academic_year + '/modules/' + x['moduleCode'] + '.json'
-    r = http.request('GET',request_query)
-    json_load = json.loads(r.data.decode('utf-8'))
-
     
+    r = http.request('GET',request_query)
+    try:   
+        json_load = json.loads(r.data.decode('utf-8'))
 
-    for i in json_load['semesterData']:
-        
-        if (i['semester'] == 1):
-            collection = db['semester1']
-            dates = datetime(int(sem1_start_year), int(sem1_start_month), int(sem1_start_day))
-            
-        elif (i['semester'] == 2):
-            collection = db['semester2']
-            dates = datetime(int(sem2_start_year), int(sem2_start_month), int(sem2_start_day))
-            
-        
-        elif (i['semester'] == 3):
-            collection = db['specialterm1']
-            dates = datetime(int(st1_start_year), int(st1_start_month), int(st1_start_day))
-            
-        else:
-            collection = db['specialterm2']
-            dates = datetime(int(st2_start_year), int(st2_start_month), int(st2_start_day))
-            
         
 
-        for j in i['timetable']:
-            lesson_date = []
-            if (isinstance(j['weeks'], dict)):
-                #j['weeks']['start'] is the first lesson and j['weeks']['end'] is the last lesson
-                # It's in the form of YYYY-MM-DD
+        for i in json_load['semesterData']:
+            
+            if (i['semester'] == 1):
+                collection = db['semester1']
+                dates = datetime(int(sem1_start_year), int(sem1_start_month), int(sem1_start_day))
                 
-                module_date = datetime(int(j['weeks']['start'][0] + j['weeks']['start'][1] + j['weeks']['start'][2] + j['weeks']['start'][3]),int(j['weeks']['start'][5] + j['weeks']['start'][6]),int(j['weeks']['start'][8] + j['weeks']['start'][9]))
-                module_end_date = datetime(int(j['weeks']['end'][0] + j['weeks']['end'][1] + j['weeks']['end'][2] + j['weeks']['end'][3]),int(j['weeks']['end'][5] + j['weeks']['end'][6]),int(j['weeks']['end'][8] + j['weeks']['end'][9]))
-
-                while module_date <= module_end_date:
-                    lesson_date.append(str(module_date.date()))
-                    module_date += timedelta(days = 7)
+            elif (i['semester'] == 2):
+                collection = db['semester2']
+                dates = datetime(int(sem2_start_year), int(sem2_start_month), int(sem2_start_day))
+                
+            
+            elif (i['semester'] == 3):
+                collection = db['specialterm1']
+                dates = datetime(int(st1_start_year), int(st1_start_month), int(st1_start_day))
                 
             else:
-            
-                weeks = j['weeks']
-                add_days = j['day']
-
+                collection = db['specialterm2']
+                dates = datetime(int(st2_start_year), int(st2_start_month), int(st2_start_day))
                 
-                for week_no in weeks:
-                    # print(week_no)
-                    
-                    
-                    if week_no >= 7:
-                        lesson_date.append(str((dates + timedelta(days = (7 * (week_no - 1)) + 7 + days[add_days])).date()))
-                    else:
-                        lesson_date.append(str((dates + timedelta(days = 7 * (week_no - 1) + days[add_days])).date()))
+            
 
-            collection.insert_one({'ModuleCode' : json_load['moduleCode'], 'ClassNo' : j['classNo'], 'ClassType' : j['lessonType'], "LessonDay": j['day'],'StartTime' : j['startTime'], 'endTime' : j['endTime'], 'lessonDate' : str(lesson_date)})
+            for j in i['timetable']:
+                lesson_date = []
+                if (isinstance(j['weeks'], dict)):
+                    #j['weeks']['start'] is the first lesson and j['weeks']['end'] is the last lesson
+                    # It's in the form of YYYY-MM-DD
+                    
+                    module_date = datetime(int(j['weeks']['start'][0] + j['weeks']['start'][1] + j['weeks']['start'][2] + j['weeks']['start'][3]),int(j['weeks']['start'][5] + j['weeks']['start'][6]),int(j['weeks']['start'][8] + j['weeks']['start'][9]))
+                    module_end_date = datetime(int(j['weeks']['end'][0] + j['weeks']['end'][1] + j['weeks']['end'][2] + j['weeks']['end'][3]),int(j['weeks']['end'][5] + j['weeks']['end'][6]),int(j['weeks']['end'][8] + j['weeks']['end'][9]))
+
+                    while module_date <= module_end_date:
+                        lesson_date.append(str(module_date.date()))
+                        module_date += timedelta(days = 7)
+                    
+                else:
+                
+                    weeks = j['weeks']
+                    add_days = j['day']
+
+                    
+                    for week_no in weeks:
+                        # print(week_no)
+                        
+                        
+                        if week_no >= 7:
+                            lesson_date.append(str((dates + timedelta(days = (7 * (week_no - 1)) + 7 + days[add_days])).date()))
+                        else:
+                            lesson_date.append(str((dates + timedelta(days = 7 * (week_no - 1) + days[add_days])).date()))
+
+                collection.insert_one({'ModuleCode' : json_load['moduleCode'], 'ClassNo' : j['classNo'], 'ClassType' : j['lessonType'], "LessonDay": j['day'],'StartTime' : j['startTime'], 'endTime' : j['endTime'], 'lessonDate' : str(lesson_date)})
+    except:
+        continue
             

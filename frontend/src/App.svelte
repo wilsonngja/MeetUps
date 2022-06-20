@@ -53,7 +53,6 @@
 </script>
 
 <main>
-	<h1><strong>MeetUps!</strong></h1>
 	<TopBackground />
   	<DynamicTextField />
 </main>
