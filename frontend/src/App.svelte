@@ -45,8 +45,9 @@
 
 		for (let i = 0; i < venue_slot.length; i += 1)
 		{
-		
-			buttons += "<button class='VenueButton'>" + venue_slot[i] + "</button>";
+			
+			buttons += "<button class='VenueButton' id = '" + venue_slot[i] + "'>" + venue_slot[i] + "</button>";
+			// buttons += "<button class='VenueButton' id = '{ venue_slot[i]} '>" + venue_slot[i] + "</button>";
 		}
 		venue_slot = [];
 	}

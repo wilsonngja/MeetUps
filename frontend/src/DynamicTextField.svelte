@@ -201,4 +201,13 @@
 
 
 <style>
+  button {
+		background: #533A7B;
+		color: white;
+	  	border: none;
+		font-size: 1em;
+	  	padding: 8px 12px;
+	  	border-radius: 2px;
+		text-align: center;
+	}
 </style>
