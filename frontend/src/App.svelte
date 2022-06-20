@@ -12,6 +12,7 @@
 	var selected_sem_venue;
 	const apiURL = "http://localhost:3000";
 
+	// This function does an API call for venue
 	async function getVenue(){
 		const response = await fetch(apiURL,
 		{	method:"post",

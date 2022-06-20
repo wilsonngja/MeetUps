@@ -1,0 +1,31 @@
+{
+  "type": "module",
+  "name": "test_website",
+  "description": "\"# test_website\"",
+  "version": "1.0.0",
+  "main": "db.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wilsonngja/test_website.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wilsonngja/test_website/issues"
+  },
+  "homepage": "https://github.com/wilsonngja/test_website#readme",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.1"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.7",
+    "postcss": "^8.4.14",
+    "svelte-preprocess": "^4.10.7",
+    "tailwindcss": "^3.1.3"
+  }
+}

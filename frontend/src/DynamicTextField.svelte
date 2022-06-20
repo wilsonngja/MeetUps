@@ -1,8 +1,10 @@
 <script>
-  // import AcademicYear from "./academic_year.json";
+  import AcademicYear from "./backend/database/start_date.json";
 
   var num_links = 1;
   let links = "";
+  //Message will be the message that will be printed out
+  var message = "";
 
   const addField = () => {
     num_links += 1;
@@ -32,6 +34,7 @@
   };
   const submitLink = () => {
     //Variable Declaration
+    message = "";
     let list_of_modules = new Map();
 
     var each_module = [];
@@ -52,18 +55,13 @@
       // console.log(val);
     }
 
-    console.log(nus_tt_links);
+    // console.log(nus_tt_links);
 
     var response;
     (async () => {
-      const ay = "2022-2023"; // Manually keyed in cos cant import json file
-      // const ay = await fetch("./academic_year.json")
-      //   .then((response) => {
-      //     return response.json();
-      //   })
-      // .then();
-
-      // console.log(ay["academic_year"]);
+      // const ay = "2022-2023"; // Manually keyed in if json file doesnt load.
+      const ay = AcademicYear.AY;
+      
 
       //This for-loop is for each links.
       for (let i = 0; i < nus_tt_links.length; i += 1) {
@@ -134,8 +132,7 @@
         module_list.clear();
       }
 
-      //Message will be the message that will be printed out
-      var message = "";
+      
       for (const [key, value] of Object.entries(lesson_slot)) {
         //2359 is the end of the search. Can be change to differnt class timing. But take note that the class in NUS ends latest at 9pm
         lesson_slot[key].push(["2359", "2359"]);
@@ -146,20 +143,15 @@
           //Check if there is any slots in between each classes
           if (parseInt(value[i][1]) < parseInt(value[i + 1][0])) {
             //Append the message if there is a free slot
-            message =
-              message +
-              key +
-              ": " +
-              value[i][1] +
-              "-" +
-              value[i + 1][0] +
-              "<br />";
+            message += key + ": " + value[i][1] + "-" + value[i + 1][0] + "<br/>";
             num_timeslots += 1;
           }
         }
       }
       // console.log(num_timeslots);
-      alert(message);
+      // alert(message);
+
+
     })();
   };
 </script>
@@ -168,6 +160,7 @@
   <br />
   <p>Find your Time and Space !</p>
 </div>
+
 {#each Array(num_links) as _, i}
   <div>
     <input
@@ -179,6 +172,11 @@
       placeholder="Enter Timetable Link!"
     />
   </div>
+
+
+
+
+
 {/each}
 
 {#if num_links > 1}
@@ -196,6 +194,11 @@
 <button on:click|preventDefault={submitLink}>
   <strong>Find Time</strong></button
 >
+
+<div class = "freeslot_div" contenteditable="true" bind:innerHTML={message}>
+  <p>{message}</p> 
+</div>
+
 
 <style>
 </style>
