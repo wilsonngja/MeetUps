@@ -2,6 +2,8 @@
   import { get } from "svelte/store";
   import TopBackground from "./BackgroundTop.svelte";
   import DynamicTextField from "./DynamicTextField.svelte";
+  import Modal from "./Modal.svelte";
+  import { modal } from "./stores.js";
 
   let day;
   let week;
@@ -9,6 +11,7 @@
   let endTime;
   let venue_slot = [];
   var buttons = "";
+  let map_center = { lat: 1.297, lng: 103.776 };
   var selected_sem_venue;
   const apiURL = "http://localhost:3000";
 
@@ -67,8 +70,10 @@
 </script>
 
 <main>
-  <TopBackground />
-  <DynamicTextField />
+  <Modal show={$modal}>
+    <TopBackground />
+    <DynamicTextField />
+  </Modal>>
 </main>
 
 <h3><strong>Venue Section</strong></h3>
