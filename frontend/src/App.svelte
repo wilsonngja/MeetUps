@@ -1,5 +1,8 @@
 <script>
-import { get } from "svelte/store";
+	import { get } from "svelte/store";
+	import TopBackground from "./BackgroundTop.svelte";
+  	import DynamicTextField from "./DynamicTextField.svelte";
+	
 	let day;
 	let week;
 	let startTime;
@@ -51,7 +54,8 @@ import { get } from "svelte/store";
 
 <main>
 	<h1><strong>MeetUps!</strong></h1>
-	
+	<TopBackground />
+  	<DynamicTextField />
 </main>
 
 
