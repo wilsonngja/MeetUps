@@ -13,7 +13,8 @@
   let map_center = { lat: 1.297, lng: 103.776 };
   var selected_sem_venue;
   var loading = false;
-  const apiURL = "localhost:3000";
+  // const apiURL = "https://api-server-rust.vercel.app/";
+  const apiURL = "http://localhost:3000"
   // let venuedata = require(VenueInfo);
   let long = "1.2966";
   let lat = "103.7764";

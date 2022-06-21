@@ -1,9 +1,8 @@
-import express from 'express';
 import { MongoClient } from 'mongodb';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import fs from 'fs';
 import config from './config.json' assert {type:'json'};
+import express from 'express';
 
 // const config = require('./config.json')
 
@@ -17,7 +16,7 @@ app.post('/', jsonParser, async function (req, res) {
     var username = config['MONGODB_USERNAME'];
     var password = config['MONGODB_PASSWORD'];
 
-    var url = "mongodb+srv://wilsonngja:wilsonngja@cluster0.20uxruv.mongodb.net/?retryWrites=true&w=majority";
+    var url = "mongodb+srv://" + username + ":" + password + "@cluster0.20uxruv.mongodb.net/?retryWrites=true&w=majority";
     var venue_database = {"Semester 1": 'venue_availability_sem1', 'Semester 2': 'venue_availability_sem2', 'Special Term 1': 'venue_availability_st1', 'Special Term 2' : 'venue_availability_st2'};
     var semester = req.body.semester;
 
