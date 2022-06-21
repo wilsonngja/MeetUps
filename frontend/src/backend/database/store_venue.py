@@ -6,8 +6,14 @@ import pymongo
 from datetime import datetime, date, time, timedelta
 from pymongo import MongoClient, InsertOne
 
+with open('config.json') as file:
+    config_data = json.load(file)
+
+username = config_data["MONGODB_USERNAME"]
+password = config_data["MONGODB_PASSWORD"]
+
 # Establish connection and connect to 'mydatabase' database
-client = pymongo.MongoClient("mongodb+srv://wilsonngja:wilsonngja@cluster0.20uxruv.mongodb.net/?retryWrites=true&w=majority")
+client = pymongo.MongoClient("mongodb+srv://" + username + ":" + password + "@cluster0.20uxruv.mongodb.net/?retryWrites=true&w=majority")
 
 
 # The first part of the code will be storing for semester 1

@@ -44,8 +44,15 @@ st2_start_year = st2_start[0]
 
 
 
+with open('config.json') as file:
+    config_data = json.load(file)
+
+username = config_data["MONGODB_USERNAME"]
+password = config_data["MONGODB_PASSWORD"]
+
 # Establish connection and connect to 'mydatabase' database
-client = pymongo.MongoClient("mongodb+srv://wilsonngja:wilsonngja@cluster0.20uxruv.mongodb.net/?retryWrites=true&w=majority")
+client = pymongo.MongoClient("mongodb+srv://" + username + ":" + password + "@cluster0.20uxruv.mongodb.net/?retryWrites=true&w=majority")
+
 db = client["timetables"]
 
 
