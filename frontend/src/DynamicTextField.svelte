@@ -10,6 +10,7 @@
 
   //Message will be the message that will be printed out
   var message = "";
+  var error_message = "";
 
   const addField = () => {
     num_links += 1;
@@ -63,7 +64,19 @@
     let loop_count = "";
     for (let i = 0; i < num_links; i += 1) {
       const val = document.getElementById(`link_` + i).value;
-      nus_tt_links.push(val);
+
+      if (val.match("(https://nusmods.com/timetable/)((st-ii)|(st-i)|(sem-2)|(sem-1))(/share\?)(.{1,})") == null)
+      {
+        error_message = "Please enter timetable in the correct format or remove empty text field."
+        free_slot_generated = true;
+        return;
+      }
+      else
+      {
+        error_message = "";
+        nus_tt_links.push(val);
+      } 
+      
     }
 
     var response;
@@ -201,8 +214,10 @@
 {/if}
 
 <div class="freeslot_div" contenteditable="false" bind:innerHTML={message}>
+  
   <p>{message}</p>  
 </div>
+<h3><strong>{error_message}</strong></h3>
 
 <style>
   button {
@@ -212,6 +227,13 @@
     font-size: 1em;
     padding: 8px 12px;
     border-radius: 2px;
+    text-align: center;
+  }
+
+  h3 {
+    color: #377395;
+    font-size: 1.5em;
+    font-weight: 100;
     text-align: center;
   }
 </style>
