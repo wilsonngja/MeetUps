@@ -3,6 +3,7 @@
   import TopBackground from "./BackgroundTop.svelte";
   import DynamicTextField from "./DynamicTextField.svelte";
   import VenueInfo from "./backend/database/venues.json";
+  import config from "./config.json";
 
   let day;
   let startTime;
@@ -14,11 +15,9 @@
   var loading = false;
   var week;
   var weeks = ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'];
-  // const apiURL = "https://api-server-rust.vercel.app/";
 
   var errorMessage = ""
-  const apiURL = "http://localhost:3000"
-  // let venuedata = require(VenueInfo);
+  const apiURL = config["API_LINK"];
   let long = "1.2966";
   let lat = "103.7764";
   let url = "";

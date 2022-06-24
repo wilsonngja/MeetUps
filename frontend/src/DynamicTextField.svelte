@@ -117,7 +117,7 @@
           module_list.set(splitted_module_slot[0], module_lesson_type);
           for (var [key, value] of module_lesson_type.entries()) {
             // Get the timetable info from the database through the server.
-            const response = await fetch("http://localhost:3000", {
+            const response = await fetch("https://meeetups-api-server.herokuapp.com/", {
               method: "post",
               headers: {
                 Accept: "application/json",
