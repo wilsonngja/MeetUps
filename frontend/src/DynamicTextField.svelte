@@ -3,12 +3,11 @@
   import AcademicYear from "./backend/database/start_date.json";
   import config from "./config.json";
 
-
   var free_slot_generated = true;
   var num_links = 1;
   let links = "";
-
-
+  let free_slot_arr = [];
+  $: num_free_slot = free_slot_arr.length; // if theres more than 1 free slot in the free_slot_arr. become true
 
   //Message will be the message that will be printed out
   var message = "";
@@ -54,6 +53,7 @@
 
     var each_module = [];
     var module_list = new Map();
+    var temp_str = "";
 
     let num_timeslots = 0; // UnusedGlobal variable for use to generate out timetable.
 
@@ -67,18 +67,19 @@
     for (let i = 0; i < num_links; i += 1) {
       const val = document.getElementById(`link_` + i).value;
 
-      if (val.match("(https://nusmods.com/timetable/)((st-ii)|(st-i)|(sem-2)|(sem-1))(/share\?)(.{1,})") == null)
-      {
-        error_message = "Please enter timetable in the correct format or remove empty text field."
+      if (
+        val.match(
+          "(https://nusmods.com/timetable/)((st-ii)|(st-i)|(sem-2)|(sem-1))(/share?)(.{1,})"
+        ) == null
+      ) {
+        error_message =
+          "Please enter timetable in the correct format or remove empty text field.";
         free_slot_generated = true;
         return;
-      }
-      else
-      {
+      } else {
         error_message = "";
         nus_tt_links.push(val);
-      } 
-      
+      }
     }
 
     var response;
@@ -119,7 +120,7 @@
           module_list.set(splitted_module_slot[0], module_lesson_type);
           for (var [key, value] of module_lesson_type.entries()) {
             // Get the timetable info from the database through the server.
-            const response = await fetch(config['API_LINK'], {
+            const response = await fetch(config["API_LINK"], {
               method: "post",
               headers: {
                 Accept: "application/json",
@@ -163,11 +164,22 @@
           //Check if there is any slots in between each classes
           if (parseInt(value[i][1]) < parseInt(value[i + 1][0])) {
             //Append the message if there is a free slot
+            // temp_str = "";
+            // temp_str =
+            //   id : key + ":" + value[i][1] + "-" + value[i + 1][0] + "<br/>";
+
             message +=
               key + ": " + value[i][1] + "-" + value[i + 1][0] + "<br/>";
+            free_slot_arr.push({
+              id: key,
+              start: value[i][1],
+              end: value[i + 1][0],
+            });
+            free_slot_arr = [...free_slot_arr];
             num_timeslots += 1;
           }
         }
+        //
       }
 
       free_slot_generated = true;
@@ -209,16 +221,31 @@
   <strong>Find Time</strong></button
 >
 {#if !free_slot_generated}
-
-    <br>
-    <img src="dual_ring.svg" alt=""/>
-    <!-- <p>{message}</p> -->
+  <br />
+  <img src="dual_ring.svg" alt="" />
+  <!-- <p>{message}</p> -->
 {/if}
 
-<div class="freeslot_div" contenteditable="false" bind:innerHTML={message}>
-  
-  <p>{message}</p>  
+<!-- <div class="freeslot_div" contenteditable="false" bind:innerHTML={message}>
+  <p>{message}</p>
+</div> -->
+
+<div class="freeslot_div" contenteditable="false">
+  <!-- <p>button outputs</p> -->
+  {#each free_slot_arr as { id, start, end }}
+    <button id={id + "_" + start + "_" + end}>
+      {id + ": " + start + " - " + end}
+    </button>
+    <br />
+  {/each}
 </div>
+
+{#if num_free_slot}
+  <div>
+    <p>test</p>
+  </div>
+{/if}
+
 <h3><strong>{error_message}</strong></h3>
 
 <style>
