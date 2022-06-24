@@ -11,60 +11,82 @@
   let venue_slot = [];
   var buttons = "";
   let map_center = { lat: 1.297, lng: 103.776 };
-  var selected_sem_venue = 'Semester 1';
+  var selected_sem_venue = "Semester 1";
   var loading = false;
   var week;
-  var weeks = ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'];
+  var weeks = ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6"];
 
-  var errorMessage = ""
+  var errorMessage = "";
   const apiURL = config["API_LINK"];
   let long = "1.2966";
   let lat = "103.7764";
   let url = "";
 
-  $: if ((selected_sem_venue == "Semester 1") || (selected_sem_venue == "Semester 2"))
-  {
-    weeks = ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7', 'Week 8', 'Week 9', 'Week 10', 'Week 11', 'Week 12', 'Week 13'];
-  }
-  else
-  {
-    weeks = ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'];
+  $: if (
+    selected_sem_venue == "Semester 1" ||
+    selected_sem_venue == "Semester 2"
+  ) {
+    weeks = [
+      "Week 1",
+      "Week 2",
+      "Week 3",
+      "Week 4",
+      "Week 5",
+      "Week 6",
+      "Week 7",
+      "Week 8",
+      "Week 9",
+      "Week 10",
+      "Week 11",
+      "Week 12",
+      "Week 13",
+    ];
+  } else {
+    weeks = ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6"];
   }
   // let url = "http://maps.google.com/maps?q=1.2966,103.7764"; // Default Map location.
   //This function does an API call for the Google Map
 
   //Add
   async function getMap({ venue }) {
-    alert("Close this pop up to view " + venue + "'s location.");
     //reset the values before search
-
     url = "";
     long = "1.2966";
     lat = "103.7764";
 
-    long = VenueInfo[venue].location.y;
-    lat = VenueInfo[venue].location.x;
+    if (
+      VenueInfo[venue] == null ||
+      VenueInfo[venue].location.y == null ||
+      VenueInfo[venue].location.x == null
+    ) {
+      alert("Currently unable to display location on Google Map.");
+    } else {
+      long = VenueInfo[venue].location.y;
+      lat = VenueInfo[venue].location.x;
 
-    //Find Json File and , modify and extract out venue data
-    url = "http://maps.google.com/maps?q=" + long + "," + lat;
+      //Find Json File and , modify and extract out venue data
+      alert("Close this pop up to view " + venue + "'s location.");
+      url = "http://maps.google.com/maps?q=" + long + "," + lat;
 
-    window.open(url);
+      window.open(url);
+    }
   }
 
   // This function does an API call for venue
   async function getVenue() {
     venue_slot = [];
-    if ((startTime.match('\\d{4}') == null) || (endTime.match('\\d{4}') == null) || (startTime.match('\\d{4}') != startTime) || (endTime.match('\\d{4}') != endTime))
-    {
+    if (
+      startTime.match("\\d{4}") == null ||
+      endTime.match("\\d{4}") == null ||
+      startTime.match("\\d{4}") != startTime ||
+      endTime.match("\\d{4}") != endTime
+    ) {
       errorMessage = "Please enter a valid start time or end time.";
       return;
-  
-    }
-    else
-    {
+    } else {
       errorMessage = "";
       loading = true;
-      
+
       const response = await fetch(apiURL, {
         method: "post",
         headers: {
@@ -110,8 +132,6 @@
       }
       loading = false;
     }
-
-    
   }
 </script>
 
@@ -150,7 +170,7 @@
       <option>{week_num}</option>
     {/each}
   </select>
-  
+
   <!-- <input bind:value={week} placeholder="Week 1" /> -->
   <!-- svelte-ignore a11y-label-has-associated-control -->
   <label><strong>Start Time</strong></label>
@@ -181,7 +201,8 @@
     </button>
   {/each}
 </div>
-<h3><strong>{errorMessage}</strong></h3><br>
+<h3><strong>{errorMessage}</strong></h3>
+<br />
 
 <style>
   main {
