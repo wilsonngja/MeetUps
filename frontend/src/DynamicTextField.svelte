@@ -91,7 +91,6 @@
 
   const addField = () => {
     num_links += 1;
-    // console.log(num_links);
   };
 
   const removeField = (div) => {
@@ -175,10 +174,9 @@
           "(sem-1)|(sem-2)|(st-ii)|(st-i)"
         )[0];
 
-        console.log(i);
+
         if (checkSemester[sem] != query_semester)
         {
-          console.log(checkSemester[sem], query_semester);
           error_message = "Please use timetable that corresponds to the correct semester.";
           wrongSemester = true;
           free_slot_generated = true;
@@ -189,11 +187,9 @@
           return;
         }
       }
-
       
       //This for-loop is for each links.
       for (let i = 0; i < nus_tt_links.length; i += 1) {
-        console.log(i);
         
         //Splitting the links into 2 parts. The first part contains the semester while the second part contains the timetable itself
         each_timetable_module = nus_tt_links[i].split("?");
@@ -268,7 +264,6 @@
         //2359 is the end of the search. Can be change to differnt class timing. But take note that the class in NUS ends latest at 9pm
         lesson_slot[key].push(["2359", "2359"]);
         value.sort();
-        // console.log(key, value);
 
         //Check through the classes each day
         for (var i = 0; i < value.length - 1; i += 1) {
@@ -325,7 +320,6 @@
   async function getLocation(freeslot_day , starttime , endtime, selected_semester, week){
     venue_slot = [];
     error_message = "";
-    // console.log(freeslot_day, starttime, endtime, selected_semester, week);
     loading = true;
 
     const response = await fetch(apiURL, {
