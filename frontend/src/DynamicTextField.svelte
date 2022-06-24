@@ -121,6 +121,7 @@
     Friday: [["0800", "0800"]],
   };
   async function submitLink() {
+    wrongSemester = false;
     free_slot_arr = [];
     //Variable Declaration
     message = "";
