@@ -121,14 +121,21 @@
         }
       }
 
-      for (let i = 0; i < venue_slot.length; i += 1) {
-        buttons +=
-          "<button class='VenueButton' id = '" +
-          venue_slot[i] +
-          "'>" +
-          venue_slot[i] +
-          "</button>";
-        // buttons += "<button class='VenueButton' id = '{ venue_slot[i]} '>" + venue_slot[i] + "</button>";
+      if (venue_slot.length == 0)
+      {
+        errorMessage = "There are no rooms available.";
+      }
+      else
+      {
+        for (let i = 0; i < venue_slot.length; i += 1) {
+          buttons +=
+            "<button class='VenueButton' id = '" +
+            venue_slot[i] +
+            "'>" +
+            venue_slot[i] +
+            "</button>";
+          // buttons += "<button class='VenueButton' id = '{ venue_slot[i]} '>" + venue_slot[i] + "</button>";
+        }
       }
       loading = false;
     }
@@ -142,7 +149,9 @@
   <!-- </Modal>> -->
 </main>
 
-<h3><strong>Venue Section</strong></h3>
+<hr>
+
+<h3><strong>Venue Search</strong></h3>
 <form class="venue_form">
   <!-- svelte-ignore a11y-label-has-associated-control -->
   <label><strong>Semester</strong></label>
@@ -181,7 +190,7 @@
 </form>
 
 <section>
-  <button on:click={getVenue}>Find Venue</button>
+  <button on:click={getVenue}><strong>Find Venue</strong></button>
 </section>
 
 <!-- <div class="button_div" contenteditable="false" bind:innerHTML={buttons} /> -->
@@ -198,6 +207,7 @@
       on:click={() => getMap({ venue })}
     >
       {venue}
+      
     </button>
   {/each}
 </div>
