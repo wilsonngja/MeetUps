@@ -20,7 +20,6 @@
   var errorMessage_wrong_input = "";
   var errorMessage_no_rooms = "";
 
-
   const apiURL = config["API_LINK"];
   let long = "1.2966";
   let lat = "103.7764";
@@ -83,52 +82,60 @@
     errorMessage_no_rooms = "";
     venue_slot = [];
 
-    if ((startTime == "") || (endTime == "") || (startTime == undefined) || (endTime == undefined))
-    {
-      if (((startTime == "") || (startTime == undefined)) && (endTime != "") && (endTime != undefined))
-      {
+    if (
+      startTime == "" ||
+      endTime == "" ||
+      startTime == undefined ||
+      endTime == undefined
+    ) {
+      if (
+        (startTime == "" || startTime == undefined) &&
+        endTime != "" &&
+        endTime != undefined
+      ) {
         errorMessage_empty_field = "Please fill in the start time.";
 
-        if (endTime.match("\\d{4}") != endTime)
-        {
-          errorMessage_wrong_input = "Please insert only 4 digits for the end time.";
+        if (endTime.match("\\d{4}") != endTime) {
+          errorMessage_wrong_input =
+            "Please insert only 4 digits for the end time.";
         }
-      } 
-
-      else if (((endTime == "") || (endTime == undefined)) && (startTime != "") && (startTime != undefined))
-      {
+      } else if (
+        (endTime == "" || endTime == undefined) &&
+        startTime != "" &&
+        startTime != undefined
+      ) {
         errorMessage_empty_field = "Please fill in the end time.";
 
-        if (startTime.match("\\d{4}") != startTime)
-        {
-          errorMessage_wrong_input = "Please insert only 4 digits for the start time."
+        if (startTime.match("\\d{4}") != startTime) {
+          errorMessage_wrong_input =
+            "Please insert only 4 digits for the start time.";
         }
-      }
-
-      else if (((startTime == "") || (startTime == undefined)) && ((endTime == "") || (endTime == undefined)))
-      {
+      } else if (
+        (startTime == "" || startTime == undefined) &&
+        (endTime == "" || endTime == undefined)
+      ) {
         errorMessage_empty_field = "Please fill in the start and end time.";
       }
-    }
-    else
-    {
-      if ((startTime.match("\\d{4}") != startTime) && (endTime.match("\\d{4}") == endTime))
-      {
-        errorMessage_wrong_input = "Please insert only 4 digits for the start time.";
-      }
-      else if ((startTime.match("\\d{4}") == startTime) && (endTime.match("\\d{4}") != endTime ))
-      {
-        errorMessage_wrong_input = "Please insert only 4 digits for the end time.";
-      }
-      else if ((startTime.match("\\d{4}") != startTime) && (endTime.match("\\d{4}") != endTime))
-      {
-        errorMessage_wrong_input = "Please insert only 4 digits for the start and end time.";
-      }
-      else
-      {
-        
-
-        
+    } else {
+      if (
+        startTime.match("\\d{4}") != startTime &&
+        endTime.match("\\d{4}") == endTime
+      ) {
+        errorMessage_wrong_input =
+          "Please insert only 4 digits for the start time.";
+      } else if (
+        startTime.match("\\d{4}") == startTime &&
+        endTime.match("\\d{4}") != endTime
+      ) {
+        errorMessage_wrong_input =
+          "Please insert only 4 digits for the end time.";
+      } else if (
+        startTime.match("\\d{4}") != startTime &&
+        endTime.match("\\d{4}") != endTime
+      ) {
+        errorMessage_wrong_input =
+          "Please insert only 4 digits for the start and end time.";
+      } else {
         loading = true;
 
         const response = await fetch(apiURL, {
@@ -156,7 +163,6 @@
               data["result"][i]["Availability Timeslot"][0][1] >= endTime &&
               data["result"][i]["Day"] == day
             ) {
-              console.log(data['result'][i]["Availability Timeslot"][0][0], data['result'][i]["Availability Timeslot"][0][1]);
               if ((data["result"][i]["Availability Timeslot"][0][0] != "0800") || (data["result"][i]["Availability Timeslot"][0][1] != "2359"))
               {
                 if (!venue_slot.includes(data["result"][i]["Venue"])) 
@@ -166,7 +172,6 @@
                   
                 }
               }
-              
             }
           }
         }
@@ -175,9 +180,7 @@
         {
           
           errorMessage_no_rooms = "There are no rooms available.";
-        }
-        else
-        {
+        } else {
           for (let i = 0; i < venue_slot.length; i += 1) {
             buttons +=
               "<button class='VenueButton' id = '" +
@@ -189,8 +192,6 @@
           }
         }
         loading = false;
-
-
       }
     }
   }
@@ -203,7 +204,7 @@
   <!-- </Modal>> -->
 </main>
 
-<hr>
+<hr />
 
 <h3><strong>Venue Search</strong></h3>
 <form class="venue_form">
@@ -261,7 +262,6 @@
       on:click={() => getMap({ venue })}
     >
       {venue}
-      
     </button>
   {/each}
 </div>
@@ -278,12 +278,12 @@
     margin: 0 auto;
   }
 
-  h1 {
+  /* h1 {
     color: #533a7b;
     text-transform: uppercase;
     font-size: 4em;
     font-weight: 100;
-  }
+  } */
 
   h3 {
     color: #377395;
@@ -292,8 +292,8 @@
     text-align: center;
   }
 
-  button {
-    background: #533a7b;
+  .VenueButton {
+    background: #000000;
     color: white;
     border: none;
     font-size: 1em;
@@ -331,7 +331,7 @@
   }
 
   :global(.VenueButton) {
-    background: #6969b3;
+    background: #7f7f7f;
     color: white;
     border: none;
     padding: 8px 12px;

@@ -1,6 +1,5 @@
 <script>
-import { each } from "svelte/internal";
-
+  import { each } from "svelte/internal";
 
   import App from "./App.svelte";
   import AcademicYear from "./backend/database/start_date.json";
@@ -20,48 +19,50 @@ import { each } from "svelte/internal";
   var lat = "103.7764";
   $: num_free_slot = free_slot_arr.length; // if theres more than 1 free slot in the free_slot_arr. become true
 
-
   var today_date = new Date();
-  var sem1_start_date = AcademicYear['Sem 1'].split('-');
-  var sem1 = new Date(sem1_start_date[0], sem1_start_date[1] - 1, sem1_start_date[2]);
-  var sem2_start_date = AcademicYear['Sem 2'].split('-');
-  var sem2 = new Date(sem2_start_date[0], sem2_start_date[1] - 1, sem2_start_date[2]);
-  var st1_start_date = AcademicYear['Special Term 1'].split('-');
-  var st1 = new Date(st1_start_date[0], st1_start_date[1] - 1, st1_start_date[2]);
-  var st2_start_date = AcademicYear['Special Term 2'].split('-');
-  var st2 = new Date(st2_start_date[0], st2_start_date[1] - 1, st2_start_date[2]);
+  var sem1_start_date = AcademicYear["Sem 1"].split("-");
+  var sem1 = new Date(
+    sem1_start_date[0],
+    sem1_start_date[1] - 1,
+    sem1_start_date[2]
+  );
+  var sem2_start_date = AcademicYear["Sem 2"].split("-");
+  var sem2 = new Date(
+    sem2_start_date[0],
+    sem2_start_date[1] - 1,
+    sem2_start_date[2]
+  );
+  var st1_start_date = AcademicYear["Special Term 1"].split("-");
+  var st1 = new Date(
+    st1_start_date[0],
+    st1_start_date[1] - 1,
+    st1_start_date[2]
+  );
+  var st2_start_date = AcademicYear["Special Term 2"].split("-");
+  var st2 = new Date(
+    st2_start_date[0],
+    st2_start_date[1] - 1,
+    st2_start_date[2]
+  );
   var query_semester = "";
-  
 
   const apiURL = config["API_LINK"];
 
-
   // This section will check the current date today and see if the date corresponds to which semester.
-  if ((today_date >= sem1_start_date) && (today_date < sem2_start_date))
-  {
+  if (today_date >= sem1_start_date && today_date < sem2_start_date) {
     query_semester = "Semester 1";
-  } else if ((today_date >= sem2_start_date) && (today_date < st1_start_date))
-  {
+  } else if (today_date >= sem2_start_date && today_date < st1_start_date) {
     query_semester = "Semester 2";
-  }
-  else if ((today_date >= st1_start_date) && (today_date < st2_start_date))
-  {
+  } else if (today_date >= st1_start_date && today_date < st2_start_date) {
     query_semester = "Special Term 1";
-  }
-  else
-  {
+  } else {
     query_semester = "Special Term 2";
   }
-
-
 
   // IF it's semester 1 or 2, there will be 13 weeks, else there will be 6 weeks
   var week;
   var weeks = ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6"];
-  $: if (
-    query_semester == "Semester 1" ||
-    query_semester == "Semester 2"
-  ) {
+  $: if (query_semester == "Semester 1" || query_semester == "Semester 2") {
     weeks = [
       "Week 1",
       "Week 2",
@@ -81,7 +82,6 @@ import { each } from "svelte/internal";
     weeks = ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6"];
   }
 
-
   // This will be the semester that will be checked from the timetable
   const checkSemester = {
     "sem-1": "Semester 1",
@@ -89,7 +89,6 @@ import { each } from "svelte/internal";
     "st-i": "Special Term 1",
     "st-ii": "Special Term 2",
   };
-
 
   // Count the number of text field that is empty
   var empty_count = 0;
@@ -141,7 +140,6 @@ import { each } from "svelte/internal";
     wrongSemester = false;
     free_slot_arr = [];
 
-
     //Variable Declaration
     message = "";
     let list_of_modules = new Map();
@@ -164,9 +162,7 @@ import { each } from "svelte/internal";
     for (let i = 0; i < num_links; i += 1) {
       const val = document.getElementById(`link_` + i).value;
 
-      
       nus_tt_links.push(val);
-      
     }
 
     var response;
@@ -175,65 +171,57 @@ import { each } from "svelte/internal";
       const ay = AcademicYear.AY;
       message = "";
 
-      // This part here will be the error checking. 
-      for (var i = 0; i < nus_tt_links.length; i += 1)
-      {
-        if (nus_tt_links[i] == "")
-        {
+      // This part here will be the error checking.
+      for (var i = 0; i < nus_tt_links.length; i += 1) {
+        if (nus_tt_links[i] == "") {
           empty_count += 1;
-        }
-        else
-        {
-          
+        } else {
           each_timetable_module = nus_tt_links[i].split("?");
-          
-          if (each_timetable_module.length != 2)
-          {
+
+          if (each_timetable_module.length != 2) {
             error_message_invalid_timetable = "Unrecognised timetable.\n";
             wrongSemester = true;
             free_slot_generated = true;
-          }
-          else
-          {
-            var sem = each_timetable_module[0].match("(sem-1)|(sem-2)|(st-ii)|(st-i)")[0];
+          } else {
+            var sem = each_timetable_module[0].match(
+              "(sem-1)|(sem-2)|(st-ii)|(st-i)"
+            )[0];
 
-            if ((sem != "sem-1") && (sem != "sem-2") && (sem != "st-ii") && (sem != "st-i"))
-            {
+            if (
+              sem != "sem-1" &&
+              sem != "sem-2" &&
+              sem != "st-ii" &&
+              sem != "st-i"
+            ) {
               error_message_invalid_timetable = "Unrecgonised timetable.\n";
               wrongSemester = true;
               free_slot_generated = true;
-            }
-            else
-            {
-              if (checkSemester[sem] != query_semester)
-              {
-                error_message_wrong_sem = "Please use timetable that corresponds to the correct semester.";
+            } else {
+              if (checkSemester[sem] != query_semester) {
+                error_message_wrong_sem =
+                  "Please use timetable that corresponds to the correct semester.";
                 wrongSemester = true;
                 free_slot_generated = true;
               }
             }
-          } 
+          }
         }
       }
 
       // This 2 if function will check for the error. If there is error, no processing will be done.
-      if (empty_count == nus_tt_links.length)
-      {
+      if (empty_count == nus_tt_links.length) {
         error_message_empty = "Please insert in at least one text field.";
-        free_slot_generated = true; 
+        free_slot_generated = true;
         return;
       }
 
-      if (wrongSemester)
-      {
+      if (wrongSemester) {
         return;
       }
-      
+
       //This for-loop is for each links.
       for (let i = 0; i < nus_tt_links.length; i += 1) {
-
-        if (nus_tt_links[i] != "")
-        {
+        if (nus_tt_links[i] != "") {
           //Splitting the links into 2 parts. The first part contains the semester while the second part contains the timetable itself
           each_timetable_module = nus_tt_links[i].split("?");
           //Splitting the timetable into each individual modules
@@ -242,10 +230,7 @@ import { each } from "svelte/internal";
           var sem = each_timetable_module[0].match(
             "(sem-1)|(sem-2)|(st-ii)|(st-i)"
           )[0];
-          
 
-          
-          
           wrongSemester = false;
           // var = semester[(each_timetable_module[0]).match(/\w+-\w/)[0]];
           //For loop to iterate through each of the modules
@@ -301,10 +286,8 @@ import { each } from "svelte/internal";
 
           module_list.clear();
         }
-        
-        
       }
-    
+
       for (const [key, value] of Object.entries(lesson_slot)) {
         //2359 is the end of the search. Can be change to differnt class timing. But take note that the class in NUS ends latest at 9pm
         lesson_slot[key].push(["2359", "2359"]);
@@ -328,19 +311,16 @@ import { each } from "svelte/internal";
         }
         //
       }
-      
+
       // Stop the generation and the loading animation
       free_slot_generated = true;
     })();
   }
 
-
   // The portion that generates the google map
   async function getMap({ venue }) {
-    
     //reset the values before search
     url = "";
-    
 
     if (
       VenueInfo[venue] == null ||
@@ -360,7 +340,13 @@ import { each } from "svelte/internal";
     }
   }
 
-  async function getLocation(freeslot_day , starttime , endtime, selected_semester, week){
+  async function getLocation(
+    freeslot_day,
+    starttime,
+    endtime,
+    selected_semester,
+    week
+  ) {
     venue_slot = [];
     loading = true;
 
@@ -368,27 +354,33 @@ import { each } from "svelte/internal";
       method: "post",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         type: "venue",
         semester: selected_semester,
-        req_week: week
+        req_week: week,
       }),
     });
 
     var data = await response.json();
     buttons = "";
-    for (var i = 0; i <data["result"].length; i += 1)
-    {
-      for (var j = 0; j < data["result"][i]["Availability Timeslot"].length; j += 1)
-      {
-        if (!((data["result"][i]["Availability Timeslot"][0][0] == "0800") && (data["result"][i]["Availability Timeslot"][0][1] == "2359"))
-        || ((data["result"][i]["Availability Timeslot"][0][0] <= starttime) && 
-        data["result"][i]["Availability Timeslot"][0][1] >= endtime && data["result"][i]["Day"] == freeslot_day))
-        {
-          if (!venue_slot.includes(data["result"][i]["Venue"]))
-          {
+    for (var i = 0; i < data["result"].length; i += 1) {
+      for (
+        var j = 0;
+        j < data["result"][i]["Availability Timeslot"].length;
+        j += 1
+      ) {
+        if (
+          !(
+            data["result"][i]["Availability Timeslot"][0][0] == "0800" &&
+            data["result"][i]["Availability Timeslot"][0][1] == "2359"
+          ) ||
+          (data["result"][i]["Availability Timeslot"][0][0] <= starttime &&
+            data["result"][i]["Availability Timeslot"][0][1] >= endtime &&
+            data["result"][i]["Day"] == freeslot_day)
+        ) {
+          if (!venue_slot.includes(data["result"][i]["Venue"])) {
             venue_slot.push(data["result"][i]["Venue"]);
             venue_slot = [...venue_slot];
           }
@@ -396,15 +388,10 @@ import { each } from "svelte/internal";
       }
     }
 
-    if (venue_slot.length == 0)
-    {
+    if (venue_slot.length == 0) {
       error_message_no_rooms = "There are no rooms available";
-      
-    }
-    else
-    {
-      for (var i = 0; i < venue_slot.length; i += 1)
-      {
+    } else {
+      for (var i = 0; i < venue_slot.length; i += 1) {
         buttons +=
           "<button class='VenueButton' id = '" +
           venue_slot[i] +
@@ -414,15 +401,12 @@ import { each } from "svelte/internal";
       }
     }
     loading = false;
-    
   }
-
 </script>
-
 
 <div>
   <h3><strong>Free Period Search For Current Semester</strong></h3>
-  <h4><strong>Current Semester: {query_semester}</strong></h4> 
+  <h4><strong>Current Semester: {query_semester}</strong></h4>
   <p>Find your Time and Space !</p>
 </div>
 
@@ -462,7 +446,7 @@ import { each } from "svelte/internal";
 
 {#if num_free_slot}
   <!-- svelte-ignore a11y-label-has-associated-control -->
-   
+
   <!-- svelte-ignore a11y-label-has-associated-control -->
   <select bind:value={week}>
     {#each weeks as week_num}
@@ -471,23 +455,21 @@ import { each } from "svelte/internal";
   </select>
 {/if}
 
-<br>
-<br>
-
+<br />
+<br />
 
 <div class="freeslot_div" contenteditable="false">
-  
   {#each free_slot_arr as { slotid, start, end }}
-    <button id={slotid + "_" + start + "_" + end} on:click={getLocation(slotid, start ,end, query_semester, week)}>
+    <button
+      class="TimingButton"
+      id={slotid + "_" + start + "_" + end}
+      on:click={getLocation(slotid, start, end, query_semester, week)}
+    >
       {slotid + ": " + start + " - " + end}
     </button>
     <br />
   {/each}
 </div>
-
-
-
-
 
 <!-- <div class="button_div" contenteditable="false" bind:innerHTML={buttons} /> -->
 <div class="VenueDiv">
@@ -503,7 +485,6 @@ import { each } from "svelte/internal";
       on:click={() => getMap({ venue })}
     >
       {venue}
-      
     </button>
   {/each}
 </div>
@@ -513,7 +494,7 @@ import { each } from "svelte/internal";
 <h3><strong>{error_message_no_rooms}</strong></h3>
 
 <style>
-  button {
+  /* button {
     background: #533a7b;
     color: white;
     border: none;
@@ -521,7 +502,7 @@ import { each } from "svelte/internal";
     padding: 8px 12px;
     border-radius: 2px;
     text-align: center;
-  }
+  } */
 
   h3 {
     color: #377395;
@@ -533,6 +514,26 @@ import { each } from "svelte/internal";
   h4 {
     font-size: 20px;
     color: #377395;
+  }
+
+  .TimingButton {
+    background: #6a6a6a;
+    color: white;
+    border: none;
+    font-size: 1em;
+    padding: 8px 12px;
+    border-radius: 2px;
+    text-align: center;
+  }
+
+  .VenueButton {
+    background: #000000;
+    color: white;
+    border: none;
+    font-size: 1em;
+    padding: 8px 12px;
+    border-radius: 2px;
+    text-align: center;
   }
 
   /* .freeslot_div{
