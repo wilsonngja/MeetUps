@@ -1,6 +1,6 @@
 <script>
+import { each } from "svelte/internal";
 
-// import { start } from "repl";
 
   import App from "./App.svelte";
   import AcademicYear from "./backend/database/start_date.json";
@@ -32,8 +32,11 @@
   var st2 = new Date(st2_start_date[0], st2_start_date[1] - 1, st2_start_date[2]);
   var query_semester = "";
   
+
   const apiURL = config["API_LINK"];
 
+
+  // This section will check the current date today and see if the date corresponds to which semester.
   if ((today_date >= sem1_start_date) && (today_date < sem2_start_date))
   {
     query_semester = "Semester 1";
@@ -52,7 +55,7 @@
 
 
 
-
+  // IF it's semester 1 or 2, there will be 13 weeks, else there will be 6 weeks
   var week;
   var weeks = ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6"];
   $: if (
@@ -78,6 +81,8 @@
     weeks = ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6"];
   }
 
+
+  // This will be the semester that will be checked from the timetable
   const checkSemester = {
     "sem-1": "Semester 1",
     "sem-2": "Semester 2",
@@ -85,9 +90,16 @@
     "st-ii": "Special Term 2",
   };
 
+
+  // Count the number of text field that is empty
+  var empty_count = 0;
+
   //Message will be the message that will be printed out
   var message = "";
-  var error_message = "";
+  var error_message_empty = "";
+  var error_message_wrong_sem = "";
+  var error_message_invalid_timetable = "";
+  var error_message_no_rooms = "";
 
   const addField = () => {
     num_links += 1;
@@ -120,8 +132,16 @@
     Friday: [["0800", "0800"]],
   };
   async function submitLink() {
+    error_message_no_rooms = "";
+    empty_count = 0;
+    error_message_empty = "";
+    error_message_wrong_sem = "";
+    error_message_invalid_timetable = "";
+
     wrongSemester = false;
     free_slot_arr = [];
+
+
     //Variable Declaration
     message = "";
     let list_of_modules = new Map();
@@ -144,19 +164,9 @@
     for (let i = 0; i < num_links; i += 1) {
       const val = document.getElementById(`link_` + i).value;
 
-      if (
-        val.match(
-          "(https://nusmods.com/timetable/)((st-ii)|(st-i)|(sem-2)|(sem-1))(/share?)(.{1,})"
-        ) == null
-      ) {
-        error_message =
-          "Please enter timetable in the correct format or remove empty text field.";
-        free_slot_generated = true;
-        return;
-      } else {
-        error_message = "";
-        nus_tt_links.push(val);
-      }
+      
+      nus_tt_links.push(val);
+      
     }
 
     var response;
@@ -165,98 +175,133 @@
       const ay = AcademicYear.AY;
       message = "";
 
+      // This part here will be the error checking. 
       for (var i = 0; i < nus_tt_links.length; i += 1)
       {
-        each_timetable_module = nus_tt_links[i].split("?");
-        //Splitting the timetable into each individual modules
-        var each_module_class = each_timetable_module[1].split("&");
-        var sem = each_timetable_module[0].match(
-          "(sem-1)|(sem-2)|(st-ii)|(st-i)"
-        )[0];
-
-
-        if (checkSemester[sem] != query_semester)
+        if (nus_tt_links[i] == "")
         {
-          error_message = "Please use timetable that corresponds to the correct semester.";
-          wrongSemester = true;
-          free_slot_generated = true;
+          empty_count += 1;
         }
-        
-        if (wrongSemester)
+        else
         {
-          return;
+          
+          each_timetable_module = nus_tt_links[i].split("?");
+          
+          if (each_timetable_module.length != 2)
+          {
+            error_message_invalid_timetable = "Unrecognised timetable.\n";
+            wrongSemester = true;
+            free_slot_generated = true;
+          }
+          else
+          {
+            var sem = each_timetable_module[0].match("(sem-1)|(sem-2)|(st-ii)|(st-i)")[0];
+
+            if ((sem != "sem-1") && (sem != "sem-2") && (sem != "st-ii") && (sem != "st-i"))
+            {
+              error_message_invalid_timetable = "Unrecgonised timetable.\n";
+              wrongSemester = true;
+              free_slot_generated = true;
+            }
+            else
+            {
+              if (checkSemester[sem] != query_semester)
+              {
+                error_message_wrong_sem = "Please use timetable that corresponds to the correct semester.";
+                wrongSemester = true;
+                free_slot_generated = true;
+              }
+            }
+          } 
         }
+      }
+
+      // This 2 if function will check for the error. If there is error, no processing will be done.
+      if (empty_count == nus_tt_links.length)
+      {
+        error_message_empty = "Please insert in at least one text field.";
+        free_slot_generated = true; 
+        return;
+      }
+
+      if (wrongSemester)
+      {
+        return;
       }
       
       //This for-loop is for each links.
       for (let i = 0; i < nus_tt_links.length; i += 1) {
-        
-        //Splitting the links into 2 parts. The first part contains the semester while the second part contains the timetable itself
-        each_timetable_module = nus_tt_links[i].split("?");
-        //Splitting the timetable into each individual modules
-        var each_module_class = each_timetable_module[1].split("&");
 
-        var sem = each_timetable_module[0].match(
-          "(sem-1)|(sem-2)|(st-ii)|(st-i)"
-        )[0];
-        
+        if (nus_tt_links[i] != "")
+        {
+          //Splitting the links into 2 parts. The first part contains the semester while the second part contains the timetable itself
+          each_timetable_module = nus_tt_links[i].split("?");
+          //Splitting the timetable into each individual modules
+          var each_module_class = each_timetable_module[1].split("&");
 
-        
-        
-        wrongSemester = false;
-        // var = semester[(each_timetable_module[0]).match(/\w+-\w/)[0]];
-        //For loop to iterate through each of the modules
-        for (let j = 0; j < each_module_class.length; j += 1) {
-          //Splitting each of the module into their module code and their classes (At this point the class code and class type is still not split)
-          var splitted_module_slot = each_module_class[j].split("=");
+          var sem = each_timetable_module[0].match(
+            "(sem-1)|(sem-2)|(st-ii)|(st-i)"
+          )[0];
+          
 
-          //Split the class into different types (Lab, Tut) etc
-          var module_slot_timetable = splitted_module_slot[1].split(",");
-          var module_lesson_type = new Map();
+          
+          
+          wrongSemester = false;
+          // var = semester[(each_timetable_module[0]).match(/\w+-\w/)[0]];
+          //For loop to iterate through each of the modules
+          for (let j = 0; j < each_module_class.length; j += 1) {
+            //Splitting each of the module into their module code and their classes (At this point the class code and class type is still not split)
+            var splitted_module_slot = each_module_class[j].split("=");
 
-          //Loop into each of the module timetable
-          for (let l = 0; l < module_slot_timetable.length; l += 1) {
-            //Split the class type and store into module_lesson_type (which is a map containing their class)
-            var split = module_slot_timetable[l].split(":");
-            module_lesson_type.set(split[0], split[1]);
-          }
+            //Split the class into different types (Lab, Tut) etc
+            var module_slot_timetable = splitted_module_slot[1].split(",");
+            var module_lesson_type = new Map();
 
-          //After all the classes type has been configured into a map, store into the module list where the module list will contain
-          //the module code as the key and the map of class type and class code as the value
-          module_list.set(splitted_module_slot[0], module_lesson_type);
-          for (var [key, value] of module_lesson_type.entries()) {
-            // Get the timetable info from the database through the server.
-            const response = await fetch(config["API_LINK"], {
-              method: "post",
-              headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                type: "free slot",
-                module_code: splitted_module_slot[0],
-                class_type: lesson_type[key],
-                class_code: value,
-                semester: semester[sem],
-              }),
-            });
+            //Loop into each of the module timetable
+            for (let l = 0; l < module_slot_timetable.length; l += 1) {
+              //Split the class type and store into module_lesson_type (which is a map containing their class)
+              var split = module_slot_timetable[l].split(":");
+              module_lesson_type.set(split[0], split[1]);
+            }
 
-            var data = await response.json();
+            //After all the classes type has been configured into a map, store into the module list where the module list will contain
+            //the module code as the key and the map of class type and class code as the value
+            module_list.set(splitted_module_slot[0], module_lesson_type);
+            for (var [key, value] of module_lesson_type.entries()) {
+              // Get the timetable info from the database through the server.
+              const response = await fetch(config["API_LINK"], {
+                method: "post",
+                headers: {
+                  Accept: "application/json",
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  type: "free slot",
+                  module_code: splitted_module_slot[0],
+                  class_type: lesson_type[key],
+                  class_code: value,
+                  semester: semester[sem],
+                }),
+              });
 
-            for (
-              var class_num = 0;
-              class_num < data["result"].length;
-              class_num += 1
-            ) {
-              lesson_slot[data["result"][class_num]["LessonDay"]].push([
-                data["result"][class_num]["StartTime"],
-                data["result"][class_num]["endTime"],
-              ]);
+              var data = await response.json();
+
+              for (
+                var class_num = 0;
+                class_num < data["result"].length;
+                class_num += 1
+              ) {
+                lesson_slot[data["result"][class_num]["LessonDay"]].push([
+                  data["result"][class_num]["StartTime"],
+                  data["result"][class_num]["endTime"],
+                ]);
+              }
             }
           }
-        }
 
-        module_list.clear();
+          module_list.clear();
+        }
+        
         
       }
     
@@ -270,10 +315,6 @@
           //Check if there is any slots in between each classes
           if (parseInt(value[i][1]) < parseInt(value[i + 1][0])) {
             //Append the message if there is a free slot
-            // temp_str = "";
-            // temp_str =
-            //   id : key + ":" + value[i][1] + "-" + value[i + 1][0] + "<br/>";
-
             message +=
               key + ": " + value[i][1] + "-" + value[i + 1][0] + "<br/>";
             free_slot_arr.push({
@@ -288,13 +329,15 @@
         //
       }
       
-    
+      // Stop the generation and the loading animation
       free_slot_generated = true;
     })();
   }
 
 
+  // The portion that generates the google map
   async function getMap({ venue }) {
+    
     //reset the values before search
     url = "";
     
@@ -319,7 +362,6 @@
 
   async function getLocation(freeslot_day , starttime , endtime, selected_semester, week){
     venue_slot = [];
-    error_message = "";
     loading = true;
 
     const response = await fetch(apiURL, {
@@ -341,8 +383,9 @@
     {
       for (var j = 0; j < data["result"][i]["Availability Timeslot"].length; j += 1)
       {
-        if ((data["result"][i]["Availability Timeslot"][0][0] <= starttime) && 
-        data["result"][i]["Availability Timeslot"][0][1] >= endtime && data["result"][i]["Day"] == freeslot_day)
+        if (!((data["result"][i]["Availability Timeslot"][0][0] == "0800") && (data["result"][i]["Availability Timeslot"][0][1] == "2359"))
+        || ((data["result"][i]["Availability Timeslot"][0][0] <= starttime) && 
+        data["result"][i]["Availability Timeslot"][0][1] >= endtime && data["result"][i]["Day"] == freeslot_day))
         {
           if (!venue_slot.includes(data["result"][i]["Venue"]))
           {
@@ -355,7 +398,7 @@
 
     if (venue_slot.length == 0)
     {
-      error_message = "There are no rooms available";
+      error_message_no_rooms = "There are no rooms available";
       
     }
     else
@@ -417,9 +460,6 @@
   <!-- <p>{message}</p> -->
 {/if}
 
-<!-- <div class="freeslot_div" contenteditable="false" bind:innerHTML={message}>
-  <p>{message}</p>
-</div> -->
 {#if num_free_slot}
   <!-- svelte-ignore a11y-label-has-associated-control -->
    
@@ -436,7 +476,7 @@
 
 
 <div class="freeslot_div" contenteditable="false">
-  <!-- <p>button outputs</p> -->
+  
   {#each free_slot_arr as { slotid, start, end }}
     <button id={slotid + "_" + start + "_" + end} on:click={getLocation(slotid, start ,end, query_semester, week)}>
       {slotid + ": " + start + " - " + end}
@@ -467,7 +507,10 @@
     </button>
   {/each}
 </div>
-<h3><strong>{error_message}</strong></h3>
+<h3><strong>{error_message_empty}</strong></h3>
+<h3><strong>{error_message_invalid_timetable}</strong></h3>
+<h3><strong>{error_message_wrong_sem}</strong></h3>
+<h3><strong>{error_message_no_rooms}</strong></h3>
 
 <style>
   button {
