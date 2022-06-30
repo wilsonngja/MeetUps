@@ -16,7 +16,11 @@
   var week;
   var weeks = ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6"];
 
-  var errorMessage = "";
+  var errorMessage_empty_field = "";
+  var errorMessage_wrong_input = "";
+  var errorMessage_no_rooms = "";
+
+
   const apiURL = config["API_LINK"];
   let long = "1.2966";
   let lat = "103.7764";
@@ -74,75 +78,117 @@
 
   // This function does an API call for venue
   async function getVenue() {
+    errorMessage_empty_field = "";
+    errorMessage_wrong_input = "";
+    errorMessage_no_rooms = "";
     venue_slot = [];
-    if (
-      startTime.match("\\d{4}") == null ||
-      endTime.match("\\d{4}") == null ||
-      startTime.match("\\d{4}") != startTime ||
-      endTime.match("\\d{4}") != endTime
-    ) {
-      errorMessage = "Please enter a valid start time or end time.";
-      return;
-    } else {
-      errorMessage = "";
-      loading = true;
 
-      const response = await fetch(apiURL, {
-        method: "post",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          type: "venue",
-          semester: selected_sem_venue,
-          req_week: week,
-        }),
-      });
-      var data = await response.json();
-      buttons = "";
-      for (let i = 0; i < data["result"].length; i += 1) {
-        for (
-          let j = 0;
-          j < data["result"][i]["Availability Timeslot"].length;
-          j += 1
-        ) {
-          if (
-            data["result"][i]["Availability Timeslot"][0][0] <= startTime &&
-            data["result"][i]["Availability Timeslot"][0][1] >= endTime &&
-            data["result"][i]["Day"] == day
-          ) {
-            if ((data["result"][i]["Availability Timeslot"][0][0] != "0800") && (data["result"][i]["Availability Timeslot"][0][1] != "2359"))
-            {
-              if (!venue_slot.includes(data["result"][i]["Venue"])) 
-              {
-                venue_slot.push(data["result"][i]["Venue"]);
-                venue_slot = [...venue_slot];
-              }
-            }
-            
-            // console.log(data['result'][i]['Day']  + "		" + data['result'][i]['Venue'] + "	" + data['result'][i]['Availability Timeslot'][0][0] + "-" + data['result'][i]['Availability Timeslot'][0][1]);
-          }
+    if ((startTime == "") || (endTime == "") || (startTime == undefined) || (endTime == undefined))
+    {
+      if (((startTime == "") || (startTime == undefined)) && (endTime != "") && (endTime != undefined))
+      {
+        errorMessage_empty_field = "Please fill in the start time.";
+
+        if (endTime.match("\\d{4}") != endTime)
+        {
+          errorMessage_wrong_input = "Please insert only 4 digits for the end time.";
+        }
+      } 
+
+      else if (((endTime == "") || (endTime == undefined)) && (startTime != "") && (startTime != undefined))
+      {
+        errorMessage_empty_field = "Please fill in the end time.";
+
+        if (startTime.match("\\d{4}") != startTime)
+        {
+          errorMessage_wrong_input = "Please insert only 4 digits for the start time."
         }
       }
 
-      if (venue_slot.length == 0)
+      else if (((startTime == "") || (startTime == undefined)) && ((endTime == "") || (endTime == undefined)))
       {
-        errorMessage = "There are no rooms available.";
+        errorMessage_empty_field = "Please fill in the start and end time.";
+      }
+    }
+    else
+    {
+      if ((startTime.match("\\d{4}") != startTime) && (endTime.match("\\d{4}") == endTime))
+      {
+        errorMessage_wrong_input = "Please insert only 4 digits for the start time.";
+      }
+      else if ((startTime.match("\\d{4}") == startTime) && (endTime.match("\\d{4}") != endTime ))
+      {
+        errorMessage_wrong_input = "Please insert only 4 digits for the end time.";
+      }
+      else if ((startTime.match("\\d{4}") != startTime) && (endTime.match("\\d{4}") != endTime))
+      {
+        errorMessage_wrong_input = "Please insert only 4 digits for the start and end time.";
       }
       else
       {
-        for (let i = 0; i < venue_slot.length; i += 1) {
-          buttons +=
-            "<button class='VenueButton' id = '" +
-            venue_slot[i] +
-            "'>" +
-            venue_slot[i] +
-            "</button>";
-          // buttons += "<button class='VenueButton' id = '{ venue_slot[i]} '>" + venue_slot[i] + "</button>";
+        
+
+        
+        loading = true;
+
+        const response = await fetch(apiURL, {
+          method: "post",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            type: "venue",
+            semester: selected_sem_venue,
+            req_week: week,
+          }),
+        });
+        var data = await response.json();
+        buttons = "";
+        for (let i = 0; i < data["result"].length; i += 1) {
+          for (
+            let j = 0;
+            j < data["result"][i]["Availability Timeslot"].length;
+            j += 1
+          ) {
+            if (
+              data["result"][i]["Availability Timeslot"][0][0] <= startTime &&
+              data["result"][i]["Availability Timeslot"][0][1] >= endTime &&
+              data["result"][i]["Day"] == day
+            ) {
+              if ((data["result"][i]["Availability Timeslot"][0][0] != "0800") && (data["result"][i]["Availability Timeslot"][0][1] != "2359"))
+              {
+                if (!venue_slot.includes(data["result"][i]["Venue"])) 
+                {
+                  venue_slot.push(data["result"][i]["Venue"]);
+                  venue_slot = [...venue_slot];
+                }
+              }
+              
+            }
+          }
         }
+
+        if (venue_slot.length == 0)
+        {
+          errorMessage_no_rooms = "There are no rooms available.";
+        }
+        else
+        {
+          for (let i = 0; i < venue_slot.length; i += 1) {
+            buttons +=
+              "<button class='VenueButton' id = '" +
+              venue_slot[i] +
+              "'>" +
+              venue_slot[i] +
+              "</button>";
+            // buttons += "<button class='VenueButton' id = '{ venue_slot[i]} '>" + venue_slot[i] + "</button>";
+          }
+        }
+        loading = false;
+
+
       }
-      loading = false;
     }
   }
 </script>
@@ -216,7 +262,9 @@
     </button>
   {/each}
 </div>
-<h3><strong>{errorMessage}</strong></h3>
+<h3><strong>{errorMessage_empty_field}</strong></h3>
+<h3><strong>{errorMessage_wrong_input}</strong></h3>
+<h3><strong>{errorMessage_no_rooms}</strong></h3>
 <br />
 
 <style>
