@@ -156,12 +156,14 @@
               data["result"][i]["Availability Timeslot"][0][1] >= endTime &&
               data["result"][i]["Day"] == day
             ) {
-              if ((data["result"][i]["Availability Timeslot"][0][0] != "0800") && (data["result"][i]["Availability Timeslot"][0][1] != "2359"))
+              console.log(data['result'][i]["Availability Timeslot"][0][0], data['result'][i]["Availability Timeslot"][0][1]);
+              if ((data["result"][i]["Availability Timeslot"][0][0] != "0800") || (data["result"][i]["Availability Timeslot"][0][1] != "2359"))
               {
                 if (!venue_slot.includes(data["result"][i]["Venue"])) 
                 {
                   venue_slot.push(data["result"][i]["Venue"]);
                   venue_slot = [...venue_slot];
+                  
                 }
               }
               
@@ -171,6 +173,7 @@
 
         if (venue_slot.length == 0)
         {
+          
           errorMessage_no_rooms = "There are no rooms available.";
         }
         else
