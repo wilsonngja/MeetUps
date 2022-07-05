@@ -12,6 +12,7 @@
     var loading = false;
     var week;
     var weeks = ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6"];
+    var embbed_map = "";
 
     var errorMessage_empty_field = "";
     var errorMessage_wrong_input = "";
@@ -58,18 +59,29 @@
         VenueInfo[venue] == null ||
         VenueInfo[venue].location.y == null ||
         VenueInfo[venue].location.x == null
-        ) {
-        alert("Currently unable to display location on Google Map.");
-        } else {
-        long = VenueInfo[venue].location.y;
-        lat = VenueInfo[venue].location.x;
-
-        //Find Json File and , modify and extract out venue data
-        alert("Close this pop up to view " + venue + "'s location.");
-        url = "http://maps.google.com/maps?q=" + long + "," + lat;
-
-        window.open(url);
+        ) 
+        {
+            embbed_map = "none";
         }
+        else
+        {
+            long = VenueInfo[venue].location.y;
+            lat = VenueInfo[venue].location.x;
+            console.log(embbed_map);
+            embbed_map = "<iframe class='w-full h-96' src='https://www.google.com/maps/embed/v1/place?q=" + long + "," + lat + "&amp;key=" + config["MAP_API_KEY"] + "&center=" + long + "," + lat + "&zoom=19'></iframe>";
+        }
+        // {
+        // alert("Currently unable to display location on Google Map.");
+        // } else {
+        // long = VenueInfo[venue].location.y;
+        // lat = VenueInfo[venue].location.x;
+
+        // //Find Json File and , modify and extract out venue data
+        // alert("Close this pop up to view " + venue + "'s location.");
+        // url = "http://maps.google.com/maps?q=" + long + "," + lat;
+
+        // window.open(url);
+        // }
     }
 
     // This function does an API call for venue
@@ -201,16 +213,16 @@
     <div class="font-extrabold 2xl:mt-40 2xl:mb-10 xl:mt-40 xl:mb-10 lg:mt-32 lg:mb-5 mt-16 mb-2">
         <span class=" 2xl:text-8xl lg:text-8xl md:text-7xl text-6xl bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-sky-500" ><strong>Venue Search</strong></span>
     </div>
-    <p class=" font-extrabold text-gray-400 2xl:text-2xl xl:text-xl lg:text-xl text-md text-center ">This function allows you to search for available venues in the specified time range</p>
-    <p class=" font-extrabold text-gray-400 2xl:text-2xl xl:text-xl lg:text-xl text-md text-center ">Start Time should be 0800 hrs or after. </p>
-    <p class="font-extrabold text-gray-400 2xl:text-2xl xl:text-xl lg:text-xl text-md text-center mb-5">End Time should be before 0000. </p>
+    <p class=" font-extrabold text-gray-300 2xl:text-2xl xl:text-xl lg:text-xl text-md text-center ">This function allows you to search for available venues in the specified time range</p>
+    <p class=" font-extrabold text-gray-300 2xl:text-2xl xl:text-xl lg:text-xl text-md text-center ">Start Time should be 0800 hrs or after. </p>
+    <p class="font-extrabold text-gray-300 2xl:text-2xl xl:text-xl lg:text-xl text-md text-center mb-5">End Time should be before 0000. </p>
 
     <div class = "grid grid-cols-1 justify-items-center">
         
         <div class= "grid grid-cols-2">
             <!-- svelte-ignore a11y-label-has-associated-control -->
-            <label class="text-end mr-4"><strong>Semester</strong></label>
-            <select bind:value={selected_sem_venue} class ="text-sm border border-gray-300 bg-[#202124] text-white text-md rounded-lg border-2 block  h-8 max-h-full focus:outline-none focus:border-sky-500 my-0.5 ">
+            <label class="font-semibold text-end mr-4 2xl:text-xl 2xl:mt-10 2xl:mb-3 xl:text-xl xl:mt-10 xl:mb-3 lg:text-xl lg:mt-10 lg:mb-3 text-lg mt-5 mb-1.5 inline-block align-bottom">Semester</label>
+            <select bind:value={selected_sem_venue} class ="border border-gray-300 bg-[#202124] text-white rounded-lg border-2 block 2xl:text-xl 2xl:mt-10 2xl:mb-3 xl:text-xl xl:mt-10 xl:mb-3 lg:text-xl lg:mt-10 lg:mb-3 text-lg mt-5 mb-1.5 max-h-full focus:outline-none focus:border-sky-500 my-0.5 ">
                 <option>Semester 1</option>
                 <option>Semester 2</option>
                 <option>Special Term 1</option>
@@ -220,8 +232,8 @@
 
         <div class= "grid grid-cols-2">
             <!-- svelte-ignore a11y-label-has-associated-control -->
-            <label class="text-end mr-4"><strong>Week</strong></label>
-            <select bind:value={week} class ="border border-gray-300 bg-[#202124] text-white text-sm rounded-lg border-2 block h-8 focus:outline-none focus:border-sky-500 my-0.5 text-md">
+            <label class="font-semibold text-end mr-4 2xl:text-xl 2xl:mt-3 2xl:mb-5 xl:text-xl xl:mt-3 xl:mb-3 lg:text-xl lg:mt-3 lg:mb-3 text-lg mt-1.5 mb-1.5 inline-block align-bottom">Week</label>
+            <select bind:value={week} class ="border border-gray-300 bg-[#202124] text-white rounded-lg border-2 block  2xl:text-xl 2xl:mt-3 2xl:mb-3 xl:text-xl xl:mt-3 xl:mb-3 lg:text-xl lg:mt-3 lg:mb-3 text-lg mt-1.5 mb-1.5 max-h-full focus:outline-none focus:border-sky-500 my-0.5 text-md">
                 {#each weeks as week_num}
                 <option >{week_num}</option>
                 {/each}
@@ -230,8 +242,8 @@
 
         <div class = "grid grid-cols-2">
             <!-- svelte-ignore a11y-label-has-associated-control -->
-            <label class="text-end mr-4"><strong>Day</strong></label>
-            <select bind:value={day}   class ="border border-gray-300 bg-[#202124] text-md text-white rounded-lg border-2 block h-8 focus:outline-none focus:border-sky-500 my-0.5">
+            <label class="font-semibold text-end mr-4 2xl:text-xl 2xl:mt-3 2xl:mb-5 xl:text-xl xl:mt-3 xl:mb-3 lg:text-xl lg:mt-3 lg:mb-3 text-lg mt-1.5 mb-1.5 inline-block align-bottom">Day</label>
+            <select bind:value={day}   class ="border border-gray-300 bg-[#202124] text-white rounded-lg border-2 block 2xl:text-xl 2xl:mt-3 2xl:mb-3 xl:text-xl xl:mt-3 xl:mb-3 lg:text-xl lg:mt-3 lg:mb-3 text-lg mt-1.5 mb-1.5 max-h-full focus:outline-none focus:border-sky-500 my-0.5">
                 <option>Monday</option>
                 <option>Tuesday</option>
                 <option>Wednesday</option>
@@ -242,20 +254,20 @@
         </div>
 
 
-        <div class = "grid grid-cols-2">
+        <div class = "grid grid-cols-2 ">
             <!-- svelte-ignore a11y-label-has-associated-control -->
-            <label class="text-end mr-4"><strong>Start Time</strong></label>
-            <input class ="border-2 border-gray-300 rounded-md focus:outline-none focus:border-sky-500 " bind:value={startTime} placeholder=" 0800"  required/>
+            <label class="font-semibold text-end mr-4 2xl:text-xl 2xl:mt-3 2xl:mb-5 xl:text-xl xl:mt-3 xl:mb-3 lg:text-xl lg:mt-3 lg:mb-3 text-lg mt-1.5 mb-1.5 inline-block align-bottom">Start Time</label>
+            <input class ="border-2 border-gray-300 rounded-md focus:outline-none focus:border-sky-500 2xl:text-xl 2xl:mt-3 2xl:mb-3 2xl:w-40 xl:text-xl xl:mt-3 xl:mb-3 xl:w-40 lg:text-xl lg:mt-3 lg:mb-3 lg:w-32 md:w-24 text-lg mt-1.5 mb-1.5 " bind:value={startTime} placeholder=" 0800"  required/>
         </div>
 
         <div  class = "grid grid-cols-2">
             <!-- svelte-ignore a11y-label-has-associated-control -->
-            <label class="text-end mr-4"><strong>End Time</strong></label>
-            <input  class ="border-2 border-gray-300 rounded-md focus:outline-none focus:border-sky-500" bind:value={endTime} placeholder=" 2359" required />
+            <label class="font-semibold text-end mr-4 2xl:text-xl 2xl:mt-3 2xl:mb-5 xl:text-xl xl:mt-3 xl:mb-3 lg:text-xl lg:mt-3 lg:mb-3 text-lg mt-1.5 mb-1.5 inline-block align-bottom">End Time</label>
+            <input class ="border-2 border-gray-300 rounded-md focus:outline-none focus:border-sky-500 2xl:text-xl 2xl:mt-3 2xl:mb-3 2xl:w-40 xl:text-xl xl:mt-3 xl:mb-3 xl:w-40 lg:text-xl lg:mt-3 lg:mb-3 lg:w-32 md:w-24 text-lg mt-1.5 mb-1.5 "  bind:value={endTime} placeholder=" 2359" required />
         </div>
 
         <div class = "grid grid-cols-1">
-            <button on:click={getVenue} class ="my-2 py-2.5 px-5 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"><strong>Find Venue</strong></button>
+            <button on:click={getVenue} class ="mt-14 py-2.5 px-5 mb-2 text-sm bg-gradient-to-r from-pink-600 to-sky-600 rounded-lg border-none text-gray-50 font-bold hover:from-sky-600 hover:to-teal-600"><strong>Find Venue</strong></button>
         </div>
 
         {#if loading}
@@ -271,16 +283,42 @@
     </div>
 </div>
 
-<div class = "grid 2xl:grid-cols-10 xl:grid-cols-8 lg:grid-cols-8 grid-cols-6">
-    {#each venue_slot as venue}
-        <button class = "VenueButton py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-sky-600 hover:rounded-lg hover:bg-sky-600 hover:text-white"
-        contenteditable="false"
-            on:click={() => getMap({ venue })}
-        >
-        {venue}
-        </button>
-    {/each}
+<div class = "2xl:invisible xl:invisible lg:invisible">
+    {#if ((embbed_map != "none") && (embbed_map != ""))}
+        <h3 class="text-sky-500 text-center md:text-xl sm:text-xl ">Please scroll down to view the map...</h3>
+    {/if}
 </div>
+
+{#if venue_slot.length != 0}
+<div class = "grid 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 grid-cols-1">
+
+    <div class = "grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-4 grid-cols-2 overflow-y-auto h-96 mb-10 overscroll-y-none">
+        {#each venue_slot as venue}
+            <button class = "VenueButton py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-sky-600 hover:rounded-lg hover:bg-sky-600 hover:text-white"
+            contenteditable="false"
+                on:click={() => getMap({ venue })}
+            >
+            {venue}
+            </button>
+        {/each}
+    </div>
+
+    <div class="md:mb-10 sm:mb-10">
+        {#if embbed_map == ""}
+            <p class="text-white">Please click on any of the class to view the map</p>
+        {/if}
+
+        {#if embbed_map == "none"}
+            <p class="text-white">Sorry the map is currently unavailable.</p>
+        {/if}
+
+        {#if ((embbed_map != "none") && (embbed_map != "")) }
+            
+            <div  bind:innerHTML={embbed_map} contenteditable="false"></div>
+        {/if}
+    </div>
+</div>
+{/if}
 
 
 
@@ -321,11 +359,7 @@
     color: white;
   }
 
- 
 
-  label{
-    margin-top: 5%;
-  }
 
   input{
     background-color: #202124;
