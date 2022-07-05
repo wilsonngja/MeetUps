@@ -1,360 +1,54 @@
 <script>
   import { get } from "svelte/store";
-  import TopBackground from "./BackgroundTop.svelte";
-  import DynamicTextField from "./DynamicTextField.svelte";
+  // import TopBackground from "./BackgroundTop.svelte";
+  import Venue from "./Venue.svelte";
+  import Freeslot from "./Freeslot.svelte";
   import VenueInfo from "./backend/database/venues.json";
   import config from "./config.json";
 
-  let day;
-  let startTime;
-  let endTime;
-  let venue_slot = [];
-  var buttons = "";
-  let map_center = { lat: 1.297, lng: 103.776 };
-  var selected_sem_venue = "Semester 1";
-  var loading = false;
-  var week;
-  var weeks = ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6"];
 
-  var errorMessage_empty_field = "";
-  var errorMessage_wrong_input = "";
-  var errorMessage_no_rooms = "";
 
-  const apiURL = config["API_LINK"];
-  let long = "1.2966";
-  let lat = "103.7764";
-  let url = "";
 
-  $: if (
-    selected_sem_venue == "Semester 1" ||
-    selected_sem_venue == "Semester 2"
-  ) {
-    weeks = [
-      "Week 1",
-      "Week 2",
-      "Week 3",
-      "Week 4",
-      "Week 5",
-      "Week 6",
-      "Week 7",
-      "Week 8",
-      "Week 9",
-      "Week 10",
-      "Week 11",
-      "Week 12",
-      "Week 13",
-    ];
-  } else {
-    weeks = ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6"];
-  }
-  // let url = "http://maps.google.com/maps?q=1.2966,103.7764"; // Default Map location.
-  //This function does an API call for the Google Map
 
-  //Add
-  async function getMap({ venue }) {
-    //reset the values before search
-    url = "";
-    long = "1.2966";
-    lat = "103.7764";
 
-    if (
-      VenueInfo[venue] == null ||
-      VenueInfo[venue].location.y == null ||
-      VenueInfo[venue].location.x == null
-    ) {
-      alert("Currently unable to display location on Google Map.");
-    } else {
-      long = VenueInfo[venue].location.y;
-      lat = VenueInfo[venue].location.x;
+  const webpages = [
+		{ name: "Free Period Search", component: Freeslot},
+		{ name: "Venue Search", component: Venue }
+	];
 
-      //Find Json File and , modify and extract out venue data
-      alert("Close this pop up to view " + venue + "'s location.");
-      url = "http://maps.google.com/maps?q=" + long + "," + lat;
-
-      window.open(url);
-    }
-  }
-
-  // This function does an API call for venue
-  async function getVenue() {
-    errorMessage_empty_field = "";
-    errorMessage_wrong_input = "";
-    errorMessage_no_rooms = "";
-    venue_slot = [];
-
-    if (
-      startTime == "" ||
-      endTime == "" ||
-      startTime == undefined ||
-      endTime == undefined
-    ) {
-      if (
-        (startTime == "" || startTime == undefined) &&
-        endTime != "" &&
-        endTime != undefined
-      ) {
-        errorMessage_empty_field = "Please fill in the start time.";
-
-        if (endTime.match("\\d{4}") != endTime) {
-          errorMessage_wrong_input =
-            "Please insert only 4 digits for the end time.";
-        }
-      } else if (
-        (endTime == "" || endTime == undefined) &&
-        startTime != "" &&
-        startTime != undefined
-      ) {
-        errorMessage_empty_field = "Please fill in the end time.";
-
-        if (startTime.match("\\d{4}") != startTime) {
-          errorMessage_wrong_input =
-            "Please insert only 4 digits for the start time.";
-        }
-      } else if (
-        (startTime == "" || startTime == undefined) &&
-        (endTime == "" || endTime == undefined)
-      ) {
-        errorMessage_empty_field = "Please fill in the start and end time.";
-      }
-    } else {
-      if (
-        startTime.match("\\d{4}") != startTime &&
-        endTime.match("\\d{4}") == endTime
-      ) {
-        errorMessage_wrong_input =
-          "Please insert only 4 digits for the start time.";
-      } else if (
-        startTime.match("\\d{4}") == startTime &&
-        endTime.match("\\d{4}") != endTime
-      ) {
-        errorMessage_wrong_input =
-          "Please insert only 4 digits for the end time.";
-      } else if (
-        startTime.match("\\d{4}") != startTime &&
-        endTime.match("\\d{4}") != endTime
-      ) {
-        errorMessage_wrong_input =
-          "Please insert only 4 digits for the start and end time.";
-      } else {
-        loading = true;
-
-        const response = await fetch(apiURL, {
-          method: "post",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            type: "venue",
-            semester: selected_sem_venue,
-            req_week: week,
-          }),
-        });
-        var data = await response.json();
-        buttons = "";
-        for (let i = 0; i < data["result"].length; i += 1) {
-          for (
-            let j = 0;
-            j < data["result"][i]["Availability Timeslot"].length;
-            j += 1
-          ) {
-            if (
-              data["result"][i]["Availability Timeslot"][0][0] <= startTime &&
-              data["result"][i]["Availability Timeslot"][0][1] >= endTime &&
-              data["result"][i]["Day"] == day
-            ) {
-              if ((data["result"][i]["Availability Timeslot"][0][0] != "0800") || (data["result"][i]["Availability Timeslot"][0][1] != "2359"))
-              {
-                if (!venue_slot.includes(data["result"][i]["Venue"])) 
-                {
-                  venue_slot.push(data["result"][i]["Venue"]);
-                  venue_slot = [...venue_slot];
-                  
-                }
-              }
-            }
-          }
-        }
-
-        if (venue_slot.length == 0)
-        {
-          
-          errorMessage_no_rooms = "There are no rooms available.";
-        } else {
-          for (let i = 0; i < venue_slot.length; i += 1) {
-            buttons +=
-              "<button class='VenueButton' id = '" +
-              venue_slot[i] +
-              "'>" +
-              venue_slot[i] +
-              "</button>";
-            // buttons += "<button class='VenueButton' id = '{ venue_slot[i]} '>" + venue_slot[i] + "</button>";
-          }
-        }
-        loading = false;
-      }
-    }
-  }
+  // Loads an object in webpages array
+	let selectedPage = webpages[0];
+	$: console.dir(selectedPage)
+	
+	// Have to use obj as arg. so value can be a class
+	const loadPage = (obj) => selectedPage = obj;
+  
 </script>
-
 <main>
-  <!-- <Modal show={$modal}> -->
-  <TopBackground />
-  <DynamicTextField />
-  <!-- </Modal>> -->
+
+  <!-- Nav ba -->
+<div class = "grid grid-cols-2">
+	
+  {#each webpages as webpageObj}
+	<button class = "inline-block m-0 border-0 text-blue-600 bg-gray-100 rounded-t-2xl mr-2 bg-gray-800  dark:text-sky-600 hover:bg-gray-700 hover:text-white 2xl:text-2xl xl:text-xl lg:text-lg text-md" 
+					title={webpageObj.name}
+					on:click={() => loadPage(webpageObj)}>{webpageObj.name}</button>
+{/each}
+
+</div>
+
+<!-- Loaded component/webpage -->
+<svelte:component this={selectedPage.component} />
+
+
+  
+  
 </main>
 
-<hr />
 
-<h3><strong>Venue Search</strong></h3>
-<form class="venue_form">
-  <!-- svelte-ignore a11y-label-has-associated-control -->
-  <label><strong>Semester</strong></label>
-  <select bind:value={selected_sem_venue}>
-    <option>Semester 1</option>
-    <option>Semester 2</option>
-    <option>Special Term 1</option>
-    <option>Special Term 2</option>
-  </select>
-  <!-- svelte-ignore a11y-label-has-associated-control -->
-  <label><strong>Day</strong></label>
-  <select bind:value={day}>
-    <option>Monday</option>
-    <option>Tuesday</option>
-    <option>Wednesday</option>
-    <option>Thursday</option>
-    <option>Friday</option>
-    <option>Saturday</option>
-  </select>
-  <!-- <input bind:value={day} placeholder="Monday" /> -->
-  <!-- svelte-ignore a11y-label-has-associated-control -->
-  <label><strong>Week</strong></label>
-  <select bind:value={week}>
-    {#each weeks as week_num}
-      <option>{week_num}</option>
-    {/each}
-  </select>
-
-  <!-- <input bind:value={week} placeholder="Week 1" /> -->
-  <!-- svelte-ignore a11y-label-has-associated-control -->
-  <label><strong>Start Time</strong></label>
-  <input bind:value={startTime} placeholder="0800" />
-  <!-- svelte-ignore a11y-label-has-associated-control -->
-  <label><strong>End Time</strong></label>
-  <input bind:value={endTime} placeholder="2359" />
-</form>
-
-<section>
-  <button on:click={getVenue}><strong>Find Venue</strong></button>
-</section>
-
-<!-- <div class="button_div" contenteditable="false" bind:innerHTML={buttons} /> -->
-<div class="VenueDiv">
-  {#if loading}
-    <img src="dual_ring.svg" alt="" />
-  {/if}
-
-  {#each venue_slot as venue}
-    <button
-      class="VenueButton"
-      id={venue}
-      contenteditable="false"
-      on:click={() => getMap({ venue })}
-    >
-      {venue}
-    </button>
-  {/each}
-</div>
-<h3><strong>{errorMessage_empty_field}</strong></h3>
-<h3><strong>{errorMessage_wrong_input}</strong></h3>
-<h3><strong>{errorMessage_no_rooms}</strong></h3>
-<br />
 
 <style>
-  main {
-    text-align: center;
-    padding: 1em;
-    max-width: 240px;
-    margin: 0 auto;
-  }
-
-  /* h1 {
-    color: #533a7b;
-    text-transform: uppercase;
-    font-size: 4em;
-    font-weight: 100;
-  } */
-
-  h3 {
-    color: #377395;
-    font-size: 1.5em;
-    font-weight: 100;
-    text-align: center;
-  }
-
-  .VenueButton {
-    background: #000000;
-    color: white;
-    border: none;
-    font-size: 1em;
-    padding: 8px 12px;
-    border-radius: 2px;
-    text-align: center;
-  }
-
-  section {
-    text-align: center;
-    padding: 1em;
-    max-width: 240px;
-    margin: 0 auto;
-  }
-
-  @media (min-width: 640px) {
-    main {
-      max-width: none;
-    }
-  }
-
-  .venue_form {
-    color: #25171a;
-    display: grid;
-    text-align: center;
-    margin-left: 40%;
-    margin-right: 25%;
-    grid-template-columns: 20% 30%;
-    grid-column-gap: 0px;
-  }
-
-  :global(.button_div) {
-    justify-content: center;
-    text-align: center;
-  }
-
-  :global(.VenueButton) {
-    background: #7f7f7f;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 2px;
-    margin: 5px 5px;
-    text-align: center;
-  }
-
-  input {
-    margin-top: -5px;
-    border: 2px solid #25171a;
-    color: #25171a;
-  }
-
-  input:focus {
-    margin-top: -5px;
-    outline: none;
-    border: 2.25px solid #6969b3;
-  }
-
-  img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+  :global(body){
+    background-color: #242124;
   }
 </style>
