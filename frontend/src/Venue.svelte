@@ -70,18 +70,7 @@
             console.log(embbed_map);
             embbed_map = "<iframe class='w-full h-96' src='https://www.google.com/maps/embed/v1/place?q=" + long + "," + lat + "&amp;key=" + config["MAP_API_KEY"] + "&center=" + long + "," + lat + "&zoom=19'></iframe>";
         }
-        // {
-        // alert("Currently unable to display location on Google Map.");
-        // } else {
-        // long = VenueInfo[venue].location.y;
-        // lat = VenueInfo[venue].location.x;
-
-        // //Find Json File and , modify and extract out venue data
-        // alert("Close this pop up to view " + venue + "'s location.");
-        // url = "http://maps.google.com/maps?q=" + long + "," + lat;
-
-        // window.open(url);
-        // }
+       
     }
 
     // This function does an API call for venue
@@ -199,7 +188,6 @@
                     "'>" +
                     venue_slot[i] +
                     "</button>";
-                    // buttons += "<button class='VenueButton' id = '{ venue_slot[i]} '>" + venue_slot[i] + "</button>";
                 }
             }
             loading = false;
@@ -283,15 +271,18 @@
     </div>
 </div>
 
+<!-- If the screen size is smth, show the text to ask viewer to scroll down to view the map -->
 <div class = "2xl:invisible xl:invisible lg:invisible">
     {#if ((embbed_map != "none") && (embbed_map != ""))}
         <h3 class="text-sky-500 text-center md:text-xl sm:text-xl ">Please scroll down to view the map...</h3>
     {/if}
 </div>
 
+<!-- Genereate the button and the map -->
 {#if venue_slot.length != 0}
 <div class = "grid 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 grid-cols-1">
 
+    <!-- Button portion -->
     <div class = "grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-4 grid-cols-2 overflow-y-auto h-96 mb-10 overscroll-y-none">
         {#each venue_slot as venue}
             <button class = "VenueButton py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-sky-600 hover:rounded-lg hover:bg-sky-600 hover:text-white"
@@ -303,13 +294,14 @@
         {/each}
     </div>
 
-    <div class="md:mb-10 sm:mb-10">
+    <!-- Map portion -->
+    <div class="md:mb-10 sm:mb-10 ">
         {#if embbed_map == ""}
-            <p class="text-white">Please click on any of the class to view the map</p>
+            <div class="text-sky-500 2xl:text-2xl xl:text-xl lg:text-xl md:text-xl text-lg text-center">Please click on any of the class to view the map</div>
         {/if}
 
         {#if embbed_map == "none"}
-            <p class="text-white">Sorry the map is currently unavailable.</p>
+            <div class="text-sky-500 2xl:text-2xl xl:text-xl lg:text-xl md:text-xl text-lg text-center">Sorry the map is currently unavailable.</div>
         {/if}
 
         {#if ((embbed_map != "none") && (embbed_map != "")) }
