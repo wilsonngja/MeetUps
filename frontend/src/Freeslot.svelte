@@ -519,8 +519,7 @@
 
   <button
     on:click|preventDefault={submitLink}
-    class="mt-8 py-2.5 px-5 mb-2 text-sm font-medium bg-gradient-to-r from-pink-600 to-sky-600 rounded-lg border-none text-gray-50 font-bold hover:from-sky-600 hover:to-teal-600"
-  >
+    class="mt-8 py-2.5 px-5 mb-2 text-sm font-medium bg-sky-500 border-none text-white font-bold rounded-md shadow-lg shadow-sky-500/50 hover:bg-cyan-500 hover:shadow-cyan-500/50">
     <strong>Find Time</strong></button
   >
 </div>
