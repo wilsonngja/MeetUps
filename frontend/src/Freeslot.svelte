@@ -17,6 +17,7 @@
   var wrongSemester = false;
   var long = "1.2966";
   var lat = "103.7764";
+  var embbed_map = "";
   $: num_free_slot = free_slot_arr.length; // if theres more than 1 free slot in the free_slot_arr. become true
 
   var today_date = new Date();
@@ -298,8 +299,8 @@
           //Check if there is any slots in between each classes
           if (parseInt(value[i][1]) < parseInt(value[i + 1][0])) {
             //Append the message if there is a free slot
-            message +=
-              key + ": " + value[i][1] + "-" + value[i + 1][0] + "<br/>";
+            // message +=
+            //   key + ": " + value[i][1] + "-" + value[i + 1][0] + "<br/>";
             free_slot_arr.push({
               slotid: key,
               start: value[i][1],
@@ -321,23 +322,44 @@
   async function getMap({ venue }) {
     //reset the values before search
     url = "";
+    long = "1.2966";
+    lat = "103.7764";
 
     if (
       VenueInfo[venue] == null ||
       VenueInfo[venue].location.y == null ||
       VenueInfo[venue].location.x == null
     ) {
-      alert("Currently unable to display location on Google Map.");
+      embbed_map = "none";
     } else {
       long = VenueInfo[venue].location.y;
       lat = VenueInfo[venue].location.x;
-
-      //Find Json File and , modify and extract out venue data
-      alert("Close this pop up to view " + venue + "'s location.");
-      url = "http://maps.google.com/maps?q=" + long + "," + lat;
-
-      window.open(url);
+      console.log(embbed_map);
+      embbed_map =
+        "<iframe class='w-full h-96' src='https://www.google.com/maps/embed/v1/place?q=" +
+        long +
+        "," +
+        lat +
+        "&amp;key=" +
+        config["MAP_API_KEY"] +
+        "&center=" +
+        long +
+        "," +
+        lat +
+        "&zoom=19'></iframe>";
     }
+    // {
+    // alert("Currently unable to display location on Google Map.");
+    // } else {
+    // long = VenueInfo[venue].location.y;
+    // lat = VenueInfo[venue].location.x;
+
+    // //Find Json File and , modify and extract out venue data
+    // alert("Close this pop up to view " + venue + "'s location.");
+    // url = "http://maps.google.com/maps?q=" + long + "," + lat;
+
+    // window.open(url);
+    // }
   }
 
   async function getLocation(
@@ -510,25 +532,33 @@
   {/if}
 
   {#if num_free_slot}
-    <!-- svelte-ignore a11y-label-has-associated-control -->
+    <!-- <div class="divide-x-2"><p class="text-white">Select week number:</p></div> -->
 
-    <!-- svelte-ignore a11y-label-has-associated-control -->
-    <select
-      class="border border-gray-300 bg-[#202124] text-white rounded-lg border-1 block 2xl:text-xl 2xl:mt-10 2xl:mb-3 xl:text-xl xl:mt-10 xl:mb-3 lg:text-xl lg:mt-10 lg:mb-3 text-lg mt-5 mb-1 max-h-full focus:outline-none focus:border-sky-500 my-0.5 "
-      bind:value={week}
-    >
-      {#each weeks as week_num}
-        <option>{week_num}</option>
-      {/each}
-    </select>
+    <div class="grid grid-cols-1 justify-items-center">
+      <div class="grid grid-cols-2">
+        <p
+          class="text-white font-semibold text-end mr-4 2xl:text-xl 2xl:mt-10 2xl:mb-3 xl:text-xl xl:mt-10 xl:mb-3 lg:text-xl lg:mt-10 lg:mb-3 text-lg mt-5 mb-1.5 inline-block align-bottom"
+        >
+          Select week number:
+        </p>
+        <select
+          class="border border-gray-300 bg-[#202124] text-white rounded-lg border-1 block 2xl:text-xl 2xl:mt-10 2xl:mb-3 xl:text-xl xl:mt-10 xl:mb-3 lg:text-xl lg:mt-10 lg:mb-3 text-lg mt-5 mb-1 max-h-full focus:outline-none focus:border-sky-500 my-0.5 "
+          bind:value={week}
+        >
+          {#each weeks as week_num}
+            <option>{week_num}</option>
+          {/each}
+        </select>
+      </div>
+    </div>
   {/if}
 
   <br />
 
-  <div class="grid grid-cols-1 justify-items-center" contenteditable="false">
+  <div class="justify-items-center mb-5" contenteditable="false">
     {#each free_slot_arr as { slotid, start, end }}
       <button
-        class="TimingButton"
+        class=" TimingButton mb-3 text-lg font-medium text-sky-600 hover:rounded-lg hover:bg-sky-600 hover:text-white"
         id={slotid + "_" + start + "_" + end}
         on:click={getLocation(slotid, start, end, query_semester, week)}
       >
@@ -539,11 +569,14 @@
   </div>
 </div>
 <!-- <div class="button_div" contenteditable="false" bind:innerHTML={buttons} /> -->
-<div class="VenueDiv">
+<div class="grid grid-cols-1 justify-items-center">
   {#if loading}
     <img src="loading_bar.svg" alt="" />
   {/if}
+</div>
 
+<!-- 
+<div>
   {#each venue_slot as venue}
     <button
       class="VenueButton"
@@ -554,7 +587,60 @@
       {venue}
     </button>
   {/each}
+</div> -->
+
+<div class="2xl:invisible xl:invisible lg:invisible">
+  {#if embbed_map != "none" && embbed_map != ""}
+    <h3 class="text-sky-200 text-center md:text-xl sm:text-xl mt-5">
+      Please scroll down to view the map...
+    </h3>
+    <br /><br />
+  {/if}
 </div>
+
+{#if venue_slot.length != 0}
+  <div class="grid grid-cols-1 justify-items-center mb-3">
+    <p
+      class="font-extrabold 2xl:text-5xl lg:text-5xl  md:text-3xl text-2xl bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-sky-500 "
+    >
+      Available Venues
+    </p>
+  </div>
+  <div class="grid 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 grid-cols-1">
+    <div
+      class="border-2 grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-4 grid-cols-2 overflow-y-auto h-96 mb-10 overscroll-y-none"
+    >
+      {#each venue_slot as venue}
+        <button
+          class="VenueButton py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-sky-600 hover:rounded-lg hover:bg-sky-600 hover:text-white"
+          contenteditable="false"
+          on:click={() => getMap({ venue })}
+        >
+          {venue}
+        </button>
+      {/each}
+    </div>
+
+    <div class="mx-10 md:mb-10 sm:mb-10">
+      {#if embbed_map == ""}
+        <p class="text-white text-center">
+          Please click on any of the venues to view the map
+        </p>
+      {/if}
+
+      {#if embbed_map == "none"}
+        <p class="text-white text-center">
+          Sorry the map is currently unavailable.
+        </p>
+      {/if}
+
+      {#if embbed_map != "none" && embbed_map != ""}
+        <div bind:innerHTML={embbed_map} contenteditable="false" />
+      {/if}
+    </div>
+  </div>
+{/if}
+
 <h3
   class="text-center text-red-700 text-xl 3xl:text-3xl xl:text-3xl lg:text-2xl md:text-2xl"
 >
@@ -593,24 +679,22 @@
 
   } */
 
-  /* .TimingButton {
-    background: #6a6a6a;
-    color: white;
-    border: none;
-    font-size: 1em;
-    padding: 8px 12px;
+  .TimingButton {
+    /* font-size: 1em; */
+
     border-radius: 2px;
     text-align: center;
-  } */
+    border: none;
+  }
 
   .VenueButton {
-    background: #000000;
-    color: white;
-    border: none;
+    /* background: #202124; */
+
     font-size: 1em;
-    padding: 8px 12px;
+    padding: 1px 1px;
     border-radius: 2px;
     text-align: center;
+    border: none;
   }
 
   /* .freeslot_div{
