@@ -297,7 +297,7 @@
         >Start Time</label
       >
       <input
-        class="border-2 border-gray-300 rounded-md focus:outline-none focus:border-sky-500 2xl:text-xl 2xl:mt-3 2xl:mb-3 2xl:w-40 xl:text-xl xl:mt-3 xl:mb-3 xl:w-40 lg:text-xl lg:mt-3 lg:mb-3 lg:w-32 md:w-24 text-lg mt-1.5 mb-1.5 "
+        class="border-2 border-gray-300 rounded-md focus:outline-none focus:border-sky-500 2xl:text-xl 2xl:mt-3 2xl:mb-3 2xl:w-40 xl:text-xl xl:mt-3 xl:mb-3 xl:w-40 lg:text-xl lg:mt-3 lg:mb-3 lg:w-32 md:w-24 w-20 text-lg mt-1.5 mb-1.5 "
         bind:value={startTime}
         placeholder=" 0800"
         required
@@ -311,7 +311,7 @@
         >End Time</label
       >
       <input
-        class="border-2 border-gray-300 rounded-md focus:outline-none focus:border-sky-500 2xl:text-xl 2xl:mt-3 2xl:mb-3 2xl:w-40 xl:text-xl xl:mt-3 xl:mb-3 xl:w-40 lg:text-xl lg:mt-3 lg:mb-3 lg:w-32 md:w-24 text-lg mt-1.5 mb-1.5 "
+        class="border-2 border-gray-300 rounded-md focus:outline-none focus:border-sky-500 2xl:text-xl 2xl:mt-3 2xl:mb-3 2xl:w-40 xl:text-xl xl:mt-3 xl:mb-3 xl:w-40 lg:text-xl lg:mt-3 lg:mb-3 lg:w-32 md:w-24 w-20 text-lg mt-1.5 mb-1.5 "
         bind:value={endTime}
         placeholder=" 2359"
         required
