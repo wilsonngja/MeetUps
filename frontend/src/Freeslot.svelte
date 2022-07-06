@@ -489,7 +489,7 @@
 {#each Array(num_links) as _, i}
   <div class="grid grid-cols-1 gap-4 text-center lg:mx-64 md:mx-32">
     <input
-      class=" appearance-none border-2 border-gray-300 rounded-md  focus:outline-none focus:border-sky-500 bg-[#202124] text-center lg:text-2xl md:text-xl sm:text-md my-1 text-sky-500 focus:placeholder-sky-500 focus:bg-[#202124] "
+      class=" appearance-none border-2 border-gray-300 rounded-md  focus:outline-none focus:border-sky-500 bg-[#202124] text-center lg:text-2xl md:text-xl sm:text-md my-1 text-sky-500 focus:placeholder-sky-500/25 focus:bg-[#202124] "
       autocomplete="off"
       name="DynamicField"
       type="text"
@@ -664,32 +664,7 @@
 
 
 <style>
-<<<<<<< HEAD
   
-=======
-  /* button {
-    background: #533a7b;
-    color: white;
-    border: none;
-    font-size: 1em;
-    padding: 8px 12px;
-    border-radius: 2px;
-    text-align: center;
-  } */
-
-  /* .tl_corner{
-
-
-  } */
-
-  .TimingButton {
-    /* font-size: 1em; */
-
-    border-radius: 2px;
-    text-align: center;
-    border: none;
-  }
->>>>>>> a757f8d6a7c2d9ff07ada7a87304fd0ea247ef7d
 
   .VenueButton {
     /* background: #202124; */

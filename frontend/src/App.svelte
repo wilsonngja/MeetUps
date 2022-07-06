@@ -33,11 +33,11 @@
     
     {#if selected == "Free Period Search"}
       
-      <button class = "border-0 text-sky-500 bg-[#202124] hover:bg-[#2e3036] 2xl:text-xl xl:text-lg lg:text-lg md:text-md text-lg h-12 underline underline-offset-4 decoration-2 mt-2 border-r-2 border-sky-500" 
+      <button class = "border-0 text-sky-500 bg-[#202124] hover:bg-[#2e3036] 2xl:text-xl xl:text-lg lg:text-lg md:text-md text-lg h-12 underline underline-offset-4 decoration-2 border-r-2 border-sky-500" 
                     title={webpages[0].name} on:click={() => loadPage(webpages[0])}>
                     {webpages[0].name}</button>
 
-      <button class = "border-0 text-gray-300 bg-[#202124] hover:bg-[#2e3036] 2xl:text-xl xl:text-lg lg:text-lg md:text-md text-lg h-12 mt-2" 
+      <button class = "border-0 text-gray-300 bg-[#202124] hover:bg-[#2e3036] 2xl:text-xl xl:text-lg lg:text-lg md:text-md text-lg h-12" 
                       title={webpages[1].name} on:click={() => loadPage(webpages[1])}>
                       {webpages[1].name}</button>
     {/if}
@@ -45,11 +45,11 @@
 
     {#if selected == "Venue Search"}
     
-      <button class = "border-0 text-gray-300 bg-[#202124] hover:bg-[#2e3036] 2xl:text-xl xl:text-lg lg:text-lg md:text-md text-lg h-12 mt-2 border-r-2 border-sky-500" 
+      <button class = "border-0 text-gray-300 bg-[#202124] hover:bg-[#2e3036] 2xl:text-xl xl:text-lg lg:text-lg md:text-md text-lg h-12 border-r-2 border-sky-500" 
                       title={webpages[0].name} on:click={() => loadPage(webpages[0])}>
                       {webpages[0].name}</button>
       
-      <button class = "border-0 text-sky-500 bg-[#202124] hover:bg-[#2e3036] 2xl:text-xl xl:text-lg lg:text-lg md:text-md text-lg h-12 underline underline-offset-4 decoration-2 mt-2" 
+      <button class = "border-0 text-sky-500 bg-[#202124] hover:bg-[#2e3036] 2xl:text-xl xl:text-lg lg:text-lg md:text-md text-lg h-12 underline underline-offset-4 decoration-2" 
                       title={webpages[1].name} on:click={() => loadPage(webpages[1])}>
                       {webpages[1].name}</button>
     {/if}
