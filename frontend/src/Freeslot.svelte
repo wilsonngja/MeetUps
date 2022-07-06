@@ -421,7 +421,7 @@
       class="font-extrabold 2xl:mt-40 2xl:mb-10 xl:mt-40 xl:mb-10 lg:mt-32 lg:mb-5 mt-16 mb-2"
     >
       <span
-        class=" 2xl:text-5xl lg:text-3xl  md:text-2xl text-2xl bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-sky-500"
+        class=" 2xl:text-6xl lg:text-3xl  md:text-2xl text-2xl bg-clip-text text-transparent bg-gradient-to-r from-pink-600 to-sky-600"
         ><strong
           >Free Period Search For Current Sem: (<u>{query_semester}</u>)
         </strong></span
@@ -477,12 +477,12 @@
   </div>
 {/each}
 
-<div class=" text-center">
+<div class=" text-center content-center">
   {#if num_links > 1}
     <input
       type="button"
       value="- Remove last timetable link"
-      class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+      class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium bg-gradient-to-r from-pink-600 to-sky-600 rounded-lg border-none text-gray-50 font-bold hover:from-sky-600 hover:to-teal-600"
       on:click={removeField}
     />
   {/if}
@@ -490,14 +490,14 @@
   {#if num_links < 5}
     <button
       on:click|preventDefault={addField}
-      class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+      class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium bg-gradient-to-r from-pink-600 to-sky-600 rounded-lg border-none text-gray-50 font-bold hover:from-sky-600 hover:to-teal-600"
       >+ Add link</button
     >
   {/if}
 
   <button
     on:click|preventDefault={submitLink}
-    class="mt-14 py-2.5 px-5 mb-2 text-sm bg-gradient-to-r from-pink-600 to-sky-600 rounded-lg border-none text-gray-50 font-bold hover:from-sky-600 hover:to-teal-600"
+    class="mt-8 py-2.5 px-5 mb-2 text-sm font-medium bg-gradient-to-r from-pink-600 to-sky-600 rounded-lg border-none text-gray-50 font-bold hover:from-sky-600 hover:to-teal-600"
   >
     <strong>Find Time</strong></button
   >
@@ -576,32 +576,9 @@
   <strong>{error_message_no_rooms}</strong>
 </h3>
 
-<!-- </div> -->
+
 <style>
-  /* button {
-    background: #533a7b;
-    color: white;
-    border: none;
-    font-size: 1em;
-    padding: 8px 12px;
-    border-radius: 2px;
-    text-align: center;
-  } */
-
-  /* .tl_corner{
-
-
-  } */
-
-  /* .TimingButton {
-    background: #6a6a6a;
-    color: white;
-    border: none;
-    font-size: 1em;
-    padding: 8px 12px;
-    border-radius: 2px;
-    text-align: center;
-  } */
+  
 
   .VenueButton {
     background: #000000;
@@ -613,8 +590,4 @@
     text-align: center;
   }
 
-  /* .freeslot_div{
-    float:left;
-    width:20%;
-  } */
 </style>

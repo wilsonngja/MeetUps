@@ -7,9 +7,7 @@
   import config from "./config.json";
 
 
-
-
-
+  var selected = "Free Period Search";
 
   const webpages = [
 		{ name: "Free Period Search", component: Freeslot},
@@ -21,20 +19,42 @@
 	$: console.dir(selectedPage)
 	
 	// Have to use obj as arg. so value can be a class
-	const loadPage = (obj) => selectedPage = obj;
+	const loadPage = (obj) => {
+    selectedPage = obj;
+    selected = obj.name;
+    console.log(selected);
+  }
   
 </script>
 <main>
 
   <!-- Nav ba -->
-<div class = "grid grid-cols-2">
-	
-  {#each webpages as webpageObj}
-	<button class = "inline-block m-0 border-0 text-blue-600 bg-gray-100 rounded-t-2xl mr-2 bg-gray-800  dark:text-sky-600 hover:bg-gray-700 hover:text-white 2xl:text-2xl xl:text-xl lg:text-lg text-md" 
-					title={webpageObj.name}
-					on:click={() => loadPage(webpageObj)}>{webpageObj.name}</button>
-{/each}
+<div class = "grid 2xl:grid-cols-6 xl:grid-cols-6 lg:grid-cols-6 md:grid-cols-4 grid-cols-2 mt-5">
+    
+    {#if selected == "Free Period Search"}
+      
+      <button class = "border-0 text-sky-500 bg-[#202124] hover:bg-[#2e3036] 2xl:text-xl xl:text-lg lg:text-lg md:text-md text-lg h-12 underline underline-offset-4 decoration-2 mt-2 border-r-2 border-sky-500" 
+                    title={webpages[0].name} on:click={() => loadPage(webpages[0])}>
+                    {webpages[0].name}</button>
 
+      <button class = "border-0 text-gray-300 bg-[#202124] hover:bg-[#2e3036] 2xl:text-xl xl:text-lg lg:text-lg md:text-md text-lg h-12 mt-2" 
+                      title={webpages[1].name} on:click={() => loadPage(webpages[1])}>
+                      {webpages[1].name}</button>
+    {/if}
+
+
+    {#if selected == "Venue Search"}
+    
+      <button class = "border-0 text-gray-300 bg-[#202124] hover:bg-[#2e3036] 2xl:text-xl xl:text-lg lg:text-lg md:text-md text-lg h-12 mt-2 border-r-2 border-sky-500" 
+                      title={webpages[0].name} on:click={() => loadPage(webpages[0])}>
+                      {webpages[0].name}</button>
+      
+      <button class = "border-0 text-sky-500 bg-[#202124] hover:bg-[#2e3036] 2xl:text-xl xl:text-lg lg:text-lg md:text-md text-lg h-12 underline underline-offset-4 decoration-2 mt-2" 
+                      title={webpages[1].name} on:click={() => loadPage(webpages[1])}>
+                      {webpages[1].name}</button>
+    {/if}
+    
+              
 </div>
 
 <!-- Loaded component/webpage -->
