@@ -198,12 +198,15 @@
 
 
 <div class = " text-center">
-    <div class="font-extrabold 2xl:mt-40 2xl:mb-10 xl:mt-40 xl:mb-10 lg:mt-32 lg:mb-5 mt-16 mb-2">
+    <div class="font-extrabold 2xl:mt-24 2xl:mb-10 xl:mt-24 xl:mb-10 lg:mt-16 lg:mb-5 mt-12 mb-2">
         <span class=" 2xl:text-8xl lg:text-8xl md:text-7xl text-6xl bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-sky-500" ><strong>Venue Search</strong></span>
     </div>
     <p class=" font-extrabold text-gray-300 2xl:text-2xl xl:text-xl lg:text-xl text-md text-center ">This function allows you to search for available venues in the specified time range</p>
+    <p class="font-extrabold text-gray-300 2xl:text-2xl xl:text-xl lg:text-xl text-md text-center ">Sunday is not available for booking since the rooms will all be locked.</p>
+    <p class="font-extrabold text-gray-300 2xl:text-2xl xl:text-xl lg:text-xl text-md text-center ">This is because there is no lesson on Sunday, thus no rooms will be unlocked.</p>
     <p class=" font-extrabold text-gray-300 2xl:text-2xl xl:text-xl lg:text-xl text-md text-center ">Start Time should be 0800 hrs or after. </p>
     <p class="font-extrabold text-gray-300 2xl:text-2xl xl:text-xl lg:text-xl text-md text-center mb-5">End Time should be before 0000. </p>
+    
 
     <div class = "grid grid-cols-1 justify-items-center">
         
