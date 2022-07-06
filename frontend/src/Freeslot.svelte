@@ -664,9 +664,28 @@
 
 
 <style>
+  button {
+    background: #533a7b;
+    color: white;
+    border: none;
+    font-size: 1em;
+    padding: 8px 12px;
+    border-radius: 2px;
+    text-align: center;
+  }
+
+
+  .TimingButton {
+    /* font-size: 1em; */
+    border-radius: 2px;
+    text-align: center;
+    border: none;
+  }
+
   
 
   .VenueButton {
+    
     /* background: #202124; */
 
     font-size: 1em;
