@@ -78,18 +78,6 @@
         lat +
         "&zoom=19'></iframe>";
     }
-    // {
-    // alert("Currently unable to display location on Google Map.");
-    // } else {
-    // long = VenueInfo[venue].location.y;
-    // lat = VenueInfo[venue].location.x;
-
-    // //Find Json File and , modify and extract out venue data
-    // alert("Close this pop up to view " + venue + "'s location.");
-    // url = "http://maps.google.com/maps?q=" + long + "," + lat;
-
-    // window.open(url);
-    // }
   }
 
   // This function does an API call for venue
@@ -204,7 +192,6 @@
               "'>" +
               venue_slot[i] +
               "</button>";
-            // buttons += "<button class='VenueButton' id = '{ venue_slot[i]} '>" + venue_slot[i] + "</button>";
           }
         }
         loading = false;
@@ -215,7 +202,7 @@
 
 <div class=" text-center">
   <div
-    class="font-extrabold 2xl:mt-40 2xl:mb-10 xl:mt-40 xl:mb-10 lg:mt-32 lg:mb-5 mt-16 mb-2"
+    class="font-extrabold 2xl:mt-24 2xl:mb-10 xl:mt-24 xl:mb-10 lg:mt-16 lg:mb-5 mt-12 mb-2"
   >
     <span
       class=" 2xl:text-8xl lg:text-8xl md:text-7xl text-6xl bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-sky-500"
@@ -227,6 +214,17 @@
   >
     This function allows you to search for available venues in the specified
     time range
+  </p>
+  <p
+    class="font-extrabold text-gray-300 2xl:text-2xl xl:text-xl lg:text-xl text-md text-center "
+  >
+    Sunday is not available for booking since the rooms will all be locked.
+  </p>
+  <p
+    class="font-extrabold text-gray-300 2xl:text-2xl xl:text-xl lg:text-xl text-md text-center "
+  >
+    This is because there is no lesson on Sunday, thus no rooms will be
+    unlocked.
   </p>
   <p
     class=" font-extrabold text-gray-300 2xl:text-2xl xl:text-xl lg:text-xl text-md text-center "
@@ -351,6 +349,7 @@
   </div>
 </div>
 
+<!-- If the screen size is smth, show the text to ask viewer to scroll down to view the map -->
 <div class="2xl:invisible xl:invisible lg:invisible">
   {#if embbed_map != "none" && embbed_map != ""}
     <h3 class="text-sky-500 text-center md:text-xl sm:text-xl ">
@@ -359,8 +358,10 @@
   {/if}
 </div>
 
+<!-- Genereate the button and the map -->
 {#if venue_slot.length != 0}
   <div class="grid 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 grid-cols-1">
+    <!-- Button portion -->
     <div
       class="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-4 grid-cols-2 overflow-y-auto h-96 mb-10 overscroll-y-none"
     >
@@ -375,15 +376,22 @@
       {/each}
     </div>
 
-    <div class="md:mb-10 sm:mb-10">
+    <!-- Map portion -->
+    <div class="md:mb-10 sm:mb-10 ">
       {#if embbed_map == ""}
-        <p class="text-white">
-          Please click on any of the venues to view the map
-        </p>
+        <div
+          class="text-sky-500 2xl:text-2xl xl:text-xl lg:text-xl md:text-xl text-lg text-center"
+        >
+          Please click on any of the class to view the map
+        </div>
       {/if}
 
       {#if embbed_map == "none"}
-        <p class="text-white">Sorry the map is currently unavailable.</p>
+        <div
+          class="text-sky-500 2xl:text-2xl xl:text-xl lg:text-xl md:text-xl text-lg text-center"
+        >
+          Sorry the map is currently unavailable.
+        </div>
       {/if}
 
       {#if embbed_map != "none" && embbed_map != ""}
