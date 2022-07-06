@@ -556,7 +556,7 @@
   <div class="justify-items-center mb-5" contenteditable="false">
     {#each free_slot_arr as { slotid, start, end }}
       <button
-        class=" TimingButton mb-3 text-lg font-medium text-sky-600 hover:rounded-lg hover:bg-sky-600 hover:text-white"
+        class=" TimingButton mb-3 text-lg font-medium text-sky-600 hover:rounded-lg hover:text-white"
         id={slotid + "_" + start + "_" + end}
         on:click={getLocation(slotid, start, end, query_semester, week)}
       >
