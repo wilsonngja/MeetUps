@@ -608,7 +608,7 @@
   </div>
   <div class="grid 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 grid-cols-1">
     <div
-      class="border-2 grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-4 grid-cols-2 overflow-y-auto h-96 mb-10 overscroll-y-none"
+      class="border-r-2 border-sky-500 grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-4 grid-cols-2 overflow-y-auto h-96 mb-10 overscroll-y-none"
     >
       {#each venue_slot as venue}
         <button
