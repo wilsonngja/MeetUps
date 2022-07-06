@@ -193,7 +193,7 @@
               sem != "st-ii" &&
               sem != "st-i"
             ) {
-              error_message_invalid_timetable = "Unrecgonised timetable.\n";
+              error_message_invalid_timetable = "Unrecognised timetable.\n";
               wrongSemester = true;
               free_slot_generated = true;
             } else {
@@ -404,83 +404,128 @@
   }
 </script>
 
-<div class= "h-screen rounded-lg bg-gradient-to-tr from-gray-900 via-stone-900 to-gray-800">
-   <div >
-    <div class="object-cover 2xl:h-48 2xl:w-96 xl:h-36 xl:w-64  
+<!-- <div
+  class="h-screen rounded-lg bg-gradient-to-tr from-gray-900 via-stone-900 to-gray-800"
+> -->
+<div>
+  <!-- <div
+      class="object-cover 2xl:h-48 2xl:w-96 xl:h-36 xl:w-64  
     lg:h-36 lg:w-48
     md:h-36 md:w-24
-    h-0 w-0 "> 
-	<img clas = "object-contain "src="topleftcorner.png"> 
-</div>
-  <h3 class="text-white lg:text-xl md:text-lg sm:text-md mb-2 text-center"><strong>Free Period Search For Current Sem: ( <u> {query_semester}</u> )</strong></h3>
-  <p class="text-gray-400 text-center">This section helps you (or your teammates) to find the timeslots to meet up in the current semester. To find the timeslot, enter the timetable slots in the textbox below.</p>
-  <p class="text-gray-400 text-center">To add on more timetable, click on the "Add link" button.</p>
-  <p class="text-gray-400 text-center mb-8">Once all the timetable has been inputed, click on the "Find Time" button.</p>
+    h-0 w-0 "
+    >
+      <img clas="object-contain " src="topleftcorner.png" />
+    </div> -->
+  <div class="text-center font-extrabold ">
+    <div
+      class="font-extrabold 2xl:mt-40 2xl:mb-10 xl:mt-40 xl:mb-10 lg:mt-32 lg:mb-5 mt-16 mb-2"
+    >
+      <span
+        class=" 2xl:text-5xl lg:text-3xl  md:text-2xl text-2xl bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-sky-500"
+        ><strong
+          >Free Period Search For Current Sem: (<u>{query_semester}</u>)
+        </strong></span
+      >
+    </div>
+  </div>
+  <p
+    class="text-gray-400 text-center font-extrabold mt-10 mb-4
+  2xl:text-3xl lg:text-2.5xl md:text-2xl text-1xl 
+  "
+  >
+    This function helps you (or your teammates) to find the timeslots to meet up
+    in the current semester.
+  </p>
+
+  <p
+    class="text-gray-400 text-center   2xl:text-3xl lg:text-2xl md:text-1xl text-1xl "
+  >
+    To find the free periods, enter the <strong>NUSMODS timetable link</strong> in
+    the textbox below.
+  </p>
+  <p
+    class="text-gray-400 text-center   2xl:text-3xl lg:text-2xl md:text-1xl text-1xl "
+  >
+    To add on more timetables, click on "Add link".
+  </p>
+  <p
+    class="text-gray-400 text-center mb-8   2xl:text-3xl lg:text-2xl md:text-1xl text-1xl "
+  >
+    Click on "Find Time" to find free periods!
+  </p>
   <!-- <h4 class="lg:text-2xl md:text-xl sm:text-md text-white" >{query_semester}</h4> -->
+</div>
 
-   </div>
-
-  <!-- <div class = "grid grid-cols-1 gap-4"> -->
-    <!-- <div  class = "grid grid-cols-2 gap-4" > 
+<!-- <div class = "grid grid-cols-1 gap-4"> -->
+<!-- <div  class = "grid grid-cols-2 gap-4" > 
       <h4 class="text-right lg:text-2xl md:text-xl sm:text-md"><strong>Current Semester: </strong></h4> 
       <h4 class="lg:text-2xl md:text-xl sm:text-md" >{query_semester}</h4>
     </div> -->
-   
-   
-  <!-- </div> -->
-  
-  {#each Array(num_links) as _, i}
-    <div class = "grid grid-cols-1 gap-4 text-center lg:mx-64 md:mx-32">
-      <input
-        class =" appearance-none border-2 border-gray-300 rounded-md  focus:outline-none focus:border-sky-500 bg-[#202124] text-center lg:text-2xl md:text-xl sm:text-md my-1 text-sky-500 focus:placeholder-sky-500 focus:bg-[#202124] " autocomplete="off"
-        name="DynamicField"
-        type="text"
-        id={`link_${i}`}
-        placeholder="https://nusmods.com/timetable/sem-1/share?CS1010=LEC:01"
-      />
-    </div>
-  {/each}
-  
-  
-  <div class = " text-center">
+
+<!-- </div> -->
+
+{#each Array(num_links) as _, i}
+  <div class="grid grid-cols-1 gap-4 text-center lg:mx-64 md:mx-32">
+    <input
+      class=" appearance-none border-2 border-gray-300 rounded-md  focus:outline-none focus:border-sky-500 bg-[#202124] text-center lg:text-2xl md:text-xl sm:text-md my-1 text-sky-500 focus:placeholder-sky-500 focus:bg-[#202124] "
+      autocomplete="off"
+      name="DynamicField"
+      type="text"
+      id={`link_${i}`}
+      placeholder="https://nusmods.com/timetable/sem-1/share?CS1010=LEC:01"
+    />
+  </div>
+{/each}
+
+<div class=" text-center">
   {#if num_links > 1}
     <input
       type="button"
       value="- Remove last timetable link"
-      class = "py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+      class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
       on:click={removeField}
     />
   {/if}
-  
+
   {#if num_links < 5}
-    <button on:click|preventDefault={addField} class = "py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">+ Add link</button>
+    <button
+      on:click|preventDefault={addField}
+      class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+      >+ Add link</button
+    >
   {/if}
-  
-  <button on:click|preventDefault={submitLink} class = "py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-    <strong>Find Time</strong></button>
-  
-  </div>
-    {#if !free_slot_generated}
+
+  <button
+    on:click|preventDefault={submitLink}
+    class="mt-14 py-2.5 px-5 mb-2 text-sm bg-gradient-to-r from-pink-600 to-sky-600 rounded-lg border-none text-gray-50 font-bold hover:from-sky-600 hover:to-teal-600"
+  >
+    <strong>Find Time</strong></button
+  >
+</div>
+<div class="grid grid-cols-1 justify-items-center">
+  {#if !free_slot_generated}
     <br />
     <img src="loading_bar.svg" alt="" />
     <!-- <p>{message}</p> -->
   {/if}
-  
+
   {#if num_free_slot}
     <!-- svelte-ignore a11y-label-has-associated-control -->
-  
+
     <!-- svelte-ignore a11y-label-has-associated-control -->
-    <select bind:value={week}>
+    <select
+      class="border border-gray-300 bg-[#202124] text-white rounded-lg border-1 block 2xl:text-xl 2xl:mt-10 2xl:mb-3 xl:text-xl xl:mt-10 xl:mb-3 lg:text-xl lg:mt-10 lg:mb-3 text-lg mt-5 mb-1 max-h-full focus:outline-none focus:border-sky-500 my-0.5 "
+      bind:value={week}
+    >
       {#each weeks as week_num}
         <option>{week_num}</option>
       {/each}
     </select>
   {/if}
-  
+
   <br />
-  <br />
-  
-  <div class="freeslot_div" contenteditable="false">
+
+  <div class="grid grid-cols-1 justify-items-center" contenteditable="false">
     {#each free_slot_arr as { slotid, start, end }}
       <button
         class="TimingButton"
@@ -492,32 +537,46 @@
       <br />
     {/each}
   </div>
-  
-  <!-- <div class="button_div" contenteditable="false" bind:innerHTML={buttons} /> -->
-  <div class="VenueDiv">
-    {#if loading}
-      <img src="loading_bar.svg" alt="" />
-    {/if}
-  
-    {#each venue_slot as venue}
-      <button
-        class="VenueButton"
-        id={venue}
-        contenteditable="false"
-        on:click={() => getMap({ venue })}
-      >
-        {venue}
-      </button>
-    {/each}
-  </div>
-  <h3 class="text-center text-red-700 text-xl 3xl:text-3xl xl:text-3xl lg:text-2xl md:text-2xl"><strong>{error_message_empty}</strong></h3>
-  <h3 class="text-center text-red-700 text-xl 3xl:text-3xl xl:text-3xl lg:text-2xl md:text-2xl"><strong>{error_message_invalid_timetable}</strong></h3>
-  <h3 class="text-center text-red-700 text-xl 3xl:text-3xl xl:text-3xl lg:text-2xl md:text-2xl"><strong>{error_message_wrong_sem}</strong></h3>
-  <h3 class="text-center text-red-700 text-xl 3xl:text-3xl xl:text-3xl lg:text-2xl md:text-2xl"><strong>{error_message_no_rooms}</strong></h3>
-
 </div>
+<!-- <div class="button_div" contenteditable="false" bind:innerHTML={buttons} /> -->
+<div class="VenueDiv">
+  {#if loading}
+    <img src="loading_bar.svg" alt="" />
+  {/if}
 
+  {#each venue_slot as venue}
+    <button
+      class="VenueButton"
+      id={venue}
+      contenteditable="false"
+      on:click={() => getMap({ venue })}
+    >
+      {venue}
+    </button>
+  {/each}
+</div>
+<h3
+  class="text-center text-red-700 text-xl 3xl:text-3xl xl:text-3xl lg:text-2xl md:text-2xl"
+>
+  <strong>{error_message_empty}</strong>
+</h3>
+<h3
+  class="text-center text-red-700 text-xl 3xl:text-3xl xl:text-3xl lg:text-2xl md:text-2xl"
+>
+  <strong>{error_message_invalid_timetable}</strong>
+</h3>
+<h3
+  class="text-center text-red-700 text-xl 3xl:text-3xl xl:text-3xl lg:text-2xl md:text-2xl"
+>
+  <strong>{error_message_wrong_sem}</strong>
+</h3>
+<h3
+  class="text-center text-red-700 text-xl 3xl:text-3xl xl:text-3xl lg:text-2xl md:text-2xl"
+>
+  <strong>{error_message_no_rooms}</strong>
+</h3>
 
+<!-- </div> -->
 <style>
   /* button {
     background: #533a7b;
@@ -529,14 +588,12 @@
     text-align: center;
   } */
 
-
   /* .tl_corner{
 
 
   } */
- 
 
-  .TimingButton {
+  /* .TimingButton {
     background: #6a6a6a;
     color: white;
     border: none;
@@ -544,7 +601,7 @@
     padding: 8px 12px;
     border-radius: 2px;
     text-align: center;
-  }
+  } */
 
   .VenueButton {
     background: #000000;
