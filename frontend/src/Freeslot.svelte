@@ -452,7 +452,7 @@
   </div>
   <p
     class="text-gray-400 text-center font-extrabold mt-10 mb-4
-  2xl:text-3xl lg:text-2.5xl md:text-2xl text-1xl 
+  2xl:text-3xl lg:text-2.5xl md:text-2xl text-xl mx-4
   "
   >
     This function helps you (or your teammates) to find the timeslots to meet up
@@ -460,18 +460,17 @@
   </p>
 
   <p
-    class="text-gray-400 text-center   2xl:text-3xl lg:text-2xl md:text-1xl text-1xl "
+    class="text-gray-400 text-center   2xl:text-3xl lg:text-2xl md:text-xl text-xl mx-4"
   >
-    To find the free periods, enter the <strong>NUSMODS timetable link</strong> in
-    the textbox below.
+    Enter NUSMODS timetable link to find free periods”
   </p>
   <p
-    class="text-gray-400 text-center   2xl:text-3xl lg:text-2xl md:text-1xl text-1xl "
+    class="text-gray-400 text-center   2xl:text-3xl lg:text-2xl md:text-xl text-xl mx-4"
   >
-    To add on more timetables, click on "Add link".
+    Click “Add Link” to add timetable links.
   </p>
   <p
-    class="text-gray-400 text-center mb-8   2xl:text-3xl lg:text-2xl md:text-1xl text-1xl "
+    class="text-gray-400 text-center mb-8   2xl:text-3xl lg:text-2xl md:text-xl text-xl mx-4"
   >
     Click on "Find Time" to find free periods!
   </p>
@@ -489,7 +488,7 @@
 {#each Array(num_links) as _, i}
   <div class="grid grid-cols-1 gap-4 text-center lg:mx-64 md:mx-32">
     <input
-      class=" appearance-none border-2 border-gray-300 rounded-md  focus:outline-none focus:border-sky-500 bg-[#202124] text-center lg:text-2xl md:text-xl sm:text-md my-1 text-sky-500 focus:placeholder-sky-500/25 focus:bg-[#202124] "
+      class=" appearance-none border-2 border-gray-300 rounded-md  focus:outline-none focus:border-sky-500 bg-[#202124] text-center lg:text-2xl md:text-xl sm:text-md my-1 text-sky-500 focus:placeholder-sky-500/25 focus:bg-[#202124] mx-4"
       autocomplete="off"
       name="DynamicField"
       type="text"

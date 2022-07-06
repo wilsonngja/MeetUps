@@ -202,7 +202,7 @@
 
 <div class=" text-center">
   <div
-    class="font-extrabold 2xl:mt-24 2xl:mb-10 xl:mt-24 xl:mb-10 lg:mt-16 lg:mb-5 mt-12 mb-2"
+    class="font-extrabold 2xl:mt-24 2xl:mb-10 xl:mt-24 xl:mb-10 lg:mt-16 lg:mb-5 mt-12 mb-4"
   >
     <span
       class=" 2xl:text-8xl lg:text-8xl md:text-7xl text-6xl bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-sky-500"
@@ -210,31 +210,32 @@
     >
   </div>
   <p
-    class=" font-extrabold text-gray-300 2xl:text-2xl xl:text-xl lg:text-xl text-md text-center "
+    class=" font-extrabold text-gray-300 2xl:text-2xl xl:text-xl lg:text-xl text-md text-center mx-4"
   >
     This function allows you to search for available venues in the specified
     time range
   </p>
   <p
-    class="font-extrabold text-gray-300 2xl:text-2xl xl:text-xl lg:text-xl text-md text-center "
-  >
-    Sunday is not available for booking since the rooms will all be locked.
-  </p>
-  <p
-    class="font-extrabold text-gray-300 2xl:text-2xl xl:text-xl lg:text-xl text-md text-center "
-  >
-    This is because there is no lesson on Sunday, thus no rooms will be
-    unlocked.
-  </p>
-  <p
-    class=" font-extrabold text-gray-300 2xl:text-2xl xl:text-xl lg:text-xl text-md text-center "
+    class=" font-extrabold text-gray-300 2xl:text-2xl xl:text-xl lg:text-xl text-md text-center mx-4"
   >
     Start Time should be 0800 hrs or after.
   </p>
   <p
-    class="font-extrabold text-gray-300 2xl:text-2xl xl:text-xl lg:text-xl text-md text-center mb-5"
+    class="font-extrabold text-gray-300 2xl:text-2xl xl:text-xl lg:text-xl text-md text-center mb-5 mx-4"
   >
     End Time should be before 0000.
+  </p>
+
+  <p
+    class="font-semibold text-orange-700 2xl:text-lg xl:text-lg lg:text-md text-sm text-center mx-4"
+  >
+    Note: Sunday is not available for booking since the rooms will all be locked.
+  </p>
+  <p
+    class="font-semibold text-orange-700 2xl:text-lg xl:text-lg lg:text-md text-sm text-center mx-4"
+  >
+    This is because there is no lesson on Sunday, thus no rooms will be
+    unlocked.
   </p>
 
   <div class="grid grid-cols-1 justify-items-center">
