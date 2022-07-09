@@ -440,10 +440,10 @@
     </div> -->
   <div class="text-center font-extrabold ">
     <div
-      class="font-extrabold 2xl:mt-40 2xl:mb-10 xl:mt-40 xl:mb-10 lg:mt-32 lg:mb-5 mt-16 mb-2"
+      class="font-extrabold 2xl:mt-40 2xl:mb-10 xl:mt-40 xl:mb-10 lg:mt-32 lg:mb-5 mt-16 mb-2 mx-2.5"
     >
       <span
-        class=" 2xl:text-6xl lg:text-3xl  md:text-2xl text-2xl bg-clip-text text-transparent bg-gradient-to-r from-pink-600 to-sky-600"
+        class=" 2xl:text-6xl lg:text-3xl  md:text-2xl text-2xl   bg-clip-text text-transparent bg-gradient-to-r from-pink-600 to-sky-600"
         ><strong
           >Free Period Search For Current Sem: (<u>{query_semester}</u>)
         </strong></span
@@ -518,7 +518,8 @@
 
   <button
     on:click|preventDefault={submitLink}
-    class="mt-8 py-2.5 px-5 mb-2 text-sm font-medium bg-sky-500 border-none text-white font-bold rounded-md shadow-lg shadow-sky-500/50 hover:bg-cyan-500 hover:shadow-cyan-500/50">
+    class="mt-8 py-2.5 px-5 mb-2 text-sm font-medium bg-sky-500 border-none text-white font-bold rounded-md shadow-lg shadow-sky-500/50 hover:bg-cyan-500 hover:shadow-cyan-500/50"
+  >
     <strong>Find Time</strong></button
   >
 </div>
@@ -660,11 +661,7 @@
   <strong>{error_message_no_rooms}</strong>
 </h3>
 
-
 <style>
-  
-
-
   .TimingButton {
     /* font-size: 1em; */
     border-radius: 2px;
@@ -672,10 +669,7 @@
     border: none;
   }
 
-
-
   .VenueButton {
-    
     /* background: #202124; */
 
     font-size: 1em;
@@ -684,5 +678,4 @@
     text-align: center;
     border: none;
   }
-
 </style>
