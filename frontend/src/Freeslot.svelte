@@ -474,42 +474,51 @@
     This function helps you (or your teammates) to find the timeslots to meet up
     in the current semester.
   </p>
-  <div class="text-sky-500 text-center">
-    <button
-      title="Click to visit NUSMODS!"
-      class=" text-center border-none
-       2xl:text-3xl lg:text-2xl md:text-xl text-xl mx-4 font-bold hover:text-white"
-      on:click={visitNUSMODS}
+  <br />
+  <div>
+    <p
+      class="text-white text-center font-bold   2xl:text-3xl lg:text-2xl md:text-xl text-xl mx-4"
     >
-      1. Visit NUSMODS in {query_semester}!
-      <i
-        class="
+      HOW TO GET FREE PERIODS?
+    </p>
+    <br />
+    <div class="text-sky-500 text-center">
+      <button
+        title="Click to visit NUSMODS!"
+        class=" text-center border-none
+       2xl:text-3xl lg:text-2xl md:text-xl text-xl mx-4 font-bold hover:text-white"
+        on:click={visitNUSMODS}
+      >
+        <u>1. Visit NUSMODS in {query_semester}!</u>
+        <i
+          class="
       fa
       fa-exclamation-circle"
-      /></button
-    >
-  </div>
-  <!-- <h1 class="text-gray-400 text-center" title="Visit NUSMODS" use:tooltip>
+        /></button
+      >
+    </div>
+    <!-- <h1 class="text-gray-400 text-center" title="Visit NUSMODS" use:tooltip>
     Extract your Timetable link from NUSMODS
   </h1> -->
-  <p
-    class="text-gray-400 text-center   2xl:text-3xl lg:text-2xl md:text-xl text-xl mx-4"
-  >
-    2. Enter NUSMODS timetable link to find free periods”
-  </p>
-  <p
-    class="text-gray-400 text-center   2xl:text-3xl lg:text-2xl md:text-xl text-xl mx-4"
-  >
-    3. Click “Add Link” to add timetable links.
-  </p>
-  <p
-    class="text-gray-400 text-center mb-8   2xl:text-3xl lg:text-2xl md:text-xl text-xl mx-4"
-  >
-    4. Click on "Find Time" to find free periods!
-  </p>
-  <!-- <h4 class="lg:text-2xl md:text-xl sm:text-md text-white" >{query_semester}</h4> -->
+    <p
+      class="text-gray-400 text-center   2xl:text-3xl lg:text-2xl md:text-xl text-xl mx-4"
+    >
+      2. Enter NUSMODS timetable link to find free periods”
+    </p>
+    <p
+      class="text-gray-400 text-center   2xl:text-3xl lg:text-2xl md:text-xl text-xl mx-4"
+    >
+      3. Click “Add more links” to add timetable links.
+    </p>
+    <p
+      class="text-gray-400 text-center mb-8   2xl:text-3xl lg:text-2xl md:text-xl text-xl mx-4"
+    >
+      4. Click on "Find Time" to find free periods!
+    </p>
+    <!-- <h4 class="lg:text-2xl md:text-xl sm:text-md text-white" >{query_semester}</h4> -->
+  </div>
 </div>
-
+<br />
 <!-- <div class = "grid grid-cols-1 gap-4"> -->
 <!-- <div  class = "grid grid-cols-2 gap-4" > 
       <h4 class="text-right lg:text-2xl md:text-xl sm:text-md"><strong>Current Semester: </strong></h4> 
@@ -545,7 +554,7 @@
     <button
       on:click|preventDefault={addField}
       class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium bg-gradient-to-r from-pink-600 to-sky-600 rounded-lg border-none text-gray-50 font-bold hover:from-sky-600 hover:to-teal-600"
-      >+ Add link</button
+      >+ Add more links</button
     >
   {/if}
 
