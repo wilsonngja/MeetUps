@@ -5,6 +5,7 @@
   import AcademicYear from "./backend/database/start_date.json";
   import VenueInfo from "./backend/database/venues.json";
   import config from "./config.json";
+  import Icon from "@iconify/svelte";
 
   var free_slot_generated = true;
   var num_links = 1;
@@ -424,6 +425,21 @@
     }
     loading = false;
   }
+
+  async function visitNUSMODS() {
+    const checkSemesterInv = {
+      "Semester 1": "sem-1",
+      "Semester 2": "sem-2",
+      "Special Term 1": "st-i",
+      "Special Term 2": "st-ii",
+    };
+
+    let url =
+      "https://nusmods.com/timetable/" + checkSemesterInv[query_semester];
+
+    window.open(url);
+    // query_semester;
+  }
 </script>
 
 <!-- <div
@@ -458,21 +474,38 @@
     This function helps you (or your teammates) to find the timeslots to meet up
     in the current semester.
   </p>
-
+  <div class="text-sky-500 text-center">
+    <button
+      title="Click to visit NUSMODS!"
+      class=" text-center border-none
+       2xl:text-3xl lg:text-2xl md:text-xl text-xl mx-4 font-bold hover:text-white"
+      on:click={visitNUSMODS}
+    >
+      1. Visit NUSMODS in {query_semester}!
+      <i
+        class="
+      fa
+      fa-exclamation-circle"
+      /></button
+    >
+  </div>
+  <!-- <h1 class="text-gray-400 text-center" title="Visit NUSMODS" use:tooltip>
+    Extract your Timetable link from NUSMODS
+  </h1> -->
   <p
     class="text-gray-400 text-center   2xl:text-3xl lg:text-2xl md:text-xl text-xl mx-4"
   >
-    Enter NUSMODS timetable link to find free periods”
+    2. Enter NUSMODS timetable link to find free periods”
   </p>
   <p
     class="text-gray-400 text-center   2xl:text-3xl lg:text-2xl md:text-xl text-xl mx-4"
   >
-    Click “Add Link” to add timetable links.
+    3. Click “Add Link” to add timetable links.
   </p>
   <p
     class="text-gray-400 text-center mb-8   2xl:text-3xl lg:text-2xl md:text-xl text-xl mx-4"
   >
-    Click on "Find Time" to find free periods!
+    4. Click on "Find Time" to find free periods!
   </p>
   <!-- <h4 class="lg:text-2xl md:text-xl sm:text-md text-white" >{query_semester}</h4> -->
 </div>
@@ -573,20 +606,6 @@
     <img src="loading_bar.svg" alt="" />
   {/if}
 </div>
-
-<!-- 
-<div>
-  {#each venue_slot as venue}
-    <button
-      class="VenueButton"
-      id={venue}
-      contenteditable="false"
-      on:click={() => getMap({ venue })}
-    >
-      {venue}
-    </button>
-  {/each}
-</div> -->
 
 <div class="2xl:invisible xl:invisible lg:invisible">
   {#if embbed_map != "none" && embbed_map != ""}
