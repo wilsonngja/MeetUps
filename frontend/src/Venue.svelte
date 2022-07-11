@@ -170,7 +170,7 @@
             ) {
               if (
                 data["result"][i]["Availability Timeslot"][0][0] != "0800" ||
-                data["result"][i]["Availability Timeslot"][0][1] != "2359"
+                data["result"][i]["Availability Timeslot"][0][1] != "2200"
               ) {
                 if (!venue_slot.includes(data["result"][i]["Venue"])) {
                   venue_slot.push(data["result"][i]["Venue"]);
@@ -229,7 +229,8 @@
   <p
     class="font-semibold text-orange-700 2xl:text-lg xl:text-lg lg:text-md text-sm text-center mx-4"
   >
-    Note: Sunday is not available for booking since the rooms will all be locked.
+    Note: Sunday is not available for booking since the rooms will all be
+    locked.
   </p>
   <p
     class="font-semibold text-orange-700 2xl:text-lg xl:text-lg lg:text-md text-sm text-center mx-4"
@@ -314,7 +315,7 @@
       <input
         class="border-2 border-gray-300 rounded-md focus:outline-none focus:border-sky-500 2xl:text-xl 2xl:mt-3 2xl:mb-3 2xl:w-40 xl:text-xl xl:mt-3 xl:mb-3 xl:w-40 lg:text-xl lg:mt-3 lg:mb-3 lg:w-32 md:w-24 w-20 text-lg mt-1.5 mb-1.5 "
         bind:value={endTime}
-        placeholder=" 2359"
+        placeholder=" 2200"
         required
       />
     </div>
