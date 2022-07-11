@@ -16,6 +16,7 @@
 
   var errorMessage_empty_field = "";
   var errorMessage_wrong_input = "";
+  var errorMessage_wrong_input2 = "";
   var errorMessage_no_rooms = "";
 
   const apiURL = config["API_LINK"];
@@ -84,7 +85,9 @@
   async function getVenue() {
     errorMessage_empty_field = "";
     errorMessage_wrong_input = "";
+    errorMessage_wrong_input2 = "";
     errorMessage_no_rooms = "";
+
     venue_slot = [];
 
     if (
@@ -121,8 +124,30 @@
       ) {
         errorMessage_empty_field = "Please fill in the start and end time.";
       }
-    } else {
-      if (
+      
+    } 
+       else {
+        if ((startTime < "0800") || (startTime > "2200") || (endTime < "0800") || (endTime > "2200"))
+        {
+          if (startTime < "0800")
+          {
+            errorMessage_wrong_input = "Start time must be after 0800.";
+          }
+          else if (startTime > "2200")
+          {
+            errorMessage_wrong_input = "Start time must be before 2200";
+          }
+
+          if (endTime < "0800")
+          {
+            errorMessage_wrong_input2 = "End time must be after 0800.";
+          }
+          else if (endTime > "2200")
+          {
+            errorMessage_wrong_input2 = "End time must be before 2200";
+          }
+        }
+        else if (
         startTime.match("\\d{4}") != startTime &&
         endTime.match("\\d{4}") == endTime
       ) {
@@ -341,6 +366,11 @@
       class="text-center text-red-800 text-xl 3xl:text-3xl xl:text-3xl lg:text-2xl md:text-2xl"
     >
       <strong>{errorMessage_wrong_input}</strong>
+    </h3>
+    <h3
+      class="text-center text-red-800 text-xl 3xl:text-3xl xl:text-3xl lg:text-2xl md:text-2xl"
+    >
+      <strong>{errorMessage_wrong_input2}</strong>
     </h3>
     <h3
       class="text-center text-red-800 text-xl 3xl:text-3xl xl:text-3xl lg:text-2xl md:text-2xl"
