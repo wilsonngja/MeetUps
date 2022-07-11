@@ -389,7 +389,7 @@
 
       {#if embbed_map == "none"}
         <div
-          class="text-sky-500 2xl:text-2xl xl:text-xl lg:text-xl md:text-xl text-lg text-center"
+          class="text-red-700 2xl:text-2xl xl:text-xl lg:text-xl md:text-xl text-lg text-center"
         >
           Sorry the map is currently unavailable.
         </div>

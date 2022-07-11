@@ -290,8 +290,8 @@
       }
 
       for (const [key, value] of Object.entries(lesson_slot)) {
-        //2359 is the end of the search. Can be change to differnt class timing. But take note that the class in NUS ends latest at 9pm
-        lesson_slot[key].push(["2359", "2359"]);
+        //2200 is the end of the search. Can be change to differnt class timing. But take note that the class in NUS ends latest at 9pm
+        lesson_slot[key].push(["2200", "2200"]);
         value.sort();
 
         //Check through the classes each day
@@ -396,7 +396,7 @@
         if (
           !(
             data["result"][i]["Availability Timeslot"][0][0] == "0800" &&
-            data["result"][i]["Availability Timeslot"][0][1] == "2359"
+            data["result"][i]["Availability Timeslot"][0][1] == "2200"
           ) ||
           (data["result"][i]["Availability Timeslot"][0][0] <= starttime &&
             data["result"][i]["Availability Timeslot"][0][1] >= endtime &&
@@ -424,6 +424,7 @@
     }
     loading = false;
   }
+
 </script>
 
 <!-- <div
@@ -475,15 +476,12 @@
     Click on "Find Time" to find free periods!
   </p>
   <!-- <h4 class="lg:text-2xl md:text-xl sm:text-md text-white" >{query_semester}</h4> -->
+
+
 </div>
 
-<!-- <div class = "grid grid-cols-1 gap-4"> -->
-<!-- <div  class = "grid grid-cols-2 gap-4" > 
-      <h4 class="text-right lg:text-2xl md:text-xl sm:text-md"><strong>Current Semester: </strong></h4> 
-      <h4 class="lg:text-2xl md:text-xl sm:text-md" >{query_semester}</h4>
-    </div> -->
 
-<!-- </div> -->
+
 
 {#each Array(num_links) as _, i}
   <div class="grid grid-cols-1 gap-4 text-center lg:mx-64 md:mx-32">
@@ -494,7 +492,8 @@
       type="text"
       id={`link_${i}`}
       placeholder="https://nusmods.com/timetable/sem-1/share?CS1010=LEC:01"
-    />
+    >
+    
   </div>
 {/each}
 
@@ -661,6 +660,9 @@
 </h3>
 
 
+
+
+
 <style>
   
 
@@ -684,5 +686,4 @@
     text-align: center;
     border: none;
   }
-
 </style>

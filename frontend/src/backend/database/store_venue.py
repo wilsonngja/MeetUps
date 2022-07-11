@@ -121,7 +121,7 @@ for location in file_data:
                         classes_slot.append((j['startTime'], j['endTime']))
                 
                 # Append the last class timing
-                classes_slot.append(("2359", "2359"))
+                classes_slot.append(("2200", "2200"))
                 # Sort it in case any class is not sorted
                 classes_slot = sorted(classes_slot)
                 free_slot = []
