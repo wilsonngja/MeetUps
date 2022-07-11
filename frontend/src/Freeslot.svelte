@@ -291,8 +291,8 @@
       }
 
       for (const [key, value] of Object.entries(lesson_slot)) {
-        //2359 is the end of the search. Can be change to differnt class timing. But take note that the class in NUS ends latest at 9pm
-        lesson_slot[key].push(["2359", "2359"]);
+        //2200 is the end of the search. Can be change to differnt class timing. But take note that the class in NUS ends latest at 9pm
+        lesson_slot[key].push(["2200", "2200"]);
         value.sort();
 
         //Check through the classes each day
@@ -397,7 +397,7 @@
         if (
           !(
             data["result"][i]["Availability Timeslot"][0][0] == "0800" &&
-            data["result"][i]["Availability Timeslot"][0][1] == "2359"
+            data["result"][i]["Availability Timeslot"][0][1] == "2200"
           ) ||
           (data["result"][i]["Availability Timeslot"][0][0] <= starttime &&
             data["result"][i]["Availability Timeslot"][0][1] >= endtime &&

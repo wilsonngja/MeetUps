@@ -121,7 +121,7 @@ for location in file_data:
                         classes_slot.append((j['startTime'], j['endTime']))
                 
                 # Append the last class timing
-                classes_slot.append(("2359", "2359"))
+                classes_slot.append(("2200", "2200"))
                 # Sort it in case any class is not sorted
                 classes_slot = sorted(classes_slot)
                 free_slot = []
@@ -240,7 +240,7 @@ for location in file_data:
                         classes_slot.append((j['startTime'], j['endTime']))
                 
                 # Add the last timing
-                classes_slot.append(("2359", "2359"))
+                classes_slot.append(("2200", "2200"))
                 # Sort the class in case it's not already sorted
                 classes_slot = sorted(classes_slot)
                 free_slot = []
@@ -360,7 +360,7 @@ for location in file_data:
                         classes_slot.append((j['startTime'], j['endTime']))
                 
                 # Append the last timing
-                classes_slot.append(("2359", "2359"))
+                classes_slot.append(("2200", "2200"))
                 # Sort the array in case it's not sorted
                 classes_slot = sorted(classes_slot)
                 free_slot = []
@@ -483,7 +483,7 @@ for location in file_data:
                         classes_slot.append((j['startTime'], j['endTime']))
                 
                 # Store the last timing of the day
-                classes_slot.append(("2359", "2359"))
+                classes_slot.append(("2200", "2200"))
                 # Sort the array in case it's not sorted yet
                 classes_slot = sorted(classes_slot)
                 free_slot = []
