@@ -13,6 +13,7 @@
   var week;
   var weeks = ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6"];
   var embbed_map = "";
+  var element = document.getElementById("VenueID");
 
   var errorMessage_empty_field = "";
   var errorMessage_wrong_input = "";
@@ -59,6 +60,7 @@
     // This part of the function is to have a selected effect with same background and text colour as hover
     if (document.getElementsByClassName("active").length == 1) {
       let current = document.getElementsByClassName("active");
+      
       current[0].className = current[0].className.replace(" active", "");
     }
     document.getElementsByClassName(venue)[0].className += " active";
@@ -225,7 +227,18 @@
         loading = false;
       }
     }
+<<<<<<< HEAD
   }
+=======
+
+    
+ 
+  }
+
+ 
+
+
+>>>>>>> fafbceb855cc1ed9316f1197c282aa36822a1791
 </script>
 
 <div class=" text-center">
@@ -327,7 +340,7 @@
         >Start Time</label
       >
       <input
-        class="border-2 border-gray-300 rounded-md focus:outline-none focus:border-sky-500 2xl:text-xl 2xl:mt-3 2xl:mb-3 2xl:w-40 xl:text-xl xl:mt-3 xl:mb-3 xl:w-40 lg:text-xl lg:mt-3 lg:mb-3 lg:w-32 md:w-24 w-20 text-lg mt-1.5 mb-1.5 "
+        class="border-2 border-gray-300 rounded-md focus:outline-none focus:border-sky-500 2xl:text-xl 2xl:mt-3 2xl:mb-3 2xl:w-40 xl:text-xl xl:mt-3 xl:mb-3 xl:w-40 lg:text-xl lg:mt-3 lg:mb-3 lg:w-32 md:w-24 w-20 text-lg mt-1.5 mb-1.5 bg-[#202124] placeholder-stone-700 focus:placeholder-opacity-50 placeholder-opacity-75 focus:text-sky-500"
         bind:value={startTime}
         placeholder=" 0800"
         required
@@ -341,7 +354,7 @@
         >End Time</label
       >
       <input
-        class="border-2 border-gray-300 rounded-md focus:outline-none focus:border-sky-500 2xl:text-xl 2xl:mt-3 2xl:mb-3 2xl:w-40 xl:text-xl xl:mt-3 xl:mb-3 xl:w-40 lg:text-xl lg:mt-3 lg:mb-3 lg:w-32 md:w-24 w-20 text-lg mt-1.5 mb-1.5 "
+        class="border-2 border-gray-300 rounded-md focus:outline-none focus:border-sky-500 2xl:text-xl 2xl:mt-3 2xl:mb-3 2xl:w-40 xl:text-xl xl:mt-3 xl:mb-3 xl:w-40 lg:text-xl lg:mt-3 lg:mb-3 lg:w-32 md:w-24 w-20 text-lg mt-1.5 mb-1.5 bg-[#202124] placeholder-stone-700 focus:placeholder-opacity-50 placeholder-opacity-75 focus:text-sky-500"
         bind:value={endTime}
         placeholder=" 2200"
         required
@@ -393,11 +406,12 @@
   {/if}
 </div>
 
+
 <!-- Genereate the button and the map -->
 {#if venue_slot.length != 0}
   <div class="grid 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 grid-cols-1">
     <!-- Button portion -->
-    <div
+    <div 
       class="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-4 grid-cols-2 overflow-y-auto h-96 mb-10 overscroll-y-none"
     >
       {#each venue_slot as venue}
@@ -435,6 +449,7 @@
     </div>
   </div>
 {/if}
+
 
 <style>
   .VenueButton {
