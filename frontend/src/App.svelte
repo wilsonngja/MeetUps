@@ -37,7 +37,7 @@
   >
     {#if selected == "Free Period Search"}
       <button
-        class="border-0 text-sky-500 bg-[#202124] hover:bg-[#2e3036] 2xl:text-xl xl:text-lg lg:text-lg md:text-md text-lg h-12 underline underline-offset-4 decoration-2 border-r-2 border-sky-500"
+        class="border-0 text-sky-500 bg-[#202124] hover:bg-[#2e3036] 2xl:text-xl xl:text-lg lg:text-lg md:text-md text-lg h-12 underline underline-offset-4 decoration-2 border-r-2 border-sky-500 active:text-[#202124] font-normal active:font-semibold"
         title={webpages[0].name}
         on:click={() => loadPage(webpages[0])}
       >
@@ -45,7 +45,7 @@
       >
 
       <button
-        class="border-0 text-gray-300 bg-[#202124] hover:bg-[#2e3036] 2xl:text-xl xl:text-lg lg:text-lg md:text-md text-lg h-12"
+        class="border-0 text-gray-300 bg-[#202124] hover:bg-[#2e3036] 2xl:text-xl xl:text-lg lg:text-lg md:text-md text-lg h-12 active:text-[#202124] font-normal active:font-semibold"
         title={webpages[1].name}
         on:click={() => loadPage(webpages[1])}
       >
@@ -55,7 +55,7 @@
 
     {#if selected == "Venue Search"}
       <button
-        class="border-0 text-gray-300 bg-[#202124] hover:bg-[#2e3036] 2xl:text-xl xl:text-lg lg:text-lg md:text-md text-lg h-12 border-r-2 border-sky-500"
+        class="border-0 text-gray-300 bg-[#202124] hover:bg-[#2e3036] 2xl:text-xl xl:text-lg lg:text-lg md:text-md text-lg h-12 border-r-2 border-sky-500 active:text-[#202124] font-normal active:font-semibold"
         title={webpages[0].name}
         on:click={() => loadPage(webpages[0])}
       >
@@ -63,7 +63,7 @@
       >
 
       <button
-        class="border-0 text-sky-500 bg-[#202124] hover:bg-[#2e3036] 2xl:text-xl xl:text-lg lg:text-lg md:text-md text-lg h-12 underline underline-offset-4 decoration-2"
+        class="border-0 text-sky-500 bg-[#202124] hover:bg-[#2e3036] 2xl:text-xl xl:text-lg lg:text-lg md:text-md text-lg h-12 underline underline-offset-4 decoration-2 active:text-[#202124] font-normal active:font-semibold"
         title={webpages[1].name}
         on:click={() => loadPage(webpages[1])}
       >
