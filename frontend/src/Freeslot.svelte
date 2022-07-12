@@ -537,7 +537,7 @@
 {#each Array(num_links) as _, i}
   <div class="grid grid-cols-1 gap-4 text-center lg:mx-64 md:mx-32">
     <input
-      class=" appearance-none border-2 border-gray-300 rounded-md  focus:outline-none focus:border-sky-500 bg-[#202124] text-center lg:text-2xl md:text-xl sm:text-md my-1 text-sky-500 focus:placeholder-sky-500/25 focus:bg-[#202124] mx-4"
+      class=" appearance-none border-2 border-gray-300 rounded-md  focus:outline-none focus:border-sky-500 bg-[#202124] text-center lg:text-2xl md:text-xl sm:text-md my-1 text-sky-500 focus:placeholder-stone-700/50 focus:bg-[#202124] mx-4"
       autocomplete="off"
       name="DynamicField"
       type="text"
