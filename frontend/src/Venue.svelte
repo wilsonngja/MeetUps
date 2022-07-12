@@ -62,7 +62,6 @@
     // This part of the function is to have a selected effect with same background and text colour as hover
     if (document.getElementsByClassName("active").length == 1) {
       let current = document.getElementsByClassName("active");
-
       current[0].className = current[0].className.replace(" active", "");
     }
     document.getElementsByClassName(venue)[0].className += " active";
