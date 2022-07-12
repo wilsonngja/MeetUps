@@ -510,7 +510,7 @@
     <p
       class="text-gray-400 text-center   2xl:text-3xl lg:text-2xl md:text-xl text-xl mx-4"
     >
-      2. Enter NUSMODS timetable link to find free periods”
+      2. Enter NUSMODS timetable link to find free periods
     </p>
     <p
       class="text-gray-400 text-center   2xl:text-3xl lg:text-2xl md:text-xl text-xl mx-4"

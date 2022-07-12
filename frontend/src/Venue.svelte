@@ -274,7 +274,7 @@
   <p
     class="font-semibold text-orange-700 2xl:text-lg xl:text-lg lg:text-md text-sm text-center mx-4"
   >
-    This is because there is no lesson on Sunday, thus no rooms will be
+    This is because there are no lessons on Sunday, thus no rooms will be
     unlocked.
   </p>
 
