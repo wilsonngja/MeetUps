@@ -56,6 +56,14 @@
     long = "1.2966";
     lat = "103.7764";
 
+    // This part of the function is to have a selected effect with same background and text colour as hover
+    if (document.getElementsByClassName('active').length == 1)
+    {
+      let current = document.getElementsByClassName("active");
+      current[0].className = current[0].className.replace(" active", "");
+    }
+    document.getElementsByClassName(venue)[0].className += " active";
+
     if (
       VenueInfo[venue] == null ||
       VenueInfo[venue].location.y == null ||
@@ -222,7 +230,13 @@
         loading = false;
       }
     }
+
+
+    
   }
+
+
+
 </script>
 
 <div class=" text-center">
@@ -248,7 +262,7 @@
   <p
     class="font-extrabold text-gray-300 2xl:text-2xl xl:text-xl lg:text-xl text-md text-center mb-5 mx-4"
   >
-    End Time should be before 0000.
+    End Time should be before 2200.
   </p>
 
   <p
@@ -398,8 +412,9 @@
       class="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-4 grid-cols-2 overflow-y-auto h-96 mb-10 overscroll-y-none"
     >
       {#each venue_slot as venue}
+        
         <button
-          class="VenueButton py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-sky-600 hover:rounded-lg hover:bg-sky-600 hover:text-white"
+          class="VenueButton py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-sky-600 hover:rounded-lg hover:bg-sky-600 hover:text-white {venue}"    
           contenteditable="false"
           on:click={() => getMap({ venue })}
         >
@@ -462,6 +477,11 @@
   input {
     background-color: #202124;
     margin-top: 5%;
+    color: white;
+  }
+
+  .active{
+    background-color: #0284c7;
     color: white;
   }
 </style>

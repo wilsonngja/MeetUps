@@ -19,13 +19,13 @@
 
   // Loads an object in webpages array
   let selectedPage = webpages[0];
-  $: console.dir(selectedPage);
+  // $: console.dir(selectedPage);
 
   // Have to use obj as arg. so value can be a class
   const loadPage = (obj) => {
     selectedPage = obj;
     selected = obj.name;
-    console.log(selected);
+    // console.log(selected);
   };
 </script>
 
