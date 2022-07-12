@@ -60,7 +60,7 @@
     // This part of the function is to have a selected effect with same background and text colour as hover
     if (document.getElementsByClassName("active").length == 1) {
       let current = document.getElementsByClassName("active");
-      
+
       current[0].className = current[0].className.replace(" active", "");
     }
     document.getElementsByClassName(venue)[0].className += " active";
@@ -222,23 +222,11 @@
               venue_slot[i] +
               "</button>";
           }
-          // loading = false;
         }
         loading = false;
       }
     }
-<<<<<<< HEAD
   }
-=======
-
-    
- 
-  }
-
- 
-
-
->>>>>>> fafbceb855cc1ed9316f1197c282aa36822a1791
 </script>
 
 <div class=" text-center">
@@ -406,12 +394,11 @@
   {/if}
 </div>
 
-
 <!-- Genereate the button and the map -->
 {#if venue_slot.length != 0}
   <div class="grid 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 grid-cols-1">
     <!-- Button portion -->
-    <div 
+    <div
       class="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-4 grid-cols-2 overflow-y-auto h-96 mb-10 overscroll-y-none"
     >
       {#each venue_slot as venue}
@@ -449,7 +436,6 @@
     </div>
   </div>
 {/if}
-
 
 <style>
   .VenueButton {
