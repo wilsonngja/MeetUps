@@ -410,12 +410,11 @@
     //   behavior: "smooth",
     // });
     // This portion will show the user which button is selected
-    if (document.getElementsByClassName("freeslot_active") == 1) {
+    
+
+    if (document.getElementsByClassName("freeslot_active").length == 1) {
       let current = document.getElementsByClassName("freeslot_active");
-      current[0].className = current[0].className.replace(
-        " freeslot_active",
-        ""
-      );
+      current[0].className = current[0].className.replace(" freeslot_active", "");
     }
 
     document.getElementsByClassName(
