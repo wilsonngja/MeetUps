@@ -3,9 +3,9 @@
   import VenueInfo from "./backend/database/venues.json";
 
   let day;
-  let clockStartTime = "08:00";
+  let clockStartTime;
   let startTime;
-  let clockEndTime = "22:00";
+  let clockEndTime;
   let endTime;
   let venue_slot = [];
   var buttons = "";
@@ -78,7 +78,7 @@
       lat = VenueInfo[venue].location.x;
       console.log(embbed_map);
       embbed_map =
-        "<iframe class='w-full h-96' src='https://www.google.com/maps/embed/v1/place?q=" +
+        "<iframe style='filter: invert(90%)' class='w-full h-96' src='https://www.google.com/maps/embed/v1/place?q=" +
         long +
         "," +
         lat +
@@ -445,4 +445,5 @@
     filter: invert(89%) sepia(9%) saturate(134%) hue-rotate(177deg) brightness(97%) contrast(87%);
   }
 
+  
 </style>
