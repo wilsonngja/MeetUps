@@ -144,6 +144,12 @@
 
     //Variable Declaration
     message = "";
+    // const el = document.querySelector("#end_of_error_div");
+    // if (!el) return;
+    // el.scrollIntoView({
+    //   behavior: "smooth",
+    // });
+
     let list_of_modules = new Map();
 
     free_slot_generated = false;
@@ -166,6 +172,11 @@
 
       nus_tt_links.push(val);
     }
+    const el = document.querySelector("#start_periods_div");
+    if (!el) return;
+    el.scrollIntoView({
+      behavior: "smooth",
+    });
 
     var response;
     (async () => {
@@ -214,10 +225,22 @@
       if (empty_count == nus_tt_links.length) {
         error_message_empty = "Please insert in at least one text field.";
         free_slot_generated = true;
+
+        const el = document.querySelector("#end_of_error_div");
+        if (!el) return;
+        el.scrollIntoView({
+          behavior: "smooth",
+        });
         return;
       }
 
       if (wrongSemester) {
+        const el = document.querySelector("#end_of_error_div");
+        if (!el) return;
+        el.scrollIntoView({
+          behavior: "smooth",
+        });
+
         return;
       }
 
@@ -313,9 +336,18 @@
         }
         //
       }
-
+      const el = document.querySelector("#end_of_error_div");
+      if (!el) return;
+      el.scrollIntoView({
+        behavior: "smooth",
+      });
       // Stop the generation and the loading animation
       free_slot_generated = true;
+      // document.querySelector("#end_of_error_div");
+      // if (!el) return;
+      // el.scrollIntoView({
+      //   behavior: "smooth",
+      // });
     })();
   }
 
@@ -327,8 +359,7 @@
     lat = "103.7764";
 
     // This part of the function is to have a selected effect with same background and text colour as hover
-    if (document.getElementsByClassName('active').length == 1)
-    {
+    if (document.getElementsByClassName("active").length == 1) {
       let current = document.getElementsByClassName("active");
       current[0].className = current[0].className.replace(" active", "");
     }
@@ -357,7 +388,11 @@
         lat +
         "&zoom=19'></iframe>";
     }
-    
+    const el = document.querySelector("#end_of_error_div");
+    if (!el) return;
+    el.scrollIntoView({
+      behavior: "smooth",
+    });
   }
 
   async function getLocation(
@@ -369,16 +404,23 @@
   ) {
     venue_slot = [];
     loading = true;
-
-
+    // const e = document.querySelector("#start_of_map_div");
+    // if (!e) return;
+    // e.scrollIntoView({
+    //   behavior: "smooth",
+    // });
     // This portion will show the user which button is selected
-    if (document.getElementsByClassName('freeslot_active') == 1)
-    {
+    if (document.getElementsByClassName("freeslot_active") == 1) {
       let current = document.getElementsByClassName("freeslot_active");
-      current[0].className = current[0].className.replace(" freeslot_active", "");
+      current[0].className = current[0].className.replace(
+        " freeslot_active",
+        ""
+      );
     }
 
-    document.getElementsByClassName(freeslot_day + "_" + starttime + "_" + endtime)[0].className += " freeslot_active";
+    document.getElementsByClassName(
+      freeslot_day + "_" + starttime + "_" + endtime
+    )[0].className += " freeslot_active";
 
     const response = await fetch(apiURL, {
       method: "post",
@@ -420,6 +462,11 @@
 
     if (venue_slot.length == 0) {
       error_message_no_rooms = "There are no rooms available";
+      const el = document.querySelector("#end_of_error_div");
+      if (!el) return;
+      el.scrollIntoView({
+        behavior: "smooth",
+      });
     } else {
       for (var i = 0; i < venue_slot.length; i += 1) {
         buttons +=
@@ -429,8 +476,20 @@
           venue_slot[i] +
           "</button>";
       }
+
+      const el = document.querySelector("#end_of_error_div");
+      if (!el) return;
+      el.scrollIntoView({
+        behavior: "smooth",
+      });
     }
     loading = false;
+
+    const el = document.querySelector("#end_of_error_div");
+    if (!el) return;
+    el.scrollIntoView({
+      behavior: "smooth",
+    });
   }
 
   async function visitNUSMODS() {
@@ -572,7 +631,7 @@
     <strong>Find Time</strong></button
   >
 </div>
-<div class="grid grid-cols-1 justify-items-center">
+<div class="grid grid-cols-1 justify-items-center" id="start_periods_div">
   {#if !free_slot_generated}
     <br />
     <img src="loading_bar.svg" alt="" />
@@ -655,7 +714,7 @@
       {/each}
     </div>
 
-    <div class="mx-10 md:mb-10 sm:mb-10">
+    <div class="mx-10 md:mb-10 sm:mb-10 " id="start_of_map_div">
       {#if embbed_map == ""}
         <p class="text-white text-center">
           Please click on any of the venues to view the map
@@ -695,6 +754,8 @@
 >
   <strong>{error_message_no_rooms}</strong>
 </h3>
+<br /><br /><br />
+<div id="end_of_error_div" />
 
 <style>
   .TimingButton {
@@ -713,14 +774,13 @@
     text-align: center;
     border: none;
   }
-  
-  .freeslot_active{
+
+  .freeslot_active {
     color: white;
   }
 
-  .active{
+  .active {
     background-color: #0284c7;
     color: white;
   }
-
 </style>

@@ -57,8 +57,7 @@
     lat = "103.7764";
 
     // This part of the function is to have a selected effect with same background and text colour as hover
-    if (document.getElementsByClassName('active').length == 1)
-    {
+    if (document.getElementsByClassName("active").length == 1) {
       let current = document.getElementsByClassName("active");
       current[0].className = current[0].className.replace(" active", "");
     }
@@ -132,30 +131,25 @@
       ) {
         errorMessage_empty_field = "Please fill in the start and end time.";
       }
-      
-    } 
-       else {
-        if ((startTime < "0800") || (startTime > "2200") || (endTime < "0800") || (endTime > "2200"))
-        {
-          if (startTime < "0800")
-          {
-            errorMessage_wrong_input = "Start time must be after 0800.";
-          }
-          else if (startTime > "2200")
-          {
-            errorMessage_wrong_input = "Start time must be before 2200";
-          }
-
-          if (endTime < "0800")
-          {
-            errorMessage_wrong_input2 = "End time must be after 0800.";
-          }
-          else if (endTime > "2200")
-          {
-            errorMessage_wrong_input2 = "End time must be before 2200";
-          }
+    } else {
+      if (
+        startTime < "0800" ||
+        startTime > "2200" ||
+        endTime < "0800" ||
+        endTime > "2200"
+      ) {
+        if (startTime < "0800") {
+          errorMessage_wrong_input = "Start time must be after 0800.";
+        } else if (startTime > "2200") {
+          errorMessage_wrong_input = "Start time must be before 2200";
         }
-        else if (
+
+        if (endTime < "0800") {
+          errorMessage_wrong_input2 = "End time must be after 0800.";
+        } else if (endTime > "2200") {
+          errorMessage_wrong_input2 = "End time must be before 2200";
+        }
+      } else if (
         startTime.match("\\d{4}") != startTime &&
         endTime.match("\\d{4}") == endTime
       ) {
@@ -226,17 +220,12 @@
               venue_slot[i] +
               "</button>";
           }
+          // loading = false;
         }
         loading = false;
       }
     }
-
-
-    
   }
-
-
-
 </script>
 
 <div class=" text-center">
@@ -412,9 +401,8 @@
       class="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-4 grid-cols-2 overflow-y-auto h-96 mb-10 overscroll-y-none"
     >
       {#each venue_slot as venue}
-        
         <button
-          class="VenueButton py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-sky-600 hover:rounded-lg hover:bg-sky-600 hover:text-white {venue}"    
+          class="VenueButton py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-sky-600 hover:rounded-lg hover:bg-sky-600 hover:text-white {venue}"
           contenteditable="false"
           on:click={() => getMap({ venue })}
         >
@@ -480,7 +468,7 @@
     color: white;
   }
 
-  .active{
+  .active {
     background-color: #0284c7;
     color: white;
   }
