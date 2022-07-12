@@ -326,6 +326,14 @@
     long = "1.2966";
     lat = "103.7764";
 
+    // This part of the function is to have a selected effect with same background and text colour as hover
+    if (document.getElementsByClassName('active').length == 1)
+    {
+      let current = document.getElementsByClassName("active");
+      current[0].className = current[0].className.replace(" active", "");
+    }
+    document.getElementsByClassName(venue)[0].className += " active";
+
     if (
       VenueInfo[venue] == null ||
       VenueInfo[venue].location.y == null ||
@@ -349,18 +357,7 @@
         lat +
         "&zoom=19'></iframe>";
     }
-    // {
-    // alert("Currently unable to display location on Google Map.");
-    // } else {
-    // long = VenueInfo[venue].location.y;
-    // lat = VenueInfo[venue].location.x;
-
-    // //Find Json File and , modify and extract out venue data
-    // alert("Close this pop up to view " + venue + "'s location.");
-    // url = "http://maps.google.com/maps?q=" + long + "," + lat;
-
-    // window.open(url);
-    // }
+    
   }
 
   async function getLocation(
@@ -372,6 +369,16 @@
   ) {
     venue_slot = [];
     loading = true;
+
+
+    // This portion will show the user which button is selected
+    if (document.getElementsByClassName('freeslot_active') == 1)
+    {
+      let current = document.getElementsByClassName("freeslot_active");
+      current[0].className = current[0].className.replace(" freeslot_active", "");
+    }
+
+    document.getElementsByClassName(freeslot_day + "_" + starttime + "_" + endtime)[0].className += " freeslot_active";
 
     const response = await fetch(apiURL, {
       method: "post",
@@ -599,7 +606,7 @@
   <div class="justify-items-center mb-5" contenteditable="false">
     {#each free_slot_arr as { slotid, start, end }}
       <button
-        class=" TimingButton mb-3 text-lg font-medium text-sky-600 hover:rounded-lg hover:text-white"
+        class=" TimingButton mb-3 text-lg font-medium text-sky-600 hover:rounded-lg hover:text-white {slotid}_{start}_{end}"
         id={slotid + "_" + start + "_" + end}
         on:click={getLocation(slotid, start, end, query_semester, week)}
       >
@@ -639,7 +646,7 @@
     >
       {#each venue_slot as venue}
         <button
-          class="VenueButton py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-sky-600 hover:rounded-lg hover:bg-sky-600 hover:text-white"
+          class="VenueButton py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-sky-600 hover:rounded-lg hover:bg-sky-600 hover:text-white {venue}"
           contenteditable="false"
           on:click={() => getMap({ venue })}
         >
@@ -706,4 +713,14 @@
     text-align: center;
     border: none;
   }
+  
+  .freeslot_active{
+    color: white;
+  }
+
+  .active{
+    background-color: #0284c7;
+    color: white;
+  }
+
 </style>
