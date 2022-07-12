@@ -3,7 +3,9 @@
   import VenueInfo from "./backend/database/venues.json";
 
   let day;
+  let clockStartTime;
   let startTime;
+  let clockEndTime;
   let endTime;
   let venue_slot = [];
   var buttons = "";
@@ -99,41 +101,21 @@
 
     venue_slot = [];
 
-    if (
-      startTime == "" ||
-      endTime == "" ||
-      startTime == undefined ||
-      endTime == undefined
-    ) {
-      if (
-        (startTime == "" || startTime == undefined) &&
-        endTime != "" &&
-        endTime != undefined
-      ) {
+    if (clockStartTime == undefined || clockEndTime == undefined) {
+      if ((clockStartTime == undefined) && (clockEndTime != undefined)) 
+      {
         errorMessage_empty_field = "Please fill in the start time.";
 
-        if (endTime.match("\\d{4}") != endTime) {
-          errorMessage_wrong_input =
-            "Please insert only 4 digits for the end time.";
-        }
-      } else if (
-        (endTime == "" || endTime == undefined) &&
-        startTime != "" &&
-        startTime != undefined
-      ) {
+      } else if ((clockEndTime == undefined) && (clockStartTime != undefined)) 
+      {
         errorMessage_empty_field = "Please fill in the end time.";
-
-        if (startTime.match("\\d{4}") != startTime) {
-          errorMessage_wrong_input =
-            "Please insert only 4 digits for the start time.";
-        }
-      } else if (
-        (startTime == "" || startTime == undefined) &&
-        (endTime == "" || endTime == undefined)
-      ) {
+      } else if ((clockStartTime == undefined) && (clockEndTime == undefined)) 
+      {
         errorMessage_empty_field = "Please fill in the start and end time.";
       }
     } else {
+      startTime = clockStartTime[0] + clockStartTime[1] + clockStartTime[3] + clockStartTime[4];
+      endTime = clockEndTime[0] + clockEndTime[1] + clockEndTime[3] + clockEndTime[4];
       if (
         startTime < "0800" ||
         startTime > "2200" ||
@@ -151,24 +133,9 @@
         } else if (endTime > "2200") {
           errorMessage_wrong_input2 = "End time must be before 2200";
         }
-      } else if (
-        startTime.match("\\d{4}") != startTime &&
-        endTime.match("\\d{4}") == endTime
-      ) {
-        errorMessage_wrong_input =
-          "Please insert only 4 digits for the start time.";
-      } else if (
-        startTime.match("\\d{4}") == startTime &&
-        endTime.match("\\d{4}") != endTime
-      ) {
-        errorMessage_wrong_input =
-          "Please insert only 4 digits for the end time.";
-      } else if (
-        startTime.match("\\d{4}") != startTime &&
-        endTime.match("\\d{4}") != endTime
-      ) {
-        errorMessage_wrong_input =
-          "Please insert only 4 digits for the start and end time.";
+      } else if (endTime < startTime)
+      {
+        errorMessage_wrong_input = "End time cannot be earlier than start time.";
       } else {
         loading = true;
 
@@ -327,10 +294,9 @@
         class="font-semibold text-end mr-4 2xl:text-xl 2xl:mt-3 2xl:mb-5 xl:text-xl xl:mt-3 xl:mb-3 lg:text-xl lg:mt-3 lg:mb-3 text-lg mt-1.5 mb-1.5 inline-block align-bottom"
         >Start Time</label
       >
-      <input
-        class="border-2 border-gray-300 rounded-md focus:outline-none focus:border-sky-500 2xl:text-xl 2xl:mt-3 2xl:mb-3 2xl:w-40 xl:text-xl xl:mt-3 xl:mb-3 xl:w-40 lg:text-xl lg:mt-3 lg:mb-3 lg:w-32 md:w-24 w-20 text-lg mt-1.5 mb-1.5 bg-[#202124] placeholder-stone-700 focus:placeholder-opacity-50 placeholder-opacity-75 focus:text-sky-500"
-        bind:value={startTime}
-        placeholder=" 0800"
+      <input type="time"
+        class="border-2 border-gray-300 rounded-md focus:outline-none 2xl:text-xl 2xl:mt-3 2xl:mb-3 2xl:w-40 xl:text-xl xl:mt-3 xl:mb-3 xl:w-40 lg:text-xl lg:mt-3 lg:mb-3 lg:w-32 md:w-24 w-20 text-lg mt-1.5 mb-1.5 bg-[#202124]"
+        bind:value={clockStartTime}
         required
       />
     </div>
@@ -341,10 +307,9 @@
         class="font-semibold text-end mr-4 2xl:text-xl 2xl:mt-3 2xl:mb-5 xl:text-xl xl:mt-3 xl:mb-3 lg:text-xl lg:mt-3 lg:mb-3 text-lg mt-1.5 mb-1.5 inline-block align-bottom"
         >End Time</label
       >
-      <input
-        class="border-2 border-gray-300 rounded-md focus:outline-none focus:border-sky-500 2xl:text-xl 2xl:mt-3 2xl:mb-3 2xl:w-40 xl:text-xl xl:mt-3 xl:mb-3 xl:w-40 lg:text-xl lg:mt-3 lg:mb-3 lg:w-32 md:w-24 w-20 text-lg mt-1.5 mb-1.5 bg-[#202124] placeholder-stone-700 focus:placeholder-opacity-50 placeholder-opacity-75 focus:text-sky-500"
-        bind:value={endTime}
-        placeholder=" 2200"
+      <input type="time"
+      class="border-2 border-gray-300 rounded-md focus:outline-none 2xl:text-xl 2xl:mt-3 2xl:mb-3 2xl:w-40 xl:text-xl xl:mt-3 xl:mb-3 xl:w-40 lg:text-xl lg:mt-3 lg:mb-3 lg:w-32 md:w-24 w-20 text-lg mt-1.5 mb-1.5 bg-[#202124]"
+        bind:value={clockEndTime}
         required
       />
     </div>
@@ -473,4 +438,9 @@
     background-color: #0284c7;
     color: white;
   }
+
+  input[type="time"]::-webkit-calendar-picker-indicator{
+    filter: invert(89%) sepia(9%) saturate(134%) hue-rotate(177deg) brightness(97%) contrast(87%);
+  }
+
 </style>
