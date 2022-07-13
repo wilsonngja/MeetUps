@@ -79,7 +79,7 @@
       lat = VenueInfo[venue].location.x;
       console.log(embbed_map);
       embbed_map =
-        "<iframe style='filter: invert(90%)' class='w-full h-96' src='https://www.google.com/maps/embed/v1/place?q=" +
+        "<iframe style='filter: invert(85%)' class='w-full h-96' src='https://www.google.com/maps/embed/v1/place?q=" +
         long +
         "," +
         lat +
