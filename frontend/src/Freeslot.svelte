@@ -376,7 +376,7 @@
       lat = VenueInfo[venue].location.x;
       console.log(embbed_map);
       embbed_map =
-        "<iframe style='filter: invert(90%)' class='w-full h-96' src='https://www.google.com/maps/embed/v1/place?q=" +
+        "<iframe style='filter: invert(85%)' class='w-full h-96' src='https://www.google.com/maps/embed/v1/place?q=" +
         long +
         "," +
         lat +
@@ -537,15 +537,14 @@
   2xl:text-3xl lg:text-2.5xl md:text-2xl text-xl mx-4
   "
   >
-    This function helps you (or your teammates) to find the timeslots to meet up
-    in the current semester.
+    This function helps teams with different timetable to find suitable timeslots to meet up in the current semester.
   </p>
   <br />
   <div>
     <p
       class="text-white text-center font-bold   2xl:text-3xl lg:text-2xl md:text-xl text-xl mx-4"
     >
-      HOW TO GET FREE PERIODS?
+      STEPS TO RETRIEVE TIMETABLE LINKS:
     </p>
     <br />
     <div class="text-sky-500 text-center">
