@@ -6,6 +6,7 @@
   import VenueInfo from "./backend/database/venues.json";
   import config from "./config.json";
   import Icon from "@iconify/svelte";
+import { get } from "svelte/store";
 
   var free_slot_generated = true;
   var num_links = 1;
@@ -15,9 +16,11 @@
   var venue_slot = [];
   var buttons = "";
   var url = "";
+  var filterText;
   var wrongSemester = false;
   var long = "1.2966";
   var lat = "103.7764";
+  var active_venue;
   var embbed_map = "";
   $: num_free_slot = free_slot_arr.length; // if theres more than 1 free slot in the free_slot_arr. become true
 
@@ -132,6 +135,9 @@
     Thursday: [["0800", "0800"]],
     Friday: [["0800", "0800"]],
   };
+
+
+
   async function submitLink() {
     error_message_no_rooms = "";
     empty_count = 0;
@@ -358,12 +364,14 @@
     long = "1.2966";
     lat = "103.7764";
 
+
     // This part of the function is to have a selected effect with same background and text colour as hover
     if (document.getElementsByClassName("active").length == 1) {
       let current = document.getElementsByClassName("active");
       current[0].className = current[0].className.replace(" active", "");
     }
     document.getElementsByClassName(venue)[0].className += " active";
+    active_venue = venue;
 
     if (
       VenueInfo[venue] == null ||
@@ -416,10 +424,12 @@
       let current = document.getElementsByClassName("freeslot_active");
       current[0].className = current[0].className.replace(" freeslot_active", "");
     }
-
+    
     document.getElementsByClassName(
       freeslot_day + "_" + starttime + "_" + endtime
     )[0].className += " freeslot_active";
+
+
 
     const response = await fetch(apiURL, {
       method: "post",
@@ -690,44 +700,84 @@
   {/if}
 </div>
 
+
+
+
+<!-- Genereate the button and the map -->
 {#if venue_slot.length != 0}
+
   <div class="grid grid-cols-1 justify-items-center mb-3">
-    <p
-      class="font-extrabold 2xl:text-5xl lg:text-5xl  md:text-3xl text-2xl bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-sky-500 "
-    >
-      Available Venues
-    </p>
-  </div>
-  <div class="grid 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 grid-cols-1">
+  <p
+    class="font-extrabold 2xl:text-5xl lg:text-5xl  md:text-3xl text-2xl bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-sky-500 "
+  >
+    Available Venues
+  </p>
+</div>
+
+  <div class="grid 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 grid-cols-1 mx-4">
+    <!-- Button portion -->
     <div
-      class="border-r-2 border-sky-500 grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-4 grid-cols-2 overflow-y-auto h-96 mb-10 overscroll-y-none"
+      class="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-4 grid-cols-2 overflow-y-auto mb-10 overscroll-y-none h-96"
     >
-      {#each venue_slot as venue}
-        <button
-          class="VenueButton py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-sky-600 hover:rounded-lg hover:bg-sky-600 hover:text-white {venue}"
+    <input type="text" bind:value={filterText} class="font-semibold text-sky-500 focus:placeholder-gray-600 bg-[#202124] border-2 border-sky-500 focus:outline-none text-sky-500 2xl:col-span-5 xl:col-span-4 lg:col-span-4 col-span-2 h-6 mx-5 mt-2" placeholder=" Enter the venue...">
+      {#if filterText != "" && filterText != undefined}
+        {#each venue_slot as venue}
+          
+          {#if venue.toLowerCase().includes(filterText.toLowerCase())}
+            <button
+            class="VenueButton py-2.5 px-5 mr-2 mb-2 text-sm font-medium h-8 text-sky-600 hover:rounded-lg hover:bg-sky-600 hover:text-white {venue}"
+            contenteditable="false"
+            on:click={() => getMap({ venue })}
+            >
+            {venue}
+            </button>
+          {/if}
+        {/each}
+      {:else}
+        {#each venue_slot as venue}
+          {#if venue == active_venue}
+          <button
+          class="VenueButton py-2.5 px-5 mr-2 mb-2 text-sm font-medium h-8 text-sky-600 hover:rounded-lg hover:bg-sky-600 hover:text-white {venue} active"
           contenteditable="false"
           on:click={() => getMap({ venue })}
-        >
+          >
           {venue}
-        </button>
-      {/each}
+          </button>
+          {:else}
+            <button
+            class="VenueButton py-2.5 px-5 mr-2 mb-2 text-sm font-medium h-8 text-sky-600 hover:rounded-lg hover:bg-sky-600 hover:text-white {venue}"
+            contenteditable="false"
+            on:click={() => getMap({ venue })}
+            >
+            {venue}
+            </button>
+          {/if}
+          
+        {/each}
+      {/if}
+      
     </div>
 
-    <div class="mx-10 md:mb-10 sm:mb-10 " id="start_of_map_div">
+    <!-- Map portion -->
+    <div class="md:mb-10 sm:mb-10 ">
       {#if embbed_map == ""}
-        <p class="text-white text-center">
-          Please click on any of the venues to view the map
-        </p>
+        <div
+          class="text-sky-500 2xl:text-2xl xl:text-xl lg:text-xl md:text-xl text-lg text-center"
+        >
+          Please click on any of the class to view the map
+        </div>
       {/if}
 
       {#if embbed_map == "none"}
-        <p class="text-white text-center">
+        <div
+          class="text-red-800 2xl:text-2xl xl:text-xl lg:text-xl md:text-xl text-lg text-center font-bold"
+        >
           Sorry the map is currently unavailable.
-        </p>
+        </div>
       {/if}
 
       {#if embbed_map != "none" && embbed_map != ""}
-        <div bind:innerHTML={embbed_map} contenteditable="false" />
+        <div class="border-2 border-sky-500 ml-2" bind:innerHTML={embbed_map} contenteditable="false" />
       {/if}
     </div>
   </div>

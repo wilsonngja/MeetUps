@@ -15,6 +15,8 @@
   var weeks = ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6"];
   var embbed_map = "";
   var element = document.getElementById("VenueID");
+  var filterText;
+  var active_venue;
 
   var errorMessage_empty_field = "";
   var errorMessage_wrong_input = "";
@@ -64,6 +66,7 @@
       current[0].className = current[0].className.replace(" active", "");
     }
     document.getElementsByClassName(venue)[0].className += " active";
+    active_venue = venue;
 
     if (
       VenueInfo[venue] == null ||
@@ -359,22 +362,52 @@
   {/if}
 </div>
 
+
 <!-- Genereate the button and the map -->
 {#if venue_slot.length != 0}
-  <div class="grid 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 grid-cols-1">
+  
+  <div class="grid 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 grid-cols-1 mx-4">
     <!-- Button portion -->
     <div
-      class="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-4 grid-cols-2 overflow-y-auto h-96 mb-10 overscroll-y-none"
+      class="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-4 grid-cols-2 overflow-y-auto mb-10 overscroll-y-none h-96"
     >
-      {#each venue_slot as venue}
-        <button
-          class="VenueButton py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-sky-600 hover:rounded-lg hover:bg-sky-600 hover:text-white {venue}"
+    <input type="text" bind:value={filterText} class="font-semibold text-sky-500 focus:placeholder-gray-600 bg-[#202124] border-2 border-sky-500 focus:outline-none text-sky-500 2xl:col-span-5 xl:col-span-4 lg:col-span-4 col-span-2 h-6 mx-5 mt-2" placeholder=" Enter the venue...">
+      {#if filterText != "" && filterText != undefined}
+        {#each venue_slot as venue}
+          
+          {#if venue.toLowerCase().includes(filterText.toLowerCase())}
+            <button
+            class="VenueButton py-2.5 px-5 mr-2 mb-2 text-sm font-medium h-8 text-sky-600 hover:rounded-lg hover:bg-sky-600 hover:text-white {venue}"
+            contenteditable="false"
+            on:click={() => getMap({ venue })}
+            >
+            {venue}
+            </button>
+          {/if}
+        {/each}
+      {:else}
+        {#each venue_slot as venue}
+          {#if venue == active_venue}
+          <button
+          class="VenueButton py-2.5 px-5 mr-2 mb-2 text-sm font-medium h-8 text-sky-600 hover:rounded-lg hover:bg-sky-600 hover:text-white {venue} active"
           contenteditable="false"
           on:click={() => getMap({ venue })}
-        >
+          >
           {venue}
-        </button>
-      {/each}
+          </button>
+          {:else}
+            <button
+            class="VenueButton py-2.5 px-5 mr-2 mb-2 text-sm font-medium h-8 text-sky-600 hover:rounded-lg hover:bg-sky-600 hover:text-white {venue}"
+            contenteditable="false"
+            on:click={() => getMap({ venue })}
+            >
+            {venue}
+            </button>
+          {/if}
+          
+        {/each}
+      {/if}
+      
     </div>
 
     <!-- Map portion -->
@@ -396,7 +429,7 @@
       {/if}
 
       {#if embbed_map != "none" && embbed_map != ""}
-        <div bind:innerHTML={embbed_map} contenteditable="false" />
+        <div class="border-2 border-sky-500 ml-2" bind:innerHTML={embbed_map} contenteditable="false" />
       {/if}
     </div>
   </div>
@@ -428,7 +461,7 @@
     color: white;
   }
 
-  input {
+  input[type="time"] {
     background-color: #202124;
     margin-top: 5%;
     color: white;
