@@ -6,7 +6,7 @@
   import VenueInfo from "./backend/database/venues.json";
   import config from "./config.json";
   import Icon from "@iconify/svelte";
-import { get } from "svelte/store";
+  import { get } from "svelte/store";
 
   var free_slot_generated = true;
   var num_links = 1;
@@ -18,6 +18,8 @@ import { get } from "svelte/store";
   var url = "";
   var filterText;
   var wrongSemester = false;
+  let submitHasBeenClicked = false;
+
   var long = "1.2966";
   var lat = "103.7764";
   var active_venue;
@@ -136,9 +138,11 @@ import { get } from "svelte/store";
     Friday: [["0800", "0800"]],
   };
 
-
-
   async function submitLink() {
+    if (submitHasBeenClicked) {
+      return;
+    }
+    submitHasBeenClicked = true;
     error_message_no_rooms = "";
     empty_count = 0;
     error_message_empty = "";
@@ -349,6 +353,7 @@ import { get } from "svelte/store";
       });
       // Stop the generation and the loading animation
       free_slot_generated = true;
+      submitHasBeenClicked = false;
       // document.querySelector("#end_of_error_div");
       // if (!el) return;
       // el.scrollIntoView({
@@ -363,7 +368,6 @@ import { get } from "svelte/store";
     url = "";
     long = "1.2966";
     lat = "103.7764";
-
 
     // This part of the function is to have a selected effect with same background and text colour as hover
     if (document.getElementsByClassName("active").length == 1) {
@@ -418,18 +422,18 @@ import { get } from "svelte/store";
     //   behavior: "smooth",
     // });
     // This portion will show the user which button is selected
-    
 
     if (document.getElementsByClassName("freeslot_active").length == 1) {
       let current = document.getElementsByClassName("freeslot_active");
-      current[0].className = current[0].className.replace(" freeslot_active", "");
+      current[0].className = current[0].className.replace(
+        " freeslot_active",
+        ""
+      );
     }
-    
+
     document.getElementsByClassName(
       freeslot_day + "_" + starttime + "_" + endtime
     )[0].className += " freeslot_active";
-
-
 
     const response = await fetch(apiURL, {
       method: "post",
@@ -700,62 +704,62 @@ import { get } from "svelte/store";
   {/if}
 </div>
 
-
-
-
 <!-- Genereate the button and the map -->
 {#if venue_slot.length != 0}
-
   <div class="grid grid-cols-1 justify-items-center mb-3">
-  <p
-    class="font-extrabold 2xl:text-5xl lg:text-5xl  md:text-3xl text-2xl bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-sky-500 "
-  >
-    Available Venues
-  </p>
-</div>
+    <p
+      class="font-extrabold 2xl:text-5xl lg:text-5xl  md:text-3xl text-2xl bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-sky-500 "
+    >
+      Available Venues
+    </p>
+  </div>
 
-  <div class="grid 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 grid-cols-1 mx-4">
+  <div
+    class="grid 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 grid-cols-1 mx-4"
+  >
     <!-- Button portion -->
     <div
       class="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-4 grid-cols-2 overflow-y-auto mb-10 overscroll-y-none h-96"
     >
-    <input type="text" bind:value={filterText} class="font-semibold text-sky-500 focus:placeholder-gray-600 bg-[#202124] border-2 border-sky-500 focus:outline-none text-sky-500 2xl:col-span-5 xl:col-span-4 lg:col-span-4 col-span-2 h-6 mx-5 mt-2" placeholder=" Enter the venue...">
+      <input
+        type="text"
+        bind:value={filterText}
+        class="font-semibold text-sky-500 focus:placeholder-gray-600 bg-[#202124] border-2 border-sky-500 focus:outline-none text-sky-500 2xl:col-span-5 xl:col-span-4 lg:col-span-4 col-span-2 h-6 mx-5 mt-2"
+        placeholder=" Enter the venue..."
+      />
       {#if filterText != "" && filterText != undefined}
         {#each venue_slot as venue}
-          
           {#if venue.toLowerCase().includes(filterText.toLowerCase())}
             <button
-            class="VenueButton py-2.5 px-5 mr-2 mb-2 text-sm font-medium h-8 text-sky-600 hover:rounded-lg hover:bg-sky-600 hover:text-white {venue}"
-            contenteditable="false"
-            on:click={() => getMap({ venue })}
+              class="VenueButton py-2.5 px-5 mr-2 mb-2 text-sm font-medium h-8 text-sky-600 hover:rounded-lg hover:bg-sky-600 hover:text-white {venue}"
+              contenteditable="false"
+              on:click={() => getMap({ venue })}
             >
-            {venue}
+              {venue}
             </button>
           {/if}
         {/each}
       {:else}
         {#each venue_slot as venue}
           {#if venue == active_venue}
-          <button
-          class="VenueButton py-2.5 px-5 mr-2 mb-2 text-sm font-medium h-8 text-sky-600 hover:rounded-lg hover:bg-sky-600 hover:text-white {venue} active"
-          contenteditable="false"
-          on:click={() => getMap({ venue })}
-          >
-          {venue}
-          </button>
+            <button
+              class="VenueButton py-2.5 px-5 mr-2 mb-2 text-sm font-medium h-8 text-sky-600 hover:rounded-lg hover:bg-sky-600 hover:text-white {venue} active"
+              contenteditable="false"
+              on:click={() => getMap({ venue })}
+            >
+              {venue}
+            </button>
           {:else}
             <button
-            class="VenueButton py-2.5 px-5 mr-2 mb-2 text-sm font-medium h-8 text-sky-600 hover:rounded-lg hover:bg-sky-600 hover:text-white {venue}"
-            contenteditable="false"
-            on:click={() => getMap({ venue })}
+              class="VenueButton py-2.5 px-5 mr-2 mb-2 text-sm font-medium h-8 text-sky-600 hover:rounded-lg hover:bg-sky-600 hover:text-white {venue}"
+              contenteditable="false"
+              on:click={() => getMap({ venue })}
             >
-            {venue}
+              {venue}
             </button>
           {/if}
-          
         {/each}
       {/if}
-      
     </div>
 
     <!-- Map portion -->
@@ -777,7 +781,11 @@ import { get } from "svelte/store";
       {/if}
 
       {#if embbed_map != "none" && embbed_map != ""}
-        <div class="border-2 border-sky-500 ml-2" bind:innerHTML={embbed_map} contenteditable="false" />
+        <div
+          class="border-2 border-sky-500 ml-2"
+          bind:innerHTML={embbed_map}
+          contenteditable="false"
+        />
       {/if}
     </div>
   </div>
