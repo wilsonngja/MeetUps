@@ -9,7 +9,6 @@
   let endTime;
   let venue_slot = [];
   var buttons = "";
-  let map_center = { lat: 1.297, lng: 103.776 };
   var selected_sem_venue = "Semester 1";
   var loading = false;
   var week;
@@ -390,7 +389,7 @@
 
       {#if embbed_map == "none"}
         <div
-          class="text-sky-500 2xl:text-2xl xl:text-xl lg:text-xl md:text-xl text-lg text-center"
+          class="text-red-800 2xl:text-2xl xl:text-xl lg:text-xl md:text-xl text-lg text-center font-bold"
         >
           Sorry the map is currently unavailable.
         </div>
