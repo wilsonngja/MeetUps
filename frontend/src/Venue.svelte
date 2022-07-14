@@ -90,11 +90,22 @@
         "," +
         lat +
         "&zoom=19'></iframe>";
+
+      const el = document.querySelector("#endOfPage");
+      if (!el) return;
+      el.scrollIntoView({
+        behavior: "smooth",
+      });
     }
   }
 
   // This function does an API call for venue
   async function getVenue() {
+    const el = document.querySelector("#endOfPage");
+    if (!el) return;
+    el.scrollIntoView({
+      behavior: "smooth",
+    });
     errorMessage_empty_field = "";
     errorMessage_wrong_input = "";
     errorMessage_wrong_input2 = "";
@@ -103,20 +114,21 @@
     venue_slot = [];
 
     if (clockStartTime == undefined || clockEndTime == undefined) {
-      if ((clockStartTime == undefined) && (clockEndTime != undefined)) 
-      {
+      if (clockStartTime == undefined && clockEndTime != undefined) {
         errorMessage_empty_field = "Please fill in the start time.";
-
-      } else if ((clockEndTime == undefined) && (clockStartTime != undefined)) 
-      {
+      } else if (clockEndTime == undefined && clockStartTime != undefined) {
         errorMessage_empty_field = "Please fill in the end time.";
-      } else if ((clockStartTime == undefined) && (clockEndTime == undefined)) 
-      {
+      } else if (clockStartTime == undefined && clockEndTime == undefined) {
         errorMessage_empty_field = "Please fill in the start and end time.";
       }
     } else {
-      startTime = clockStartTime[0] + clockStartTime[1] + clockStartTime[3] + clockStartTime[4];
-      endTime = clockEndTime[0] + clockEndTime[1] + clockEndTime[3] + clockEndTime[4];
+      startTime =
+        clockStartTime[0] +
+        clockStartTime[1] +
+        clockStartTime[3] +
+        clockStartTime[4];
+      endTime =
+        clockEndTime[0] + clockEndTime[1] + clockEndTime[3] + clockEndTime[4];
       if (
         startTime < "0800" ||
         startTime > "2200" ||
@@ -134,9 +146,9 @@
         } else if (endTime > "2200") {
           errorMessage_wrong_input2 = "End time must be before 2200";
         }
-      } else if (endTime < startTime)
-      {
-        errorMessage_wrong_input = "End time cannot be earlier than start time.";
+      } else if (endTime < startTime) {
+        errorMessage_wrong_input =
+          "End time cannot be earlier than start time.";
       } else {
         loading = true;
 
@@ -165,10 +177,10 @@
               data["result"][i]["Availability Timeslot"][0][1] >= endTime &&
               data["result"][i]["Day"] == day
             ) {
-                if (!venue_slot.includes(data["result"][i]["Venue"])) {
-                  venue_slot.push(data["result"][i]["Venue"]);
-                  venue_slot = [...venue_slot];
-                }
+              if (!venue_slot.includes(data["result"][i]["Venue"])) {
+                venue_slot.push(data["result"][i]["Venue"]);
+                venue_slot = [...venue_slot];
+              }
             }
           }
         }
@@ -187,6 +199,11 @@
           }
         }
         loading = false;
+        // const el = document.querySelector("#endOfPage");
+        // if (!el) return;
+        el.scrollIntoView({
+          behavior: "smooth",
+        });
       }
     }
   }
@@ -290,7 +307,8 @@
         class="font-semibold text-end mr-4 2xl:text-xl 2xl:mt-3 2xl:mb-5 xl:text-xl xl:mt-3 xl:mb-3 lg:text-xl lg:mt-3 lg:mb-3 text-lg mt-1.5 mb-1.5 inline-block align-bottom"
         >Start Time</label
       >
-      <input type="time"
+      <input
+        type="time"
         class="border-2 border-gray-300 rounded-md focus:outline-none 2xl:text-xl 2xl:mt-3 2xl:mb-3 2xl:w-40 xl:text-xl xl:mt-3 xl:mb-3 xl:w-40 lg:text-xl lg:mt-3 lg:mb-3 lg:w-32 md:w-24 w-20 text-lg mt-1.5 mb-1.5 bg-[#202124]"
         step="1800"
         bind:value={clockStartTime}
@@ -304,10 +322,11 @@
         class="font-semibold text-end mr-4 2xl:text-xl 2xl:mt-3 2xl:mb-5 xl:text-xl xl:mt-3 xl:mb-3 lg:text-xl lg:mt-3 lg:mb-3 text-lg mt-1.5 mb-1.5 inline-block align-bottom"
         >End Time</label
       >
-      <input type="time"
-      class="border-2 border-gray-300 rounded-md focus:outline-none 2xl:text-xl 2xl:mt-3 2xl:mb-3 2xl:w-40 xl:text-xl xl:mt-3 xl:mb-3 xl:w-40 lg:text-xl lg:mt-3 lg:mb-3 lg:w-32 md:w-24 w-20 text-lg mt-1.5 mb-1.5 bg-[#202124]"
-      step="1800"  
-      bind:value={clockEndTime}
+      <input
+        type="time"
+        class="border-2 border-gray-300 rounded-md focus:outline-none 2xl:text-xl 2xl:mt-3 2xl:mb-3 2xl:w-40 xl:text-xl xl:mt-3 xl:mb-3 xl:w-40 lg:text-xl lg:mt-3 lg:mb-3 lg:w-32 md:w-24 w-20 text-lg mt-1.5 mb-1.5 bg-[#202124]"
+        step="1800"
+        bind:value={clockEndTime}
         required
       />
     </div>
@@ -357,56 +376,59 @@
   {/if}
 </div>
 
-
 <!-- Genereate the button and the map -->
 {#if venue_slot.length != 0}
-  
-  <div class="grid 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 grid-cols-1 mx-4">
+  <div
+    class="grid 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 grid-cols-1 mx-4"
+  >
     <!-- Button portion -->
     <div
       class="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-4 grid-cols-2 overflow-y-auto mb-10 overscroll-y-none h-96"
     >
-    <input type="text" bind:value={filterText} class="font-semibold text-sky-500 focus:placeholder-gray-600 bg-[#202124] border-2 border-sky-500 focus:outline-none text-sky-500 2xl:col-span-5 xl:col-span-4 lg:col-span-4 col-span-2 h-6 mx-5 mt-2" placeholder=" Enter the venue...">
+      <input
+        type="text"
+        bind:value={filterText}
+        class="font-semibold text-sky-500 focus:placeholder-gray-600 bg-[#202124] border-2 border-sky-500 focus:outline-none text-sky-500 2xl:col-span-5 xl:col-span-4 lg:col-span-4 col-span-2 h-6 mx-5 mt-2"
+        placeholder=" Enter the venue..."
+      />
       {#if filterText != "" && filterText != undefined}
         {#each venue_slot as venue}
-          
           {#if venue.toLowerCase().includes(filterText.toLowerCase())}
             <button
-            class="VenueButton py-2.5 px-5 mr-2 mb-2 text-sm font-medium h-8 text-sky-600 hover:rounded-lg hover:bg-sky-600 hover:text-white {venue}"
-            contenteditable="false"
-            on:click={() => getMap({ venue })}
+              class="VenueButton py-2.5 px-5 mr-2 mb-2 text-sm font-medium h-8 text-sky-600 hover:rounded-lg hover:bg-sky-600 hover:text-white {venue}"
+              contenteditable="false"
+              on:click={() => getMap({ venue })}
             >
-            {venue}
+              {venue}
             </button>
           {/if}
         {/each}
       {:else}
         {#each venue_slot as venue}
           {#if venue == active_venue}
-          <button
-          class="VenueButton py-2.5 px-5 mr-2 mb-2 text-sm font-medium h-8 text-sky-600 hover:rounded-lg hover:bg-sky-600 hover:text-white {venue} active"
-          contenteditable="false"
-          on:click={() => getMap({ venue })}
-          >
-          {venue}
-          </button>
+            <button
+              class="VenueButton py-2.5 px-5 mr-2 mb-2 text-sm font-medium h-8 text-sky-600 hover:rounded-lg hover:bg-sky-600 hover:text-white {venue} active"
+              contenteditable="false"
+              on:click={() => getMap({ venue })}
+            >
+              {venue}
+            </button>
           {:else}
             <button
-            class="VenueButton py-2.5 px-5 mr-2 mb-2 text-sm font-medium h-8 text-sky-600 hover:rounded-lg hover:bg-sky-600 hover:text-white {venue}"
-            contenteditable="false"
-            on:click={() => getMap({ venue })}
+              class="VenueButton py-2.5 px-5 mr-2 mb-2 text-sm font-medium h-8 text-sky-600 hover:rounded-lg hover:bg-sky-600 hover:text-white {venue}"
+              contenteditable="false"
+              on:click={() => getMap({ venue })}
             >
-            {venue}
+              {venue}
             </button>
           {/if}
-          
         {/each}
       {/if}
-      
     </div>
 
     <!-- Map portion -->
-    <div class="md:mb-10 sm:mb-10 ">
+
+    <div id="startOfMap" class="md:mb-10 sm:mb-10 ">
       {#if embbed_map == ""}
         <div
           class="text-sky-500 2xl:text-2xl xl:text-xl lg:text-xl md:text-xl text-lg text-center"
@@ -424,11 +446,17 @@
       {/if}
 
       {#if embbed_map != "none" && embbed_map != ""}
-        <div class="border-2 border-sky-500 ml-2 my-4" bind:innerHTML={embbed_map} contenteditable="false" />
+        <div
+          class="border-2 border-sky-500 ml-2 my-4"
+          bind:innerHTML={embbed_map}
+          contenteditable="false"
+        />
       {/if}
     </div>
   </div>
 {/if}
+
+<div id="endOfPage" />
 
 <style>
   .VenueButton {
@@ -467,9 +495,8 @@
     color: white;
   }
 
-  input[type="time"]::-webkit-calendar-picker-indicator{
-    filter: invert(89%) sepia(9%) saturate(134%) hue-rotate(177deg) brightness(97%) contrast(87%);
+  input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(89%) sepia(9%) saturate(134%) hue-rotate(177deg)
+      brightness(97%) contrast(87%);
   }
-
-  
 </style>

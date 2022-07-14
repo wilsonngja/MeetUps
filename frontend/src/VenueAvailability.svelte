@@ -51,6 +51,11 @@
   }
 
   async function findVenue() {
+    const el = document.querySelector("#endOfPage");
+    if (!el) return;
+    el.scrollIntoView({
+      behavior: "smooth",
+    });
     error_message_no_input = "";
     semester_venue = [];
     loading = true;
@@ -101,6 +106,11 @@
   }
 
   async function findFreeSlot({ venue }) {
+    const el = document.querySelector("#endOfPage");
+    if (!el) return;
+    el.scrollIntoView({
+      behavior: "smooth",
+    });
     day_availability = {};
     entries = [];
     day_loading = true;
@@ -367,6 +377,7 @@
     </div>
   {/if}
 </div>
+<div id="endOfPage" />
 
 <style>
   .active {
