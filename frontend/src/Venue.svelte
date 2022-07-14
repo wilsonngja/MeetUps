@@ -165,15 +165,10 @@
               data["result"][i]["Availability Timeslot"][0][1] >= endTime &&
               data["result"][i]["Day"] == day
             ) {
-              if (
-                data["result"][i]["Availability Timeslot"][0][0] != "0800" ||
-                data["result"][i]["Availability Timeslot"][0][1] != "2200"
-              ) {
                 if (!venue_slot.includes(data["result"][i]["Venue"])) {
                   venue_slot.push(data["result"][i]["Venue"]);
                   venue_slot = [...venue_slot];
                 }
-              }
             }
           }
         }

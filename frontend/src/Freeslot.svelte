@@ -456,15 +456,8 @@
         j < data["result"][i]["Availability Timeslot"].length;
         j += 1
       ) {
-        if (
-          !(
-            data["result"][i]["Availability Timeslot"][0][0] == "0800" &&
-            data["result"][i]["Availability Timeslot"][0][1] == "2200"
-          ) ||
-          (data["result"][i]["Availability Timeslot"][0][0] <= starttime &&
-            data["result"][i]["Availability Timeslot"][0][1] >= endtime &&
-            data["result"][i]["Day"] == freeslot_day)
-        ) {
+        if ((data["result"][i]["Availability Timeslot"][0][0] <= starttime && data["result"][i]["Availability Timeslot"][0][1] >= endtime && data["result"][i]["Day"] == freeslot_day)) 
+        {
           if (!venue_slot.includes(data["result"][i]["Venue"])) {
             venue_slot.push(data["result"][i]["Venue"]);
             venue_slot = [...venue_slot];
