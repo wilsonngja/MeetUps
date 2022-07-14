@@ -3,6 +3,7 @@
   // import TopBackground from "./BackgroundTop.svelte";
   import Venue from "./Venue.svelte";
   import Freeslot from "./Freeslot.svelte";
+  import Venue_Availability from "./VenueAvailability.svelte"
   import VenueInfo from "./backend/database/venues.json";
   import config from "./config.json";
   // import { writable } from "svelte/store";
@@ -15,6 +16,7 @@
   const webpages = [
     { name: "Free Period Search", component: Freeslot },
     { name: "Venue Search", component: Venue },
+    { name: "Venue Availability", component: Venue_Availability},
   ];
 
   // Loads an object in webpages array
@@ -33,7 +35,7 @@
   <!-- <Modal show={$modal}> -->
   <!-- Nav ba -->
   <div
-    class="grid 2xl:grid-cols-6 xl:grid-cols-6 lg:grid-cols-6 md:grid-cols-4 grid-cols-2 mt-5"
+    class="grid 2xl:grid-cols-6 xl:grid-cols-6 lg:grid-cols-6 md:grid-cols-4 grid-cols-3 mt-5"
   >
     {#if selected == "Free Period Search"}
       <button
@@ -51,6 +53,15 @@
       >
         {webpages[1].name}</button
       >
+
+      <button
+        class="border-0 text-gray-300 bg-[#202124] hover:bg-[#2e3036] 2xl:text-xl xl:text-lg lg:text-lg md:text-md text-lg h-12 border-l-2 border-sky-500 active:text-[#202124] font-normal active:font-semibold"
+        title={webpages[2].name}
+        on:click={() => loadPage(webpages[2])}
+      >
+        {webpages[2].name}</button
+      >
+
     {/if}
 
     {#if selected == "Venue Search"}
@@ -69,6 +80,43 @@
       >
         {webpages[1].name}</button
       >
+
+      <button
+        class="border-0 text-gray-300 bg-[#202124] hover:bg-[#2e3036] 2xl:text-xl xl:text-lg lg:text-lg md:text-md text-lg h-12 border-l-2 border-sky-500 active:text-[#202124] font-normal active:font-semibold"
+        title={webpages[2].name}
+        on:click={() => loadPage(webpages[2])}
+      >
+        {webpages[2].name}</button
+      >
+      
+    {/if}
+
+    {#if selected == "Venue Availability"}
+    <button
+        class="border-0 text-gray-300 bg-[#202124] hover:bg-[#2e3036] 2xl:text-xl xl:text-lg lg:text-lg md:text-md text-lg h-12 border-r-2 border-sky-500 active:text-[#202124] font-normal active:font-semibold"
+        title={webpages[0].name}
+        on:click={() => loadPage(webpages[0])}
+      >
+        {webpages[0].name}</button
+      >
+
+      <button
+        class="border-0 text-gray-300 bg-[#202124] hover:bg-[#2e3036] 2xl:text-xl xl:text-lg lg:text-lg md:text-md text-lg h-12 active:text-[#202124] font-normal active:font-semibold"
+        title={webpages[1].name}
+        on:click={() => loadPage(webpages[1])}
+      >
+        {webpages[1].name}</button
+      >
+
+      <button
+        class="border-0 text-sky-500 bg-[#202124] hover:bg-[#2e3036] 2xl:text-xl xl:text-lg lg:text-lg md:text-md text-lg h-12 border-l-2 border-sky-500 underline underline-offset-4 decoration-2 active:text-[#202124] font-normal active:font-semibold"
+        title={webpages[2].name}
+        on:click={() => loadPage(webpages[2])}
+      >
+        {webpages[2].name}</button
+      >
+
+
     {/if}
   </div>
 

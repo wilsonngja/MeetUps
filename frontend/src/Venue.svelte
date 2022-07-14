@@ -429,7 +429,7 @@
       {/if}
 
       {#if embbed_map != "none" && embbed_map != ""}
-        <div class="border-2 border-sky-500 ml-2" bind:innerHTML={embbed_map} contenteditable="false" />
+        <div class="border-2 border-sky-500 ml-2 my-4" bind:innerHTML={embbed_map} contenteditable="false" />
       {/if}
     </div>
   </div>
