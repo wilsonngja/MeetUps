@@ -575,7 +575,7 @@
       <button
         title="Click to visit NUSMODS!"
         class=" text-center border-none
-       2xl:text-3xl lg:text-2xl md:text-xl text-xl mx-4 font-bold hover:text-white"
+       2xl:text-3xl lg:text-2xl md:text-xl text-xl mx-4 font-bold hover:text-white active:text-[#3f3f46]"
         on:click={visitNUSMODS}
       >
         <u>2. Visit NUSMODS in {query_semester}!</u>
