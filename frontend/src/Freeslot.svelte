@@ -421,6 +421,7 @@
   ) {
     venue_slot = [];
     loading = true;
+    error_message_no_rooms = "";
     // const e = document.querySelector("#start_of_map_div");
     // if (!e) return;
     // e.scrollIntoView({
@@ -461,8 +462,11 @@
         j < data["result"][i]["Availability Timeslot"].length;
         j += 1
       ) {
-        if ((data["result"][i]["Availability Timeslot"][0][0] <= starttime && data["result"][i]["Availability Timeslot"][0][1] >= endtime && data["result"][i]["Day"] == freeslot_day)) 
-        {
+        if (
+          data["result"][i]["Availability Timeslot"][0][0] <= starttime &&
+          data["result"][i]["Availability Timeslot"][0][1] >= endtime &&
+          data["result"][i]["Day"] == freeslot_day
+        ) {
           if (!venue_slot.includes(data["result"][i]["Venue"])) {
             venue_slot.push(data["result"][i]["Venue"]);
             venue_slot = [...venue_slot];
@@ -473,11 +477,11 @@
 
     if (venue_slot.length == 0) {
       error_message_no_rooms = "There are no rooms available";
-      const el = document.querySelector("#end_of_error_div");
-      if (!el) return;
-      el.scrollIntoView({
-        behavior: "smooth",
-      });
+      // const el = document.querySelector("#end_of_error_div");
+      // if (!el) return;
+      // el.scrollIntoView({
+      //   behavior: "smooth",
+      // });
     } else {
       for (var i = 0; i < venue_slot.length; i += 1) {
         buttons +=
@@ -548,7 +552,8 @@
   2xl:text-3xl lg:text-2.5xl md:text-2xl text-xl mx-4
   "
   >
-    This function helps teams with different timetable to find suitable timeslots to meet up in the current semester.
+    This function helps teams with different timetable to find suitable
+    timeslots to meet up in the current semester.
   </p>
   <br />
   <div>
