@@ -562,6 +562,15 @@
       STEPS TO RETRIEVE TIMETABLE LINKS:
     </p>
     <br />
+    <div class="flex justify-center">
+      <label for = "select_semester" class="text-gray-300 2xl:text-3xl xl:text-3xl text-2xl font-medium bg mr-4">1. Select Semester</label>
+      <select id="semester" class="border border-gray-300 bg-[#202124] text-white rounded-lg border-2 2xl:text-2xl xl:text-xl text-xl" bind:value={query_semester}>
+        <option>Semester 1</option>
+        <option>Semester 2</option>
+        <option>Special Term 1</option>
+        <option>Special Term 2</option>
+      </select>
+    </div>
     <div class="text-sky-500 text-center">
       <button
         title="Click to visit NUSMODS!"
@@ -569,7 +578,7 @@
        2xl:text-3xl lg:text-2xl md:text-xl text-xl mx-4 font-bold hover:text-white"
         on:click={visitNUSMODS}
       >
-        <u>1. Visit NUSMODS in {query_semester}!</u>
+        <u>2. Visit NUSMODS in {query_semester}!</u>
         <i
           class="
       fa
@@ -583,17 +592,17 @@
     <p
       class="text-gray-400 text-center   2xl:text-3xl lg:text-2xl md:text-xl text-xl mx-4"
     >
-      2. Enter NUSMODS timetable link to find free periods
+      3. Enter NUSMODS timetable link to find free periods
     </p>
     <p
       class="text-gray-400 text-center   2xl:text-3xl lg:text-2xl md:text-xl text-xl mx-4"
     >
-      3. Click “Add more links” to add timetable links.
+      4. Click “Add more links” to add timetable links.
     </p>
     <p
       class="text-gray-400 text-center mb-8   2xl:text-3xl lg:text-2xl md:text-xl text-xl mx-4"
     >
-      4. Click on "Find Time" to find free periods!
+      5. Click on "Find Time" to find free periods!
     </p>
     <!-- <h4 class="lg:text-2xl md:text-xl sm:text-md text-white" >{query_semester}</h4> -->
   </div>
