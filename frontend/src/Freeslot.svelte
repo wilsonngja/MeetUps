@@ -139,9 +139,14 @@
   };
 
   async function submitLink() {
+    submitHasBeenClicked = false;
+
     if (submitHasBeenClicked) {
       return;
     }
+
+    free_slot_generated = false;
+    wrongSemester = false;
     submitHasBeenClicked = true;
     error_message_no_rooms = "";
     empty_count = 0;
@@ -149,7 +154,7 @@
     error_message_wrong_sem = "";
     error_message_invalid_timetable = "";
 
-    wrongSemester = false;
+    
     free_slot_arr = [];
 
     //Variable Declaration
@@ -216,7 +221,7 @@
               sem != "st-ii" &&
               sem != "st-i"
             ) {
-              error_message_invalid_timetable = "Unrecognised timetable.\n";
+              error_message_invalid_timetable = "Please insert a valid timetable.";
               wrongSemester = true;
               free_slot_generated = true;
             } else {
