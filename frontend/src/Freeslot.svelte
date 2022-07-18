@@ -152,7 +152,6 @@
     error_message_empty = "";
     error_message_wrong_sem = "";
     error_message_invalid_timetable = "";
-
     
     free_slot_arr = [];
 
@@ -166,7 +165,6 @@
 
     let list_of_modules = new Map();
 
-    free_slot_generated = false;
 
     var each_module = [];
     var module_list = new Map();
@@ -242,7 +240,6 @@
       if (empty_count == nus_tt_links.length) {
         error_message_empty = "Please insert in at least one text field.";
         free_slot_generated = true;
-
         const el = document.querySelector("#end_of_error_div");
         if (!el) return;
         el.scrollIntoView({
