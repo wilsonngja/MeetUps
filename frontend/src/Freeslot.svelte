@@ -139,7 +139,6 @@
   };
 
   async function submitLink() {
-    submitHasBeenClicked = false;
 
     if (submitHasBeenClicked) {
       return;
@@ -207,9 +206,10 @@
           each_timetable_module = nus_tt_links[i].split("?");
 
           if (each_timetable_module.length != 2) {
-            error_message_invalid_timetable = "Unrecognised timetable.\n";
+            error_message_invalid_timetable = "Please insert a valid timetable.";
             wrongSemester = true;
             free_slot_generated = true;
+            submitHasBeenClicked = false;
           } else {
             var sem = each_timetable_module[0].match(
               "(sem-1)|(sem-2)|(st-ii)|(st-i)"
@@ -224,12 +224,14 @@
               error_message_invalid_timetable = "Please insert a valid timetable.";
               wrongSemester = true;
               free_slot_generated = true;
+              submitHasBeenClicked = false;
             } else {
               if (checkSemester[sem] != query_semester) {
                 error_message_wrong_sem =
                   "Please use timetable that corresponds to the correct semester.";
                 wrongSemester = true;
                 free_slot_generated = true;
+                submitHasBeenClicked = false;
               }
             }
           }
@@ -340,13 +342,13 @@
             //Append the message if there is a free slot
             // message +=
             //   key + ": " + value[i][1] + "-" + value[i + 1][0] + "<br/>";
-            free_slot_arr.push({
-              slotid: key,
-              start: value[i][1],
-              end: value[i + 1][0],
-            });
-            free_slot_arr = [...free_slot_arr];
-            num_timeslots += 1;
+            if (!free_slot_arr.includes({slotid: key, start: value[i][1], end: value[i + 1][0],}))
+            {
+              free_slot_arr.push({slotid: key, start: value[i][1], end: value[i + 1][0],});
+              free_slot_arr = [...free_slot_arr];
+              num_timeslots += 1;
+            }
+            
           }
         }
         //
@@ -542,7 +544,7 @@
       <span
         class=" 2xl:text-6xl lg:text-3xl  md:text-2xl text-2xl   bg-clip-text text-transparent bg-gradient-to-r from-pink-600 to-sky-600"
         ><strong
-          >Free Period Search For Current Sem: (<u>{query_semester}</u>)
+          >Free Period Search
         </strong></span
       >
     </div>
@@ -553,7 +555,7 @@
   "
   >
     This function helps teams with different timetable to find suitable
-    timeslots to meet up in the current semester.
+    timeslots to meet up.
   </p>
   <br />
   <div>
