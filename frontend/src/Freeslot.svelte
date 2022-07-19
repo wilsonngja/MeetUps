@@ -154,6 +154,7 @@
     error_message_invalid_timetable = "";
     
     free_slot_arr = [];
+    venue_slot = [];
 
     //Variable Declaration
     message = "";
@@ -729,7 +730,7 @@
   >
     <!-- Button portion -->
     <div
-      class="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-4 grid-cols-2 overflow-y-auto mb-10 overscroll-y-none h-96"
+      class="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-4 grid-cols-2 overflow-y-auto mb-10 overscroll-y-none h-96 "
     >
       <input
         type="text"
@@ -850,4 +851,5 @@
     background-color: #0284c7;
     color: white;
   }
+
 </style>
