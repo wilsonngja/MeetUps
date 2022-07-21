@@ -11,7 +11,6 @@
   let free_slot_arr = [];
   var venue_slot = [];
   var buttons = "";
-  var url = "";
   var filterText;
   var wrongSemester = false;
   let submitHasBeenClicked = false;
@@ -328,7 +327,6 @@
   // The portion that generates the google map
   async function getMap({ venue }) {
     //reset the values before search
-    url = "";
     long = "1.2966";
     lat = "103.7764";
 
