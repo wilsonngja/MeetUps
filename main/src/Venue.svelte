@@ -304,7 +304,7 @@
 
     <!-- Button portion to find venue -->
     <div class="grid grid-cols-1">
-      <button on:click={getVenue} class="mt-14 py-2.5 px-5 mb-2 text-sm bg-gradient-to-r from-pink-600 to-sky-600 rounded-lg border-none text-gray-50 font-bold hover:from-sky-600 hover:to-teal-600">\
+      <button on:click={getVenue} class="mt-14 py-2.5 px-5 mb-2 text-sm bg-gradient-to-r from-pink-600 to-sky-600 rounded-lg border-none text-gray-50 font-bold hover:from-sky-600 hover:to-teal-600">
         <strong>Find Venue</strong>
       </button>
     </div>
