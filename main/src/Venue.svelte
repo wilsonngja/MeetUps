@@ -1,6 +1,6 @@
 <script>
   import config from "./config.json";
-  import VenueInfo from "../../backend/database/venues.json";
+  import VenueInfo from "./backend/database/venues.json";
 
   // Variable Declaration
   let day;

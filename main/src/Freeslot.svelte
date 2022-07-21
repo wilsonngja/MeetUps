@@ -1,7 +1,7 @@
 <script>
   // Import relevant files
-  import AcademicYear from "../../backend/database/start_date.json";
-  import VenueInfo from "../../backend/database/venues.json";
+  import AcademicYear from "./backend/database/start_date.json";
+  import VenueInfo from "./backend/database/venues.json";
   import config from "./config.json";
 
   // Variable Declaration
