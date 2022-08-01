@@ -449,14 +449,14 @@
   <!-- Title portion -->
   <div class="text-center font-extrabold ">
     <div class="font-extrabold 2xl:mt-40 2xl:mb-10 xl:mt-40 xl:mb-10 lg:mt-32 lg:mb-5 mt-16 mb-2 mx-2.5">
-      <span class=" 2xl:text-6xl lg:text-3xl  md:text-2xl text-2xl   bg-clip-text text-transparent bg-gradient-to-r from-pink-600 to-sky-600">
+      <span class=" 2xl:text-6xl xl:text-5xl lg:text-5xl md:text-4xl text-3xl bg-clip-text text-transparent bg-gradient-to-r from-pink-600 to-sky-600">
         <strong>Free Period Search</strong>
       </span>
     </div>
   </div>
 
   <!-- Overview -->
-  <p class="text-gray-400 text-center font-extrabold mt-10 mb-4 2xl:text-3xl lg:text-2.5xl md:text-2xl text-xl mx-4">
+  <p class="text-gray-400 text-center font-extrabold mt-10 mb-4 2xl:text-3xl xl:text-3xl lg:text-2xl md:text-xl text-lg mx-4">
     This function helps teams with different timetable to find suitable timeslots to meet up.
   </p>
   <br />
@@ -469,9 +469,9 @@
     <br />
     <!-- Select Semester Portion -->
     <div class="flex justify-center">
-      <label for = "select_semester" class="text-gray-300 2xl:text-3xl xl:text-3xl text-2xl font-medium bg mr-4">1. Select Semester</label>
+      <label for = "select_semester" class="text-gray-300 2xl:text-3xl xl:text-3xl lg:text-2xl md:text-xl text-lg font-medium bg mr-4">1. Select Semester</label>
       <!-- Dropdown to select semester -->
-      <select id="semester" class="border border-gray-300 bg-[#202124] text-white rounded-lg border-2 2xl:text-2xl xl:text-xl text-xl" bind:value={query_semester}>
+      <select id="semester" class="border border-gray-300 bg-[#202124] text-white rounded-lg border-2 2xl:text-3xl xl:text-3xl lg:text-2xl md:text-xl text-lg" bind:value={query_semester}>
         <option>Semester 1</option>
         <option>Semester 2</option>
         <option>Special Term 1</option>
@@ -481,24 +481,24 @@
 
     <!-- The link portion to bring to the selected semester -->
     <div class="text-sky-500 text-center">
-      <button title="Click to visit NUSMODS!" class=" text-center border-none 2xl:text-3xl lg:text-2xl md:text-xl text-xl mx-4 font-bold hover:text-white active:text-[#3f3f46]" on:click={visitNUSMODS}>
+      <button title="Click to visit NUSMODS!" class=" text-center border-none 2xl:text-3xl xl:text-3xl lg:text-2xl md:text-xl text-lg mx-4 font-bold hover:text-white active:text-[#3f3f46]" on:click={visitNUSMODS}>
         <u>2. Visit NUSMODS in {query_semester}!</u>
         <i class="fa fa-exclamation-circle"/>
       </button>
     </div>
     
     <!-- 3rd instruction -->
-    <p class="text-gray-400 text-center   2xl:text-3xl lg:text-2xl md:text-xl text-xl mx-4">
+    <p class="text-gray-400 text-center   2xl:text-3xl xl:text-3xl lg:text-2xl md:text-xl text-lg mx-4">
       3. Click on Share/Sync button and click on copy link logo beside the link.
     </p>
 
     <!-- 4th instruction -->
-    <p class="text-gray-400 text-center   2xl:text-3xl lg:text-2xl md:text-xl text-xl mx-4">
+    <p class="text-gray-400 text-center   2xl:text-3xl xl:text-3xl lg:text-2xl md:text-xl text-lg mx-4">
       4. Paste it in the text field shown below.
     </p>
 
     <!-- 5th instruction -->
-    <p class="text-gray-400 text-center mb-8   2xl:text-3xl lg:text-2xl md:text-xl text-xl mx-4">
+    <p class="text-gray-400 text-center mb-8   2xl:text-3xl xl:text-3xl lg:text-2xl md:text-xl text-lg mx-4">
       5. Click on 'Add more links' to generate more text field. Otherwise, click on 'Find Time' to start computation.
     </p>
   </div>
